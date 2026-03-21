@@ -160,11 +160,22 @@ flutter build apk --release
 
 ### Useful keys while app is running
 
-| Key | Action |
-|---|---|
-| `r` | Hot reload — updates UI, keeps state |
-| `R` | Hot restart — resets state |
-| `q` | Stop app |
+| Key | Action                                                        |
+| --- | ------------------------------------------------------------- |
+| `r` | Hot reload — cập nhật UI, giữ nguyên state                    |
+| `R` | Hot restart — restart app, reset state                        |
+| `q` | Stop app — dừng ứng dụng                                      |
+| `p` | Toggle debug paint — hiện/ẩn đường viền widget (debug layout) |
+| `o` | Toggle platform — chuyển đổi iOS/Android rendering            |
+| `s` | Screenshot — chụp màn hình app                                |
+| `w` | Dump widget tree — in cây widget ra console                   |
+| `t` | Dump render tree — in render tree                             |
+| `l` | Dump layer tree                                               |
+| `f` | Dump focus tree                                               |
+| `L` | Toggle performance overlay                                    |
+| `S` | Dump accessibility tree                                       |
+| `U` | Dump semantics tree                                           |
+| `h` | Show help — xem toàn bộ phím tắt                              |
 
 ---
 
