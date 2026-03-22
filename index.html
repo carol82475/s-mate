@@ -7,6 +7,9 @@
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
 
+  <!-- ✅ THÊM DÒNG NÀY - ép browser hiểu đây là mobile -->
+  <meta name="viewport" content="width=390, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -21,31 +24,12 @@
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
       background: #1a1a2e;
-      background-image: radial-gradient(ellipse at 20% 50%, #16213e 0%, #1a1a2e 100%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    flutter-view, flt-glass-pane {
-      max-width: 390px !important;
-      width: 390px !important;
-      height: 844px !important;
-      border-radius: 44px !important;
-      box-shadow:
-        0 0 0 2px #333,
-        0 0 0 6px #1a1a1a,
-        0 30px 80px rgba(0,0,0,0.6) !important;
-      overflow: hidden !important;
-      position: relative !important;
     }
   </style>
 </head>
 <body>
-  <script src="flutter_bootstrap.js" async></script>
+<script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
