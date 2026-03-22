@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="/s-mate/">
 
   <meta charset="UTF-8">
@@ -31,16 +18,34 @@
 
   <title>s_mate</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #1a1a2e;
+      background-image: radial-gradient(ellipse at 20% 50%, #16213e 0%, #1a1a2e 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    flutter-view, flt-glass-pane {
+      max-width: 390px !important;
+      width: 390px !important;
+      height: 844px !important;
+      border-radius: 44px !important;
+      box-shadow:
+        0 0 0 2px #333,
+        0 0 0 6px #1a1a1a,
+        0 30px 80px rgba(0,0,0,0.6) !important;
+      overflow: hidden !important;
+      position: relative !important;
+    }
+  </style>
 </head>
 <body>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
-
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
