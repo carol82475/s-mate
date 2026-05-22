@@ -32,6 +32,7 @@ migrate_working_dir/
 .pub/
 /build/
 /coverage/
+backend/TravelDecisionEngine.Api/App_Data/DataProtectionKeys/
 
 # Symbolication related
 app.*.symbols

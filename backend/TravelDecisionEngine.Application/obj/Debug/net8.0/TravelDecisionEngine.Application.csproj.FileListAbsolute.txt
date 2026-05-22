@@ -1,0 +1,16 @@
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Application\obj\Debug\net8.0\TravelDecisionEngine.Application.csproj.AssemblyReference.cache
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Application\obj\Debug\net8.0\TravelDecisionEngine.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Application\obj\Debug\net8.0\TravelDecisionEngine.Application.AssemblyInfoInputs.cache
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Application\obj\Debug\net8.0\TravelDecisionEngine.Application.AssemblyInfo.cs
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Application\obj\Debug\net8.0\TravelDecisionEngine.Application.csproj.CoreCompileInputs.cache
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Application\obj\Debug\net8.0\TravelDecisionEngine.Application.sourcelink.json
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Application\bin\Debug\net8.0\TravelDecisionEngine.Application.deps.json
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Application\bin\Debug\net8.0\TravelDecisionEngine.Application.dll
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Application\bin\Debug\net8.0\TravelDecisionEngine.Application.pdb
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Application\bin\Debug\net8.0\TravelDecisionEngine.Domain.dll
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Application\bin\Debug\net8.0\TravelDecisionEngine.Domain.pdb
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Application\obj\Debug\net8.0\TravelDe.93EB4D38.Up2Date
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Application\obj\Debug\net8.0\TravelDecisionEngine.Application.dll
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Application\obj\Debug\net8.0\refint\TravelDecisionEngine.Application.dll
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Application\obj\Debug\net8.0\TravelDecisionEngine.Application.pdb
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Application\obj\Debug\net8.0\ref\TravelDecisionEngine.Application.dll

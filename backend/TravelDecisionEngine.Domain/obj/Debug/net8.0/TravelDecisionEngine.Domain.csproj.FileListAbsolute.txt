@@ -1,0 +1,12 @@
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Domain\bin\Debug\net8.0\TravelDecisionEngine.Domain.deps.json
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Domain\bin\Debug\net8.0\TravelDecisionEngine.Domain.dll
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Domain\bin\Debug\net8.0\TravelDecisionEngine.Domain.pdb
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Domain\obj\Debug\net8.0\TravelDecisionEngine.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Domain\obj\Debug\net8.0\TravelDecisionEngine.Domain.AssemblyInfoInputs.cache
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Domain\obj\Debug\net8.0\TravelDecisionEngine.Domain.AssemblyInfo.cs
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Domain\obj\Debug\net8.0\TravelDecisionEngine.Domain.csproj.CoreCompileInputs.cache
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Domain\obj\Debug\net8.0\TravelDecisionEngine.Domain.sourcelink.json
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Domain\obj\Debug\net8.0\TravelDecisionEngine.Domain.dll
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Domain\obj\Debug\net8.0\refint\TravelDecisionEngine.Domain.dll
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Domain\obj\Debug\net8.0\TravelDecisionEngine.Domain.pdb
+C:\FPTU\s-mate\s-mate\backend\TravelDecisionEngine.Domain\obj\Debug\net8.0\ref\TravelDecisionEngine.Domain.dll

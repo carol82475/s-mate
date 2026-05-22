@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{AACDB459-0721-471A-8C50-520CDFA264E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelDecisionEngine.Domain", "backend\TravelDecisionEngine.Domain\TravelDecisionEngine.Domain.csproj", "{3AA7FAD4-DEE0-4FD9-A096-6923DA38CCBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelDecisionEngine.Application", "backend\TravelDecisionEngine.Application\TravelDecisionEngine.Application.csproj", "{75494D76-B8BA-44AB-B65A-6CE439DCA7E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelDecisionEngine.Infrastructure", "backend\TravelDecisionEngine.Infrastructure\TravelDecisionEngine.Infrastructure.csproj", "{8A194D86-B880-496B-A3DC-E96828BA1566}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelDecisionEngine.Api", "backend\TravelDecisionEngine.Api\TravelDecisionEngine.Api.csproj", "{505CA83F-FC20-4708-B547-AFF30C211BFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelDecisionEngine.Tests", "backend\TravelDecisionEngine.Tests\TravelDecisionEngine.Tests.csproj", "{5D1BA9A3-D3E6-4241-AAFE-1649437AF8F9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3AA7FAD4-DEE0-4FD9-A096-6923DA38CCBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AA7FAD4-DEE0-4FD9-A096-6923DA38CCBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AA7FAD4-DEE0-4FD9-A096-6923DA38CCBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AA7FAD4-DEE0-4FD9-A096-6923DA38CCBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75494D76-B8BA-44AB-B65A-6CE439DCA7E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75494D76-B8BA-44AB-B65A-6CE439DCA7E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75494D76-B8BA-44AB-B65A-6CE439DCA7E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75494D76-B8BA-44AB-B65A-6CE439DCA7E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A194D86-B880-496B-A3DC-E96828BA1566}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A194D86-B880-496B-A3DC-E96828BA1566}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A194D86-B880-496B-A3DC-E96828BA1566}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A194D86-B880-496B-A3DC-E96828BA1566}.Release|Any CPU.Build.0 = Release|Any CPU
+		{505CA83F-FC20-4708-B547-AFF30C211BFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{505CA83F-FC20-4708-B547-AFF30C211BFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{505CA83F-FC20-4708-B547-AFF30C211BFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{505CA83F-FC20-4708-B547-AFF30C211BFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D1BA9A3-D3E6-4241-AAFE-1649437AF8F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D1BA9A3-D3E6-4241-AAFE-1649437AF8F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D1BA9A3-D3E6-4241-AAFE-1649437AF8F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D1BA9A3-D3E6-4241-AAFE-1649437AF8F9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3AA7FAD4-DEE0-4FD9-A096-6923DA38CCBD} = {AACDB459-0721-471A-8C50-520CDFA264E7}
+		{75494D76-B8BA-44AB-B65A-6CE439DCA7E3} = {AACDB459-0721-471A-8C50-520CDFA264E7}
+		{8A194D86-B880-496B-A3DC-E96828BA1566} = {AACDB459-0721-471A-8C50-520CDFA264E7}
+		{505CA83F-FC20-4708-B547-AFF30C211BFF} = {AACDB459-0721-471A-8C50-520CDFA264E7}
+		{5D1BA9A3-D3E6-4241-AAFE-1649437AF8F9} = {AACDB459-0721-471A-8C50-520CDFA264E7}
+	EndGlobalSection
+EndGlobal
