@@ -1,36 +1,33 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../features/intro/intro_screen.dart';
 import '../features/auth/login_screen.dart';
 import '../features/home/home_screen.dart';
 import '../features/trip_planner/trip_planner_screen.dart';
 import '../features/itinerary/itinerary_screen.dart';
+import '../features/my_trips/my_trips_screen.dart';
 import '../features/map/map_screen.dart';
 import '../features/ai_chat/ai_chat_screen.dart';
-import '../features/travelers/find_travelers_screen.dart';
-import '../features/travelers/traveler_chat_screen.dart';
-import '../features/forum/forum_screen.dart';
+import '../features/scan/scan_screen.dart';
 import '../features/camera/trip_camera_screen.dart';
 import '../features/albums/trip_albums_screen.dart';
 import '../features/profile/profile_screen.dart';
-import '../features/quick_action/quick_action_screen.dart';
 import '../features/purchase/purchase_screen.dart';
+import '../features/quick_action/quick_action_screen.dart';
 import '../shared/widgets/main_scaffold.dart';
-import 'dart:async';
+import 'api_client.dart';
+
+const _publicRoutes = {'/', '/login'};
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/',
-  refreshListenable: GoRouterRefreshStream(
-    Supabase.instance.client.auth.onAuthStateChange,
-  ),
+  refreshListenable: ApiAuth.instance,
   redirect: (context, state) {
-    final session = Supabase.instance.client.auth.currentSession;
-    final isLoggedIn = session != null;
+    final isLoggedIn = ApiAuth.instance.isLoggedIn;
 
     final location = state.uri.path;
-    final isPublicRoute = location == '/' || location == '/login';
+    final isPublicRoute = _publicRoutes.contains(location);
 
     if (!isLoggedIn && !isPublicRoute) {
       return '/';
@@ -42,6 +39,7 @@ final GoRouter appRouter = GoRouter(
 
     return null;
   },
+  errorBuilder: (context, state) => const _RouteFallback(),
   routes: [
     GoRoute(
       path: '/',
@@ -71,6 +69,14 @@ final GoRouter appRouter = GoRouter(
           },
         ),
         GoRoute(
+          path: '/my-trips',
+          builder: (_, __) => const MyTripsScreen(),
+        ),
+        GoRoute(
+          path: '/scan',
+          builder: (_, __) => const ScanScreen(),
+        ),
+        GoRoute(
           path: '/map',
           builder: (_, __) => const MapScreen(),
         ),
@@ -79,19 +85,11 @@ final GoRouter appRouter = GoRouter(
           builder: (_, __) => const AiChatScreen(),
         ),
         GoRoute(
-          path: '/find-travelers',
-          builder: (_, __) => const FindTravelersScreen(),
-        ),
-        GoRoute(
-          path: '/traveler-chat/:id',
+          path: '/purchase',
           builder: (_, state) {
-            final travelerId = state.pathParameters['id'] ?? '1';
-            return TravelerChatScreen(travelerId: travelerId);
+            final extra = state.extra as Map<String, dynamic>?;
+            return PurchaseScreen(extra: extra);
           },
-        ),
-        GoRoute(
-          path: '/forum',
-          builder: (_, __) => const ForumScreen(),
         ),
         GoRoute(
           path: '/trip-camera',
@@ -110,26 +108,45 @@ final GoRouter appRouter = GoRouter(
           builder: (_, __) => const QuickActionScreen(),
         ),
         GoRoute(
-          path: '/purchase',
-          builder: (_, __) => const PurchaseScreen(),
+          path: '/anti-scam',
+          redirect: (_, __) => '/scan',
+        ),
+        GoRoute(
+          path: '/anti-scam/scan',
+          redirect: (_, __) => '/scan',
+        ),
+        GoRoute(
+          path: '/forum',
+          redirect: (_, __) => '/home',
+        ),
+        GoRoute(
+          path: '/find-travelers',
+          redirect: (_, __) => '/home',
+        ),
+        GoRoute(
+          path: '/traveler-chat',
+          redirect: (_, __) => '/home',
+        ),
+        GoRoute(
+          path: '/traveler-chat/:id',
+          redirect: (_, __) => '/home',
         ),
       ],
     ),
   ],
 );
 
-class GoRouterRefreshStream extends ChangeNotifier {
-  GoRouterRefreshStream(Stream<dynamic> stream) {
-    _subscription = stream.asBroadcastStream().listen(
-          (_) => notifyListeners(),
-        );
-  }
-
-  late final StreamSubscription<dynamic> _subscription;
+class _RouteFallback extends StatelessWidget {
+  const _RouteFallback();
 
   @override
-  void dispose() {
-    _subscription.cancel();
-    super.dispose();
+  Widget build(BuildContext context) {
+    Future.microtask(() {
+      if (!context.mounted) return;
+
+      context.go(ApiAuth.instance.isLoggedIn ? '/home' : '/');
+    });
+
+    return const SizedBox.shrink();
   }
 }

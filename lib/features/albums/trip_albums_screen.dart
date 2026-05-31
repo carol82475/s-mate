@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/api_client.dart';
 import '../../core/theme.dart';
+import '../../l10n/app_localizations.dart';
 
 class TripAlbumsScreen extends StatefulWidget {
   const TripAlbumsScreen({super.key});
@@ -33,10 +34,13 @@ class _TripAlbumsScreenState extends State<TripAlbumsScreen> {
       final data = response['data'];
 
       if (data is List) {
+        if (!mounted) return;
+
+        final l10n = AppLocalizations.of(context);
         _albums = data.map<Map<String, dynamic>>((item) {
           return {
             'id': item['id']?.toString() ?? '',
-            'name': item['name'] ?? 'Untitled Album',
+            'name': item['name'] ?? l10n.untitledAlbum,
             'description': item['description'] ?? '',
             'photos': item['photosCount'] ?? item['photos'] ?? 0,
             'likes': item['likesCount'] ?? item['likes'] ?? 0,
@@ -64,6 +68,7 @@ class _TripAlbumsScreenState extends State<TripAlbumsScreen> {
   }
 
   Future<void> _createAlbum() async {
+    final l10n = AppLocalizations.of(context);
     final nameCtrl = TextEditingController();
     final descCtrl = TextEditingController();
 
@@ -90,9 +95,9 @@ class _TripAlbumsScreenState extends State<TripAlbumsScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Create New Album',
-                style: TextStyle(
+              Text(
+                l10n.createNewAlbum,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -100,16 +105,16 @@ class _TripAlbumsScreenState extends State<TripAlbumsScreen> {
               const SizedBox(height: 16),
               TextField(
                 controller: nameCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'Album Name',
-                  hintText: 'e.g., Hanoi Adventures',
+                decoration: InputDecoration(
+                  labelText: l10n.albumName,
+                  hintText: l10n.albumNameHint,
                 ),
               ),
               const SizedBox(height: 12),
               TextField(
                 controller: descCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'Description',
+                decoration: InputDecoration(
+                  labelText: l10n.description,
                 ),
                 maxLines: 2,
               ),
@@ -119,7 +124,7 @@ class _TripAlbumsScreenState extends State<TripAlbumsScreen> {
                 onChanged: (v) {
                   setModalState(() => isPublic = v);
                 },
-                title: const Text('Public Album'),
+                title: Text(l10n.publicAlbum),
                 contentPadding: EdgeInsets.zero,
               ),
               const SizedBox(height: 20),
@@ -142,50 +147,51 @@ class _TripAlbumsScreenState extends State<TripAlbumsScreen> {
 
                           final data = response['data'];
 
+                          if (!mounted) return;
+
                           if (data != null) {
                             setState(() {
                               _albums.insert(0, {
                                 'id': data['id']?.toString() ?? '',
                                 'name': data['name'] ?? '',
-                                'description':
-                                    data['description'] ?? '',
+                                'description': data['description'] ?? '',
                                 'photos': 0,
                                 'likes': 0,
-                                'isPublic':
-                                    data['isPublic'] ?? false,
+                                'isPublic': data['isPublic'] ?? false,
                                 'cover': '',
                               });
                             });
                           }
 
-                          if (!mounted) return;
+                          if (!context.mounted) return;
 
                           Navigator.pop(context);
 
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Album created!'),
+                            SnackBar(
+                              content: Text(l10n.albumCreated),
                               backgroundColor: AppTheme.primary,
                             ),
                           );
                         } catch (e) {
+                          if (!context.mounted) return;
+
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(e.toString()),
-                              backgroundColor:
-                                  AppTheme.destructive,
+                              backgroundColor: AppTheme.destructive,
                             ),
                           );
                         }
                       },
-                      child: const Text('Create'),
+                      child: Text(l10n.create),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancel'),
+                      child: Text(l10n.cancel),
                     ),
                   ),
                 ],
@@ -205,6 +211,8 @@ class _TripAlbumsScreenState extends State<TripAlbumsScreen> {
     try {
       await ApiClient.post('/albums/$id/like');
 
+      if (!mounted) return;
+
       setState(() {
         if (_likedAlbums.contains(id)) {
           _likedAlbums.remove(id);
@@ -215,6 +223,8 @@ class _TripAlbumsScreenState extends State<TripAlbumsScreen> {
         }
       });
     } catch (e) {
+      if (!mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(e.toString()),
@@ -226,10 +236,12 @@ class _TripAlbumsScreenState extends State<TripAlbumsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
-        title: const Text('Trip Albums'),
+        title: Text(l10n.tripAlbums),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () =>
@@ -239,7 +251,7 @@ class _TripAlbumsScreenState extends State<TripAlbumsScreen> {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: _createAlbum,
-            tooltip: 'New Album',
+            tooltip: l10n.newAlbum,
           ),
         ],
       ),
@@ -258,17 +270,17 @@ class _TripAlbumsScreenState extends State<TripAlbumsScreen> {
                         color: AppTheme.primary,
                       ),
                       const SizedBox(height: 16),
-                      const Text(
-                        'No Albums Yet',
-                        style: TextStyle(
+                      Text(
+                        l10n.noAlbumsYet,
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        'Create your first album',
-                        style: TextStyle(
+                      Text(
+                        l10n.createFirstAlbum,
+                        style: const TextStyle(
                           color: AppTheme.textMuted,
                         ),
                       ),
@@ -276,7 +288,7 @@ class _TripAlbumsScreenState extends State<TripAlbumsScreen> {
                       ElevatedButton.icon(
                         onPressed: _createAlbum,
                         icon: const Icon(Icons.add),
-                        label: const Text('Create Album'),
+                        label: Text(l10n.createAlbum),
                       ),
                     ],
                   ),
@@ -295,8 +307,7 @@ class _TripAlbumsScreenState extends State<TripAlbumsScreen> {
                     itemCount: _albums.length,
                     itemBuilder: (_, i) => _AlbumCard(
                       album: _albums[i],
-                      isLiked:
-                          _likedAlbums.contains(_albums[i]['id']),
+                      isLiked: _likedAlbums.contains(_albums[i]['id']),
                       onLike: () => _toggleLike(i),
                     ),
                   ),
@@ -380,9 +391,7 @@ class _AlbumCard extends StatelessWidget {
                       ),
                     ),
                     Icon(
-                      album['isPublic']
-                          ? Icons.public
-                          : Icons.lock_outline,
+                      album['isPublic'] ? Icons.public : Icons.lock_outline,
                       size: 14,
                       color: AppTheme.textMuted,
                     ),
@@ -420,22 +429,16 @@ class _AlbumCard extends StatelessWidget {
                       child: Row(
                         children: [
                           Icon(
-                            isLiked
-                                ? Icons.favorite
-                                : Icons.favorite_border,
+                            isLiked ? Icons.favorite : Icons.favorite_border,
                             size: 14,
-                            color: isLiked
-                                ? Colors.red
-                                : AppTheme.textMuted,
+                            color: isLiked ? Colors.red : AppTheme.textMuted,
                           ),
                           const SizedBox(width: 2),
                           Text(
                             '${album['likes']}',
                             style: TextStyle(
                               fontSize: 11,
-                              color: isLiked
-                                  ? Colors.red
-                                  : AppTheme.textMuted,
+                              color: isLiked ? Colors.red : AppTheme.textMuted,
                             ),
                           ),
                         ],
@@ -451,3 +454,4 @@ class _AlbumCard extends StatelessWidget {
     );
   }
 }
+

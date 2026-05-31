@@ -43,9 +43,7 @@ const options = {
             { name: 'Trips', description: 'Trip planning and management' },
             { name: 'Map', description: 'Map and places exploration' },
             { name: 'AI Chat', description: 'AI travel assistant' },
-            { name: 'Travelers', description: 'Find and connect with travelers' },
             { name: 'Chats', description: 'Real-time messaging' },
-            { name: 'Forum', description: 'Travel forum and community' },
             { name: 'Albums', description: 'Photo albums and galleries' },
             { name: 'Emergency', description: 'Emergency support and safety' },
             { name: 'Quick Actions', description: 'Dynamic quick actions' },
@@ -54,4 +52,3 @@ const options = {
     apis: ['./src/modules/**/*.routes.ts'],
 };
 exports.swaggerSpec = (0, swagger_jsdoc_1.default)(options);
-//# sourceMappingURL=swagger.js.map

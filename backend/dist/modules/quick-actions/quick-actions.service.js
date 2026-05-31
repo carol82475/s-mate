@@ -21,9 +21,9 @@ class QuickActionsService {
             },
             {
                 id: '2',
-                title: 'Find Travelers',
-                icon: 'people',
-                route: '/find-travelers',
+                title: 'Trip Albums',
+                icon: 'photo_library',
+                route: '/trip-albums',
                 color: '#607D8B',
             },
             {
@@ -54,4 +54,3 @@ class QuickActionsService {
     }
 }
 exports.QuickActionsService = QuickActionsService;
-//# sourceMappingURL=quick-actions.service.js.map

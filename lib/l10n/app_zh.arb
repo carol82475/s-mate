@@ -1,0 +1,534 @@
+{
+  "@@locale": "zh",
+  "vietnam": "越南",
+  "appName": "S-Mate",
+  "login": "登录",
+  "register": "注册",
+  "email": "Email",
+  "emailHint": "you@example.com",
+  "password": "密码",
+  "home": "首页",
+  "profile": "个人资料",
+  "tripPlanner": "旅行规划器",
+  "generateItinerary": "生成行程",
+  "destination": "目的地",
+  "budget": "预算",
+  "peopleCount": "人数",
+  "startDate": "开始日期",
+  "endDate": "结束日期",
+  "save": "保存",
+  "cancel": "取消",
+  "logout": "退出登录",
+  "notifications": "通知",
+  "settings": "设置",
+  "language": "语言",
+  "loading": "加载中",
+  "error": "错误",
+  "success": "成功",
+  "retry": "重试",
+  "myTrip": "我的旅行",
+  "scan": "扫描",
+  "map": "地图",
+  "aiChat": "AI 聊天",
+  "all": "全部",
+  "upcoming": "即将开始",
+  "inProgress": "进行中",
+  "completed": "已完成",
+  "cancelled": "已取消",
+  "couldNotLoadTrips": "无法加载旅行",
+  "couldNotLoadTripsMessage": "我们现在无法加载您的旅行。请重试。",
+  "tryAgain": "重试",
+  "noTripsYet": "还没有旅行",
+  "noTripsYetMessage": "创建您的第一个 AI 行程，它会显示在这里。",
+  "noTripsFoundForFilter": "没有找到符合此筛选的旅行",
+  "createNewTrip": "创建新旅行",
+  "destinationPending": "目的地待定",
+  "defaultTripName": "{destination}之旅",
+  "@defaultTripName": {
+    "placeholders": {
+      "destination": {}
+    }
+  },
+  "budgetValue": "预算：{value}",
+  "@budgetValue": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "close": "关闭",
+  "back": "返回",
+  "create": "创建",
+  "update": "更新",
+  "edit": "编辑",
+  "done": "完成",
+  "customize": "自定义",
+  "openMap": "打开地图",
+  "createTrip": "创建旅行",
+  "welcomeBackTraveler": "欢迎回来，旅行者！",
+  "planNextAdventure": "规划您的下一次冒险",
+  "itineraryReminder": "行程提醒",
+  "nextActivitySoon": "您的下一个活动即将开始。",
+  "mapUpdate": "地图更新",
+  "nearbyRecommendationsReady": "附近推荐已准备好探索。",
+  "albumReminder": "相册提醒",
+  "addTodaysPhotos": "将今天的照片添加到您的旅行相册。",
+  "timeAgoHours": "{hours}小时前",
+  "@timeAgoHours": {
+    "placeholders": {
+      "hours": {}
+    }
+  },
+  "timeAgoDays": "{days}天前",
+  "@timeAgoDays": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "planYourFirstTrip": "规划您的第一次旅行",
+  "chooseDestination": "选择您的目的地",
+  "newStatus": "新建",
+  "action": "操作",
+  "generateTrip": "生成旅行",
+  "generateTripDescription": "根据日期和预算创建新的 AI 行程。",
+  "currentTrip": "当前旅行",
+  "currentTrips": "当前旅行",
+  "viewMyTrips": "查看我的旅行",
+  "viewItinerary": "查看行程",
+  "popularDestinations": "热门目的地",
+  "welcomeBack": "欢迎回来",
+  "createAccount": "创建账户",
+  "signInContinueJourney": "登录以继续您的旅程",
+  "signUpStartAdventure": "注册以开始规划下一次冒险",
+  "loginSuccessful": "登录成功！",
+  "accountCreatedSuccessfully": "账户创建成功！",
+  "resetPassword": "重置密码",
+  "resetPasswordInstructions": "输入您的电子邮件，我们会发送重置链接。",
+  "sendResetLink": "发送重置链接",
+  "passwordResetOtpSent": "密码重置 OTP 已发送！",
+  "fullName": "全名",
+  "fullNameHint": "John Doe",
+  "location": "位置",
+  "locationHint": "San Francisco, USA",
+  "forgotPassword": "忘记密码？",
+  "signUp": "注册",
+  "dontHaveAccount": "还没有账户？",
+  "alreadyHaveAccount": "已有账户？",
+  "yourName": "您的姓名",
+  "yourLocation": "您的位置",
+  "displayName": "显示名称",
+  "editProfile": "编辑资料",
+  "profileUpdated": "资料已更新！",
+  "saveChanges": "保存更改",
+  "selectLanguage": "选择语言",
+  "languageEnglish": "English",
+  "languageVietnamese": "Tiếng Việt",
+  "languageFrench": "Français",
+  "languageGerman": "Deutsch",
+  "languageKorean": "한국어",
+  "languageChinese": "中文",
+  "languageChangedTo": "语言已更改为 {language}",
+  "@languageChangedTo": {
+    "placeholders": {
+      "language": {}
+    }
+  },
+  "notificationsEnabled": "通知已开启",
+  "notificationsDisabled": "通知已关闭",
+  "privacy": "隐私",
+  "privacySetting": "隐私设置",
+  "privacySetTo": "隐私已设置为 {privacy}",
+  "@privacySetTo": {
+    "placeholders": {
+      "privacy": {}
+    }
+  },
+  "changePassword": "更改密码",
+  "newPassword": "新密码",
+  "passwordUpdatedSuccessfully": "密码更新成功！",
+  "updatePassword": "更新密码",
+  "failedSignOut": "退出登录失败。请重试。",
+  "signOut": "退出登录",
+  "signOutConfirmation": "您确定要退出登录吗？",
+  "traveler": "旅行者",
+  "unknown": "未知",
+  "unknownDestination": "未知目的地",
+  "countries": "国家",
+  "trips": "旅行",
+  "locations": "地点",
+  "days": "天",
+  "tripHistory": "旅行历史",
+  "enabled": "已启用",
+  "disabled": "已禁用",
+  "public": "公开",
+  "friendsOnly": "仅好友",
+  "private": "私密",
+  "planned": "已计划",
+  "unknownTrip": "未知旅行",
+  "aiTripPlanner": "AI 旅行规划器",
+  "planYourJourney": "规划您的旅程",
+  "aiCreatePerfectItinerary": "让 AI 创建完美行程",
+  "selectDate": "选择日期",
+  "pleaseSelectDates": "请选择开始和结束日期",
+  "endDateAfterStartDate": "结束日期必须晚于开始日期",
+  "tripGeneratedSuccessfully": "旅行生成成功！",
+  "generateTripFailed": "无法生成旅行。请重试。",
+  "aiGeneratedTrip": "AI 生成的旅行",
+  "fallbackItineraryUsed": "已使用备用行程",
+  "budgetUsd": "预算（USD）",
+  "enterYourBudget": "输入您的预算",
+  "numberOfTravelers": "旅行人数",
+  "travelPreferences": "旅行偏好",
+  "additionalPreferences": "其他偏好",
+  "additionalPreferencesHint": "告诉我们更多您喜欢的内容（例如隐藏景点、本地市场、晚点出发……）",
+  "generating": "生成中……",
+  "generatingTrip": "正在生成旅行……",
+  "generateAiItinerary": "生成 AI 行程",
+  "soloTraveler": "独自旅行（1人）",
+  "coupleTravelers": "情侣（2人）",
+  "smallGroupTravelers": "小团体（3-5人）",
+  "largeGroupTravelers": "大团体（6人以上）",
+  "cultural": "文化",
+  "adventure": "冒险",
+  "relaxation": "放松",
+  "food": "美食",
+  "nature": "自然",
+  "shopping": "购物",
+  "tripDay": "旅行日",
+  "tripItinerary": "旅行行程",
+  "tripSavedSuccessfully": "旅行保存成功！",
+  "newActivity": "新活动",
+  "customActivity": "自定义活动",
+  "editDayTitle": "编辑日期标题",
+  "dayTitle": "日期标题",
+  "previewYourPlan": "预览您的计划",
+  "tripProgress": "旅行进度",
+  "completedCount": "已完成 {completed}/{total}",
+  "@completedCount": {
+    "placeholders": {
+      "completed": {},
+      "total": {}
+    }
+  },
+  "confirmSavePlan": "确认并保存计划",
+  "dayNumber": "第 {day} 天",
+  "@dayNumber": {
+    "placeholders": {
+      "day": {}
+    }
+  },
+  "addActivity": "添加活动",
+  "arrivalLocalDiscovery": "抵达与本地探索",
+  "cityLandmarkVisit": "城市地标参观",
+  "localFoodExperience": "本地美食体验",
+  "culturalSite": "文化景点",
+  "eveningWalk": "夜间散步",
+  "adventureExploration": "冒险与探索",
+  "morningExcursion": "上午短途游",
+  "lunchBreak": "午餐休息",
+  "outdoorActivity": "户外活动",
+  "dinnerRelaxation": "晚餐与放松",
+  "relaxedFinalDay": "轻松的最后一天",
+  "slowMorning": "悠闲早晨",
+  "souvenirShopping": "购买纪念品",
+  "finalPhotoSpot": "最后拍照点",
+  "exploringSaigon": "探索西贡",
+  "mockLandmarkDescription": "从著名的本地地标开始您的旅行。",
+  "mockFoodDescription": "在市中心附近品尝正宗本地美食。",
+  "mockCulturalDescription": "参观博物馆、寺庙或文化目的地。",
+  "mockEveningDescription": "在夜晚享受城市氛围。",
+  "mockExcursionDescription": "前往附近景点进行短途游。",
+  "mockLunchDescription": "在推荐的本地餐厅补充能量。",
+  "mockOutdoorDescription": "探索自然、市场或隐藏宝地。",
+  "mockDinnerDescription": "用轻松的晚餐结束一天。",
+  "mockSlowMorningDescription": "用咖啡或早餐悠闲开始一天。",
+  "mockSouvenirDescription": "购买纪念品或参观本地市场。",
+  "mockPhotoDescription": "离开前记录最后的回忆。",
+  "scanDemoResult": "在价格检查 API 可用前显示演示结果。",
+  "estimatedLocalPrice": "预估本地价格",
+  "detectedPrice": "检测到的价格",
+  "advice": "建议",
+  "cameraPreview": "相机预览",
+  "cameraPreviewHint": "对准物品、收据或菜单价格。",
+  "checkingPrice": "正在检查价格……",
+  "scanItemMenu": "扫描物品或菜单",
+  "takePhoto": "拍照",
+  "upload": "上传",
+  "priceCheckInfo": "当后端扫描器连接后，价格检查会将检测价格与本地价格范围比较。",
+  "scannedItem": "已扫描物品",
+  "pending": "待处理",
+  "unknownWarning": "未知",
+  "scanAdviceDefault": "付款前请参考本地价格核对。",
+  "menuItem": "菜单项",
+  "apiPending": "API 待连接",
+  "demo": "演示",
+  "scanBackendPending": "扫描器后端尚未连接。请将此布局作为未来结果界面。",
+  "usingOfflinePlaces": "正在使用离线地点。",
+  "zoomPercent": "缩放：{percent}%",
+  "@zoomPercent": {
+    "placeholders": {
+      "percent": {}
+    }
+  },
+  "centeringLocation": "正在居中到您的位置……",
+  "searchPlaces": "搜索地点……",
+  "mapExplorer": "地图探索器",
+  "myLocation": "我的位置",
+  "search": "搜索",
+  "zoomIn": "放大",
+  "zoomOut": "缩小",
+  "nearbyPlaces": "附近地点",
+  "foundCount": "找到 {count} 个",
+  "@foundCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "noPlacesFound": "未找到地点",
+  "place": "地点",
+  "unknownPlace": "未知地点",
+  "nearby": "附近",
+  "coffeeShop": "咖啡店",
+  "vietnameseRestaurant": "越南餐厅",
+  "market": "市场",
+  "aiTravelAssistant": "AI 旅行助手",
+  "alwaysHereToHelp": "随时为您提供帮助",
+  "askMeAnything": "问我任何问题……",
+  "suggestedQuestions": "建议问题",
+  "assistantGreeting": "您好！我是您的 AI 旅行助手。我可以帮助您获取本地推荐、翻译、文化提示和旅行问题解答。今天需要什么帮助？",
+  "assistantFallback": "我可以帮忙。您能提供更多细节吗？",
+  "assistantConnectionError": "抱歉，无法连接到 AI 助手。",
+  "suggestionBestTimeHaLong": "什么时候最适合游览 Ha Long Bay？",
+  "suggestionVietnameseRestaurants": "推荐正宗越南餐厅",
+  "suggestionHanoiToSapa": "如何从 Hanoi 到 Sapa？",
+  "suggestionLocalCustoms": "我应该了解哪些本地习俗？",
+  "completeYourPurchase": "完成购买",
+  "paymentInformation": "付款信息",
+  "choosePlanUnlock": "选择套餐并解锁个性化旅行体验",
+  "mostPopular": "最受欢迎",
+  "perTrip": " /次旅行",
+  "selected": "已选择",
+  "selectPlan": "选择套餐",
+  "continueToPayment": "继续付款 - {price}",
+  "@continueToPayment": {
+    "placeholders": {
+      "price": {}
+    }
+  },
+  "purchaseSuccessful": "购买成功！",
+  "planActiveEnjoyTrip": "您的套餐已激活。祝您旅途愉快！",
+  "openItinerary": "打开行程",
+  "goToHome": "前往首页",
+  "required": "必填",
+  "cardNumber": "卡号",
+  "cardholderName": "持卡人姓名",
+  "cardholderNameHint": "John Doe",
+  "expiryDate": "到期日期",
+  "expiryDateHint": "MM/YY",
+  "cvv": "CVV",
+  "demoPaymentWarning": "这是演示付款。请勿输入真实银行卡信息。",
+  "processing": "处理中……",
+  "completePurchase": "完成购买 - {price}",
+  "@completePurchase": {
+    "placeholders": {
+      "price": {}
+    }
+  },
+  "basicPlan": "基础套餐",
+  "premiumPlan": "高级套餐",
+  "proPlan": "专业套餐",
+  "sevenDays": "7天",
+  "fourteenDays": "14天",
+  "thirtyDays": "30天",
+  "unlimitedPlanning": "无限规划",
+  "fullMapAccess": "完整地图访问",
+  "smartAiSuggestions": "智能 AI 建议",
+  "premiumFeatures": "高级功能",
+  "prioritySupport": "优先支持",
+  "plan": "套餐",
+  "tripAlbums": "旅行相册",
+  "newAlbum": "新相册",
+  "createNewAlbum": "创建新相册",
+  "albumName": "相册名称",
+  "albumNameHint": "例如：Hanoi Adventures",
+  "description": "描述",
+  "publicAlbum": "公开相册",
+  "albumCreated": "相册已创建！",
+  "noAlbumsYet": "还没有相册",
+  "createFirstAlbum": "创建您的第一个相册",
+  "createAlbum": "创建相册",
+  "untitledAlbum": "未命名相册",
+  "tripCamera": "旅行相机",
+  "savePhoto": "保存照片",
+  "caption": "说明文字",
+  "captionHint": "写点关于这张照片的内容……",
+  "photoLocationHint": "例如：Da Lat, Vietnam",
+  "cameraSource": "相机",
+  "gallerySource": "图库",
+  "mustLoginUploadPhotos": "上传照片前必须先登录。",
+  "photoReadyUploadUnavailable": "照片已准备好。后端上传暂不可用。",
+  "photoSaveFailed": "无法保存照片。请重试。",
+  "photoSaveFailedWithMessage": "无法保存照片：{message}",
+  "@photoSaveFailedWithMessage": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "tripCameraPermissionDenied": "权限被拒绝。请允许访问 {source} 后重试。",
+  "@tripCameraPermissionDenied": {
+    "placeholders": {
+      "source": {}
+    }
+  },
+  "couldNotOpenSource": "无法打开 {source}。{message}",
+  "@couldNotOpenSource": {
+    "placeholders": {
+      "source": {},
+      "message": {}
+    }
+  },
+  "couldNotSelectPhoto": "无法选择照片。请重试。",
+  "viewAlbums": "查看相册",
+  "readyCaptureMoment": "准备好记录这一刻了吗？",
+  "tapOpenCamera": "点击下方打开相机",
+  "openCamera": "打开相机",
+  "uploadFromGallery": "从图库上传",
+  "photoUploadBackendInfo": "当后端添加相册存储后将启用照片上传",
+  "emergencySupport": "紧急支持",
+  "playingPhrase": "正在播放：{phrase}",
+  "@playingPhrase": {
+    "placeholders": {
+      "phrase": {}
+    }
+  },
+  "quickTalk": "快速用语",
+  "emergencyContacts": "紧急联系人",
+  "emergency": "紧急",
+  "police": "警察",
+  "fire": "消防",
+  "ambulance": "救护车",
+  "general": "通用",
+  "medical": "医疗",
+  "incident": "事件",
+  "security": "安全",
+  "navigation": "导航",
+  "communication": "沟通",
+  "call": "呼叫",
+  "quickTips": "快速提示",
+  "tipHotelAddress": "请始终携带越南语酒店地址。",
+  "tipPhoneBattery": "出门前检查手机电量。",
+  "tipSaveEmergencyContacts": "在手机中保存紧急联系人。",
+  "phraseHelpMe": "请帮帮我！",
+  "phraseHospital": "最近的医院在哪里？",
+  "phraseLostWalletPassport": "我的钱包/护照丢了。",
+  "phraseCallPolice": "我需要报警。",
+  "phraseLost": "我迷路了。",
+  "phraseSpeakEnglish": "您会说英语吗？",
+  "aboutSMate": "关于 S-Mate",
+  "aboutSMateDescription": "S-Mate 是您的一站式旅行伙伴，旨在让每段旅程顺畅而难忘。",
+  "aiTripPlanning": "AI 旅行规划",
+  "aiTripPlanningDescription": "由 AI 生成个性化行程。只需输入目的地、日期和偏好。",
+  "interactiveMaps": "互动地图",
+  "interactiveMapsDescription": "通过实时地图、附近地点和导航支持探索目的地。",
+  "assistant247": "24/7 AI 助手",
+  "assistant247Description": "即时获得有关本地习俗、翻译、餐厅和旅行贴士的答案。",
+  "tripAlbumsFeatureDescription": "用照片和相册记录并整理您的旅行回忆。",
+  "emergencySupportDescription": "在任何情况下访问紧急联系人、快速用语和安全提示。",
+  "smartTips": "智能提示",
+  "smartTipsDescription": "根据您的计划和目的地获得个性化旅行建议。",
+  "getStarted": "开始",
+  "welcomeToSMate": "欢迎使用 S-Mate",
+  "introSubtitle": "帮助您发现、规划并体验难忘旅程的智能伙伴",
+  "smartItineraries": "智能行程",
+  "exploreDestinations": "探索目的地",
+  "instantAnswers": "即时回答",
+  "saveMemories": "保存回忆",
+  "localLaws": "本地法律",
+  "staySafe": "保持安全",
+  "personalized": "个性化",
+  "learnMore": "了解更多",
+  "copyright": "© 2026 S-Mate。保留所有权利。",
+  "validationRequiredField": "请输入{fieldName}",
+  "@validationRequiredField": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "validationEmailRequired": "请输入您的电子邮件",
+  "validationEmailInvalid": "请输入有效的电子邮件地址",
+  "validationPasswordRequired": "请输入您的密码",
+  "validationPasswordMinLength": "密码至少需要 {min} 个字符",
+  "@validationPasswordMinLength": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "validationPasswordTooLong": "密码太长",
+  "validationPasswordComplexity": "密码必须包含大写字母、数字和特殊字符",
+  "validationConfirmPasswordRequired": "请确认您的密码",
+  "validationPasswordsDoNotMatch": "密码不匹配",
+  "validationNumberInvalid": "{fieldName}必须是有效数字",
+  "@validationNumberInvalid": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "validationNumberNegative": "{fieldName}不能为负数",
+  "@validationNumberNegative": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "validationMinLength": "{fieldName}至少需要 {min} 个字符",
+  "@validationMinLength": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      },
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "validationMaxLength": "{fieldName}必须少于 {max} 个字符",
+  "@validationMaxLength": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "validationPhoneRequired": "请输入电话号码",
+  "validationPhoneInvalid": "电话号码无效",
+  "validationBudgetTooLow": "预算太低",
+  "validationUsernameRequired": "请输入用户名",
+  "validationUsernameMinLength": "用户名至少需要 {min} 个字符",
+  "@validationUsernameMinLength": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "validationUsernameTooLong": "用户名太长",
+  "validationUsernameInvalid": "用户名只能包含字母、数字和下划线",
+  "validationDescriptionMaxLength": "描述必须少于 {maxLength} 个字符",
+  "@validationDescriptionMaxLength": {
+    "placeholders": {
+      "maxLength": {
+        "type": "int"
+      }
+    }
+  },
+  "continueTrip": "继续旅行"
+}

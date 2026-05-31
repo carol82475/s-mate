@@ -1,0 +1,534 @@
+{
+  "@@locale": "en",
+  "vietnam": "Vietnam",
+  "appName": "S-Mate",
+  "login": "Login",
+  "register": "Register",
+  "email": "Email",
+  "emailHint": "you@example.com",
+  "password": "Password",
+  "home": "Home",
+  "profile": "Profile",
+  "tripPlanner": "Trip planner",
+  "generateItinerary": "Generate itinerary",
+  "destination": "Destination",
+  "budget": "Budget",
+  "peopleCount": "People count",
+  "startDate": "Start date",
+  "endDate": "End date",
+  "save": "Save",
+  "cancel": "Cancel",
+  "logout": "Logout",
+  "notifications": "Notifications",
+  "settings": "Settings",
+  "language": "Language",
+  "loading": "Loading",
+  "error": "Error",
+  "success": "Success",
+  "retry": "Retry",
+  "myTrip": "My Trip",
+  "scan": "Scan",
+  "map": "Map",
+  "aiChat": "AI Chat",
+  "all": "All",
+  "upcoming": "Upcoming",
+  "inProgress": "In Progress",
+  "completed": "Completed",
+  "cancelled": "Cancelled",
+  "couldNotLoadTrips": "Could not load trips",
+  "couldNotLoadTripsMessage": "We could not load your trips right now. Please try again.",
+  "tryAgain": "Try Again",
+  "noTripsYet": "No trips yet",
+  "noTripsYetMessage": "Create your first AI itinerary and it will appear here.",
+  "noTripsFoundForFilter": "No trips found for this filter",
+  "createNewTrip": "Create New Trip",
+  "destinationPending": "Destination pending",
+  "defaultTripName": "{destination} trip",
+  "@defaultTripName": {
+    "placeholders": {
+      "destination": {}
+    }
+  },
+  "budgetValue": "Budget: {value}",
+  "@budgetValue": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "close": "Close",
+  "back": "Back",
+  "create": "Create",
+  "update": "Update",
+  "edit": "Edit",
+  "done": "Done",
+  "customize": "Customize",
+  "openMap": "Open Map",
+  "createTrip": "Create Trip",
+  "welcomeBackTraveler": "Welcome back, Traveler!",
+  "planNextAdventure": "Plan your next adventure",
+  "itineraryReminder": "Itinerary Reminder",
+  "nextActivitySoon": "Your next activity is coming soon.",
+  "mapUpdate": "Map Update",
+  "nearbyRecommendationsReady": "Nearby recommendations are ready to explore.",
+  "albumReminder": "Album Reminder",
+  "addTodaysPhotos": "Add today's photos to your trip album.",
+  "timeAgoHours": "{hours}h ago",
+  "@timeAgoHours": {
+    "placeholders": {
+      "hours": {}
+    }
+  },
+  "timeAgoDays": "{days}d ago",
+  "@timeAgoDays": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "planYourFirstTrip": "Plan Your First Trip",
+  "chooseDestination": "Choose your destination",
+  "newStatus": "New",
+  "action": "Action",
+  "generateTrip": "Generate Trip",
+  "generateTripDescription": "Create a new AI itinerary from your dates and budget.",
+  "currentTrip": "Current Trip",
+  "currentTrips": "Current Trips",
+  "viewMyTrips": "View My Trips",
+  "viewItinerary": "View Itinerary",
+  "popularDestinations": "Popular Destinations",
+  "welcomeBack": "Welcome Back",
+  "createAccount": "Create Account",
+  "signInContinueJourney": "Sign in to continue your journey",
+  "signUpStartAdventure": "Sign up to start planning your next adventure",
+  "loginSuccessful": "Login successful!",
+  "accountCreatedSuccessfully": "Account created successfully!",
+  "resetPassword": "Reset Password",
+  "resetPasswordInstructions": "Enter your email and we will send you a reset link.",
+  "sendResetLink": "Send Reset Link",
+  "passwordResetOtpSent": "Password reset OTP sent!",
+  "fullName": "Full Name",
+  "fullNameHint": "John Doe",
+  "location": "Location",
+  "locationHint": "San Francisco, USA",
+  "forgotPassword": "Forgot password?",
+  "signUp": "Sign Up",
+  "dontHaveAccount": "Don't have an account? ",
+  "alreadyHaveAccount": "Already have an account? ",
+  "yourName": "your name",
+  "yourLocation": "your location",
+  "displayName": "Display Name",
+  "editProfile": "Edit Profile",
+  "profileUpdated": "Profile updated!",
+  "saveChanges": "Save Changes",
+  "selectLanguage": "Select Language",
+  "languageEnglish": "English",
+  "languageVietnamese": "Tiếng Việt",
+  "languageFrench": "Français",
+  "languageGerman": "Deutsch",
+  "languageKorean": "한국어",
+  "languageChinese": "中文",
+  "languageChangedTo": "Language changed to {language}",
+  "@languageChangedTo": {
+    "placeholders": {
+      "language": {}
+    }
+  },
+  "notificationsEnabled": "Notifications enabled",
+  "notificationsDisabled": "Notifications disabled",
+  "privacy": "Privacy",
+  "privacySetting": "Privacy Setting",
+  "privacySetTo": "Privacy set to {privacy}",
+  "@privacySetTo": {
+    "placeholders": {
+      "privacy": {}
+    }
+  },
+  "changePassword": "Change Password",
+  "newPassword": "New Password",
+  "passwordUpdatedSuccessfully": "Password updated successfully!",
+  "updatePassword": "Update Password",
+  "failedSignOut": "Failed to sign out. Please try again.",
+  "signOut": "Sign Out",
+  "signOutConfirmation": "Are you sure you want to sign out?",
+  "traveler": "Traveler",
+  "unknown": "Unknown",
+  "unknownDestination": "Unknown destination",
+  "countries": "Countries",
+  "trips": "Trips",
+  "locations": "Locations",
+  "days": "Days",
+  "tripHistory": "Trip History",
+  "enabled": "Enabled",
+  "disabled": "Disabled",
+  "public": "Public",
+  "friendsOnly": "Friends Only",
+  "private": "Private",
+  "planned": "Planned",
+  "unknownTrip": "Unknown trip",
+  "aiTripPlanner": "AI Trip Planner",
+  "planYourJourney": "Plan Your Journey",
+  "aiCreatePerfectItinerary": "Let AI create the perfect itinerary",
+  "selectDate": "Select date",
+  "pleaseSelectDates": "Please select start and end dates",
+  "endDateAfterStartDate": "End date must be after start date",
+  "tripGeneratedSuccessfully": "Trip generated successfully!",
+  "generateTripFailed": "Could not generate trip. Please try again.",
+  "aiGeneratedTrip": "AI-generated trip",
+  "fallbackItineraryUsed": "Fallback itinerary used",
+  "budgetUsd": "Budget (USD)",
+  "enterYourBudget": "Enter your budget",
+  "numberOfTravelers": "Number of Travelers",
+  "travelPreferences": "Travel Preferences",
+  "additionalPreferences": "Additional Preferences",
+  "additionalPreferencesHint": "Tell us more about what you like (e.g., hidden gems, local markets, late starts...)",
+  "generating": "Generating...",
+  "generatingTrip": "Generating trip...",
+  "generateAiItinerary": "Generate AI Itinerary",
+  "soloTraveler": "Solo (1 person)",
+  "coupleTravelers": "Couple (2 people)",
+  "smallGroupTravelers": "Small Group (3-5)",
+  "largeGroupTravelers": "Large Group (6+)",
+  "cultural": "Cultural",
+  "adventure": "Adventure",
+  "relaxation": "Relaxation",
+  "food": "Food",
+  "nature": "Nature",
+  "shopping": "Shopping",
+  "tripDay": "Trip Day",
+  "tripItinerary": "Trip Itinerary",
+  "tripSavedSuccessfully": "Trip saved successfully!",
+  "newActivity": "New Activity",
+  "customActivity": "Custom activity",
+  "editDayTitle": "Edit Day Title",
+  "dayTitle": "Day title",
+  "previewYourPlan": "Preview Your Plan",
+  "tripProgress": "Trip Progress",
+  "completedCount": "{completed}/{total} completed",
+  "@completedCount": {
+    "placeholders": {
+      "completed": {},
+      "total": {}
+    }
+  },
+  "confirmSavePlan": "Confirm and Save Plan",
+  "dayNumber": "DAY {day}",
+  "@dayNumber": {
+    "placeholders": {
+      "day": {}
+    }
+  },
+  "addActivity": "Add Activity",
+  "arrivalLocalDiscovery": "Arrival & Local Discovery",
+  "cityLandmarkVisit": "City Landmark Visit",
+  "localFoodExperience": "Local Food Experience",
+  "culturalSite": "Cultural Site",
+  "eveningWalk": "Evening Walk",
+  "adventureExploration": "Adventure & Exploration",
+  "morningExcursion": "Morning Excursion",
+  "lunchBreak": "Lunch Break",
+  "outdoorActivity": "Outdoor Activity",
+  "dinnerRelaxation": "Dinner & Relaxation",
+  "relaxedFinalDay": "Relaxed Final Day",
+  "slowMorning": "Slow Morning",
+  "souvenirShopping": "Souvenir Shopping",
+  "finalPhotoSpot": "Final Photo Spot",
+  "exploringSaigon": "Exploring Saigon",
+  "mockLandmarkDescription": "Start your trip with a famous local landmark.",
+  "mockFoodDescription": "Try authentic local food near the city center.",
+  "mockCulturalDescription": "Visit a museum, temple, or cultural destination.",
+  "mockEveningDescription": "Enjoy the city atmosphere in the evening.",
+  "mockExcursionDescription": "Take a short trip to a nearby attraction.",
+  "mockLunchDescription": "Recharge with a recommended local restaurant.",
+  "mockOutdoorDescription": "Explore nature, markets, or hidden gems.",
+  "mockDinnerDescription": "End your day with a relaxing dinner.",
+  "mockSlowMorningDescription": "Enjoy a slower start with coffee or breakfast.",
+  "mockSouvenirDescription": "Buy souvenirs or visit a local market.",
+  "mockPhotoDescription": "Capture final memories before leaving.",
+  "scanDemoResult": "Demo result shown until the price-check API is available.",
+  "estimatedLocalPrice": "Estimated local price",
+  "detectedPrice": "Detected price",
+  "advice": "Advice",
+  "cameraPreview": "Camera preview",
+  "cameraPreviewHint": "Point at an item, receipt, or menu price.",
+  "checkingPrice": "Checking Price...",
+  "scanItemMenu": "Scan Item or Menu",
+  "takePhoto": "Take Photo",
+  "upload": "Upload",
+  "priceCheckInfo": "Price check compares detected prices with local ranges when the backend scanner is connected.",
+  "scannedItem": "Scanned item",
+  "pending": "Pending",
+  "unknownWarning": "Unknown",
+  "scanAdviceDefault": "Review the price with a local reference before paying.",
+  "menuItem": "Menu item",
+  "apiPending": "API pending",
+  "demo": "Demo",
+  "scanBackendPending": "Scanner backend is not connected yet. Use this layout as the future result surface.",
+  "usingOfflinePlaces": "Using offline places.",
+  "zoomPercent": "Zoom: {percent}%",
+  "@zoomPercent": {
+    "placeholders": {
+      "percent": {}
+    }
+  },
+  "centeringLocation": "Centering on your location...",
+  "searchPlaces": "Search places...",
+  "mapExplorer": "Map Explorer",
+  "myLocation": "My Location",
+  "search": "Search",
+  "zoomIn": "Zoom In",
+  "zoomOut": "Zoom Out",
+  "nearbyPlaces": "Nearby Places",
+  "foundCount": "{count} found",
+  "@foundCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "noPlacesFound": "No places found",
+  "place": "Place",
+  "unknownPlace": "Unknown Place",
+  "nearby": "Nearby",
+  "coffeeShop": "Coffee Shop",
+  "vietnameseRestaurant": "Vietnamese Restaurant",
+  "market": "Market",
+  "aiTravelAssistant": "AI Travel Assistant",
+  "alwaysHereToHelp": "Always here to help",
+  "askMeAnything": "Ask me anything...",
+  "suggestedQuestions": "Suggested Questions",
+  "assistantGreeting": "Hello! I'm your AI travel assistant. I can help you with local recommendations, translations, cultural tips, and travel questions. How can I help you today?",
+  "assistantFallback": "I can help with that. Can you provide more details?",
+  "assistantConnectionError": "Sorry, I could not connect to the AI assistant.",
+  "suggestionBestTimeHaLong": "What's the best time to visit Ha Long Bay?",
+  "suggestionVietnameseRestaurants": "Recommend authentic Vietnamese restaurants",
+  "suggestionHanoiToSapa": "How do I get from Hanoi to Sapa?",
+  "suggestionLocalCustoms": "What are local customs I should know?",
+  "completeYourPurchase": "Complete Your Purchase",
+  "paymentInformation": "Payment Information",
+  "choosePlanUnlock": "Choose a plan and unlock your personalized travel experience",
+  "mostPopular": "Most Popular",
+  "perTrip": " /trip",
+  "selected": "Selected",
+  "selectPlan": "Select Plan",
+  "continueToPayment": "Continue to Payment - {price}",
+  "@continueToPayment": {
+    "placeholders": {
+      "price": {}
+    }
+  },
+  "purchaseSuccessful": "Purchase Successful!",
+  "planActiveEnjoyTrip": "Your plan is now active. Enjoy your trip!",
+  "openItinerary": "Open Itinerary",
+  "goToHome": "Go to Home",
+  "required": "Required",
+  "cardNumber": "Card Number",
+  "cardholderName": "Cardholder Name",
+  "cardholderNameHint": "John Doe",
+  "expiryDate": "Expiry Date",
+  "expiryDateHint": "MM/YY",
+  "cvv": "CVV",
+  "demoPaymentWarning": "This is a demo payment. Do not enter real card information.",
+  "processing": "Processing...",
+  "completePurchase": "Complete Purchase - {price}",
+  "@completePurchase": {
+    "placeholders": {
+      "price": {}
+    }
+  },
+  "basicPlan": "Basic Plan",
+  "premiumPlan": "Premium Plan",
+  "proPlan": "Pro Plan",
+  "sevenDays": "7 Days",
+  "fourteenDays": "14 Days",
+  "thirtyDays": "30 Days",
+  "unlimitedPlanning": "Unlimited Planning",
+  "fullMapAccess": "Full Map Access",
+  "smartAiSuggestions": "Smart AI Suggestions",
+  "premiumFeatures": "Premium Features",
+  "prioritySupport": "Priority Support",
+  "plan": "Plan",
+  "tripAlbums": "Trip Albums",
+  "newAlbum": "New Album",
+  "createNewAlbum": "Create New Album",
+  "albumName": "Album Name",
+  "albumNameHint": "e.g., Hanoi Adventures",
+  "description": "Description",
+  "publicAlbum": "Public Album",
+  "albumCreated": "Album created!",
+  "noAlbumsYet": "No Albums Yet",
+  "createFirstAlbum": "Create your first album",
+  "createAlbum": "Create Album",
+  "untitledAlbum": "Untitled Album",
+  "tripCamera": "Trip Camera",
+  "savePhoto": "Save Photo",
+  "caption": "Caption",
+  "captionHint": "Write something about this photo...",
+  "photoLocationHint": "e.g., Da Lat, Vietnam",
+  "cameraSource": "camera",
+  "gallerySource": "gallery",
+  "mustLoginUploadPhotos": "You must login before uploading photos.",
+  "photoReadyUploadUnavailable": "Photo ready. Backend upload is not available yet.",
+  "photoSaveFailed": "Photo could not be saved. Please try again.",
+  "photoSaveFailedWithMessage": "Photo could not be saved: {message}",
+  "@photoSaveFailedWithMessage": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "tripCameraPermissionDenied": "Permission denied. Please allow {source} access and try again.",
+  "@tripCameraPermissionDenied": {
+    "placeholders": {
+      "source": {}
+    }
+  },
+  "couldNotOpenSource": "Could not open {source}. {message}",
+  "@couldNotOpenSource": {
+    "placeholders": {
+      "source": {},
+      "message": {}
+    }
+  },
+  "couldNotSelectPhoto": "Could not select photo. Please try again.",
+  "viewAlbums": "View Albums",
+  "readyCaptureMoment": "Ready to capture the moment?",
+  "tapOpenCamera": "Tap below to open your camera",
+  "openCamera": "Open Camera",
+  "uploadFromGallery": "Upload from Gallery",
+  "photoUploadBackendInfo": "Photo upload will be enabled when the backend adds album storage",
+  "emergencySupport": "Emergency Support",
+  "playingPhrase": "Playing: {phrase}",
+  "@playingPhrase": {
+    "placeholders": {
+      "phrase": {}
+    }
+  },
+  "quickTalk": "Quick Talk",
+  "emergencyContacts": "Emergency Contacts",
+  "emergency": "Emergency",
+  "police": "Police",
+  "fire": "Fire",
+  "ambulance": "Ambulance",
+  "general": "General",
+  "medical": "Medical",
+  "incident": "Incident",
+  "security": "Security",
+  "navigation": "Navigation",
+  "communication": "Communication",
+  "call": "Call",
+  "quickTips": "Quick Tips",
+  "tipHotelAddress": "Always bring your hotel address in Vietnamese.",
+  "tipPhoneBattery": "Check your phone battery before going out.",
+  "tipSaveEmergencyContacts": "Save emergency contacts in your phone.",
+  "phraseHelpMe": "Please help me!",
+  "phraseHospital": "Where is the nearest hospital?",
+  "phraseLostWalletPassport": "I lost my wallet/passport.",
+  "phraseCallPolice": "I need to call the police.",
+  "phraseLost": "I am lost.",
+  "phraseSpeakEnglish": "Do you speak English?",
+  "aboutSMate": "About S-Mate",
+  "aboutSMateDescription": "S-Mate is your all-in-one travel companion designed to make every journey seamless and memorable.",
+  "aiTripPlanning": "AI Trip Planning",
+  "aiTripPlanningDescription": "Generate personalized itineraries powered by AI. Just enter your destination, dates, and preferences.",
+  "interactiveMaps": "Interactive Maps",
+  "interactiveMapsDescription": "Explore destinations with real-time maps, nearby places, and navigation support.",
+  "assistant247": "24/7 AI Assistant",
+  "assistant247Description": "Get instant answers about local customs, translations, restaurants, and travel tips.",
+  "tripAlbumsFeatureDescription": "Capture and organize your travel memories with photos and albums.",
+  "emergencySupportDescription": "Access emergency contacts, quick phrases, and safety tips for any situation.",
+  "smartTips": "Smart Tips",
+  "smartTipsDescription": "Get personalized travel suggestions for your plans and destination.",
+  "getStarted": "Get Started",
+  "welcomeToSMate": "Welcome to S-Mate",
+  "introSubtitle": "Your intelligent companion for discovering, planning, and experiencing unforgettable journeys",
+  "smartItineraries": "Smart itineraries",
+  "exploreDestinations": "Explore destinations",
+  "instantAnswers": "Instant answers",
+  "saveMemories": "Save memories",
+  "localLaws": "Local Laws",
+  "staySafe": "Stay safe",
+  "personalized": "Personalized",
+  "learnMore": "Learn More",
+  "copyright": "© 2026 S-Mate. All rights reserved.",
+  "validationRequiredField": "Please enter {fieldName}",
+  "@validationRequiredField": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "validationEmailRequired": "Please enter your email",
+  "validationEmailInvalid": "Enter a valid email address",
+  "validationPasswordRequired": "Please enter your password",
+  "validationPasswordMinLength": "Password must be at least {min} characters",
+  "@validationPasswordMinLength": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "validationPasswordTooLong": "Password is too long",
+  "validationPasswordComplexity": "Password must contain uppercase, number, and special character",
+  "validationConfirmPasswordRequired": "Please confirm your password",
+  "validationPasswordsDoNotMatch": "Passwords do not match",
+  "validationNumberInvalid": "{fieldName} must be a valid number",
+  "@validationNumberInvalid": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "validationNumberNegative": "{fieldName} cannot be negative",
+  "@validationNumberNegative": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "validationMinLength": "{fieldName} must be at least {min} characters",
+  "@validationMinLength": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      },
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "validationMaxLength": "{fieldName} must be less than {max} characters",
+  "@validationMaxLength": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "validationPhoneRequired": "Please enter phone number",
+  "validationPhoneInvalid": "Invalid phone number",
+  "validationBudgetTooLow": "Budget too low",
+  "validationUsernameRequired": "Please enter username",
+  "validationUsernameMinLength": "Username must be at least {min} characters",
+  "@validationUsernameMinLength": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "validationUsernameTooLong": "Username is too long",
+  "validationUsernameInvalid": "Username can only contain letters, numbers, and underscore",
+  "validationDescriptionMaxLength": "Description must be less than {maxLength} characters",
+  "@validationDescriptionMaxLength": {
+    "placeholders": {
+      "maxLength": {
+        "type": "int"
+      }
+    }
+  },
+  "continueTrip": "Continue Trip"
+}

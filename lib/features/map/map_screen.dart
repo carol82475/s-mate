@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 import '../../core/api_client.dart';
 import '../../core/theme.dart';
+import '../../l10n/app_localizations.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -28,6 +29,8 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> _loadNearbyPlaces() async {
+    final l10n = AppLocalizations.of(context);
+
     try {
       setState(() => _isLoading = true);
 
@@ -47,12 +50,12 @@ class _MapScreenState extends State<MapScreen> {
     } catch (e) {
       debugPrint('LOAD NEARBY ERROR: $e');
 
-      _locations = _fallbackLocations;
+      _locations = _fallbackLocations(l10n);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Using offline places. $e'),
+            content: Text(l10n.usingOfflinePlaces),
             backgroundColor: AppTheme.destructive,
           ),
         );
@@ -105,18 +108,18 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Map<String, dynamic> _normalizePlace(Map<String, dynamic> item) {
-    final category = item['category']?.toString() ??
-        item['type']?.toString() ??
-        'Place';
+    final l10n = AppLocalizations.of(context);
+    final category =
+        item['category']?.toString() ?? item['type']?.toString() ?? l10n.place;
 
     return {
       'id': item['id']?.toString() ??
           item['place_id']?.toString() ??
           DateTime.now().microsecondsSinceEpoch.toString(),
-      'name': item['name']?.toString() ?? 'Unknown Place',
+      'name': item['name']?.toString() ?? l10n.unknownPlace,
       'type': category,
       'rating': item['rating'] ?? 4.5,
-      'distance': item['distance']?.toString() ?? 'Nearby',
+      'distance': item['distance']?.toString() ?? l10n.nearby,
       'icon': _iconForCategory(category),
     };
   }
@@ -146,12 +149,12 @@ class _MapScreenState extends State<MapScreen> {
     return Icons.place;
   }
 
-  List<Map<String, dynamic>> get _fallbackLocations {
+  List<Map<String, dynamic>> _fallbackLocations(AppLocalizations l10n) {
     return [
       {
         'id': '1',
         'name': 'The Coffee House',
-        'type': 'Coffee Shop',
+        'type': l10n.coffeeShop,
         'rating': 4.8,
         'distance': '0.3 km',
         'icon': Icons.coffee,
@@ -159,7 +162,7 @@ class _MapScreenState extends State<MapScreen> {
       {
         'id': '2',
         'name': 'Pho 24',
-        'type': 'Vietnamese Restaurant',
+        'type': l10n.vietnameseRestaurant,
         'rating': 4.9,
         'distance': '0.7 km',
         'icon': Icons.restaurant,
@@ -167,7 +170,7 @@ class _MapScreenState extends State<MapScreen> {
       {
         'id': '3',
         'name': 'Ben Thanh Market',
-        'type': 'Market',
+        'type': l10n.market,
         'rating': 4.6,
         'distance': '1.1 km',
         'icon': Icons.storefront,
@@ -187,10 +190,11 @@ class _MapScreenState extends State<MapScreen> {
 
   void _zoomIn() {
     setState(() => _zoomLevel = (_zoomLevel + 0.2).clamp(0.5, 3.0));
+    final l10n = AppLocalizations.of(context);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Zoom: ${(_zoomLevel * 100).toInt()}%'),
+        content: Text(l10n.zoomPercent((_zoomLevel * 100).toInt())),
         duration: const Duration(milliseconds: 600),
       ),
     );
@@ -198,10 +202,11 @@ class _MapScreenState extends State<MapScreen> {
 
   void _zoomOut() {
     setState(() => _zoomLevel = (_zoomLevel - 0.2).clamp(0.5, 3.0));
+    final l10n = AppLocalizations.of(context);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Zoom: ${(_zoomLevel * 100).toInt()}%'),
+        content: Text(l10n.zoomPercent((_zoomLevel * 100).toInt())),
         duration: const Duration(milliseconds: 600),
       ),
     );
@@ -211,9 +216,9 @@ class _MapScreenState extends State<MapScreen> {
     _loadNearbyPlaces();
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Centering on your location...'),
-        duration: Duration(seconds: 1),
+      SnackBar(
+        content: Text(AppLocalizations.of(context).centeringLocation),
+        duration: const Duration(seconds: 1),
       ),
     );
   }
@@ -227,6 +232,7 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     final selectedName = _selectedPlaceName();
+    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
       backgroundColor: AppTheme.background,
@@ -235,19 +241,19 @@ class _MapScreenState extends State<MapScreen> {
             ? TextField(
                 controller: _searchCtrl,
                 autofocus: true,
-                decoration: const InputDecoration(
-                  hintText: 'Search places...',
+                decoration: InputDecoration(
+                  hintText: l10n.searchPlaces,
                   border: InputBorder.none,
-                  hintStyle: TextStyle(color: AppTheme.textMuted),
+                  hintStyle: const TextStyle(color: AppTheme.textMuted),
                 ),
                 onSubmitted: _searchPlaces,
               )
-            : const Text('Map Explorer'),
+            : Text(l10n.mapExplorer),
         actions: [
           IconButton(
             icon: const Icon(Icons.my_location),
             onPressed: _centerLocation,
-            tooltip: 'My Location',
+            tooltip: l10n.myLocation,
           ),
           IconButton(
             icon: Icon(_showSearch ? Icons.close : Icons.search),
@@ -265,7 +271,7 @@ class _MapScreenState extends State<MapScreen> {
                 _loadNearbyPlaces();
               }
             },
-            tooltip: 'Search',
+            tooltip: l10n.search,
           ),
         ],
       ),
@@ -342,19 +348,19 @@ class _MapScreenState extends State<MapScreen> {
                         _MapButton(
                           icon: Icons.add,
                           onTap: _zoomIn,
-                          tooltip: 'Zoom In',
+                          tooltip: l10n.zoomIn,
                         ),
                         const SizedBox(height: 8),
                         _MapButton(
                           icon: Icons.remove,
                           onTap: _zoomOut,
-                          tooltip: 'Zoom Out',
+                          tooltip: l10n.zoomOut,
                         ),
                         const SizedBox(height: 8),
                         _MapButton(
                           icon: Icons.navigation_outlined,
                           onTap: _centerLocation,
-                          tooltip: 'My Location',
+                          tooltip: l10n.myLocation,
                         ),
                       ],
                     ),
@@ -372,10 +378,10 @@ class _MapScreenState extends State<MapScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     children: [
-                      const Expanded(
+                      Expanded(
                         child: Text(
-                          'Nearby Places',
-                          style: TextStyle(
+                          l10n.nearbyPlaces,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
@@ -389,7 +395,7 @@ class _MapScreenState extends State<MapScreen> {
                         )
                       else
                         Text(
-                          '${_locations.length} found',
+                          l10n.foundCount(_locations.length),
                           style: const TextStyle(
                             fontSize: 12,
                             color: AppTheme.textMuted,
@@ -403,10 +409,11 @@ class _MapScreenState extends State<MapScreen> {
                   child: _isLoading
                       ? const Center(child: CircularProgressIndicator())
                       : _locations.isEmpty
-                          ? const Center(
+                          ? Center(
                               child: Text(
-                                'No places found',
-                                style: TextStyle(color: AppTheme.textMuted),
+                                l10n.noPlacesFound,
+                                style:
+                                    const TextStyle(color: AppTheme.textMuted),
                               ),
                             )
                           : RefreshIndicator(
@@ -570,11 +577,11 @@ class _PulsingDotState extends State<_PulsingDot>
         height: 20,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.blue.withOpacity(_anim.value),
+          color: Colors.blue.withValues(alpha: _anim.value),
           border: Border.all(color: Colors.white, width: 2),
           boxShadow: [
             BoxShadow(
-              color: Colors.blue.withOpacity(0.4),
+              color: Colors.blue.withValues(alpha: 0.4),
               blurRadius: 8,
               spreadRadius: 4,
             ),
@@ -611,7 +618,7 @@ class _MapButton extends StatelessWidget {
             border: Border.all(color: AppTheme.border),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: 4,
               ),
             ],
@@ -622,3 +629,4 @@ class _MapButton extends StatelessWidget {
     );
   }
 }
+

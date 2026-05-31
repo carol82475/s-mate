@@ -1,39 +1,46 @@
 {
   "format": 1,
   "restore": {
-    "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Api\\TravelDecisionEngine.Api.csproj": {}
+    "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Api\\TravelDecisionEngine.Api.csproj": {}
   },
   "projects": {
-    "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Api\\TravelDecisionEngine.Api.csproj": {
+    "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Api\\TravelDecisionEngine.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Api\\TravelDecisionEngine.Api.csproj",
+        "projectUniqueName": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Api\\TravelDecisionEngine.Api.csproj",
         "projectName": "TravelDecisionEngine.Api",
-        "projectPath": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Api\\TravelDecisionEngine.Api.csproj",
+        "projectPath": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Api\\TravelDecisionEngine.Api.csproj",
         "packagesPath": "C:\\Users\\thoai\\.nuget\\packages\\",
-        "outputPath": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Api\\obj\\",
+        "outputPath": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Api\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\thoai\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\thoai\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
+            "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Application\\TravelDecisionEngine.Application.csproj": {
-                "projectPath": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Application\\TravelDecisionEngine.Application.csproj"
+              "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Application\\TravelDecisionEngine.Application.csproj": {
+                "projectPath": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Application\\TravelDecisionEngine.Application.csproj"
               },
-              "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\TravelDecisionEngine.Domain.csproj": {
-                "projectPath": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\TravelDecisionEngine.Domain.csproj"
+              "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\TravelDecisionEngine.Domain.csproj": {
+                "projectPath": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\TravelDecisionEngine.Domain.csproj"
               },
-              "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Infrastructure\\TravelDecisionEngine.Infrastructure.csproj": {
-                "projectPath": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Infrastructure\\TravelDecisionEngine.Infrastructure.csproj"
+              "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Infrastructure\\TravelDecisionEngine.Infrastructure.csproj": {
+                "projectPath": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Infrastructure\\TravelDecisionEngine.Infrastructure.csproj"
               }
             }
           }
@@ -47,10 +54,12 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net8.0": {
+          "framework": "net8.0",
           "targetAlias": "net8.0",
           "dependencies": {
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
@@ -87,34 +96,41 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.421/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Application\\TravelDecisionEngine.Application.csproj": {
+    "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Application\\TravelDecisionEngine.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Application\\TravelDecisionEngine.Application.csproj",
+        "projectUniqueName": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Application\\TravelDecisionEngine.Application.csproj",
         "projectName": "TravelDecisionEngine.Application",
-        "projectPath": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Application\\TravelDecisionEngine.Application.csproj",
+        "projectPath": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Application\\TravelDecisionEngine.Application.csproj",
         "packagesPath": "C:\\Users\\thoai\\.nuget\\packages\\",
-        "outputPath": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Application\\obj\\",
+        "outputPath": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Application\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\thoai\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\thoai\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
+            "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\TravelDecisionEngine.Domain.csproj": {
-                "projectPath": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\TravelDecisionEngine.Domain.csproj"
+              "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\TravelDecisionEngine.Domain.csproj": {
+                "projectPath": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\TravelDecisionEngine.Domain.csproj"
               }
             }
           }
@@ -128,10 +144,12 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net8.0": {
+          "framework": "net8.0",
           "targetAlias": "net8.0",
           "dependencies": {
             "Microsoft.Extensions.DependencyInjection.Abstractions": {
@@ -163,30 +181,37 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.421/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\TravelDecisionEngine.Domain.csproj": {
+    "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\TravelDecisionEngine.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\TravelDecisionEngine.Domain.csproj",
+        "projectUniqueName": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\TravelDecisionEngine.Domain.csproj",
         "projectName": "TravelDecisionEngine.Domain",
-        "projectPath": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\TravelDecisionEngine.Domain.csproj",
+        "projectPath": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\TravelDecisionEngine.Domain.csproj",
         "packagesPath": "C:\\Users\\thoai\\.nuget\\packages\\",
-        "outputPath": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\obj\\",
+        "outputPath": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\thoai\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\thoai\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
+            "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {}
           }
@@ -200,10 +225,12 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net8.0": {
+          "framework": "net8.0",
           "targetAlias": "net8.0",
           "imports": [
             "net461",
@@ -221,37 +248,44 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.421/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Infrastructure\\TravelDecisionEngine.Infrastructure.csproj": {
+    "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Infrastructure\\TravelDecisionEngine.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Infrastructure\\TravelDecisionEngine.Infrastructure.csproj",
+        "projectUniqueName": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Infrastructure\\TravelDecisionEngine.Infrastructure.csproj",
         "projectName": "TravelDecisionEngine.Infrastructure",
-        "projectPath": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Infrastructure\\TravelDecisionEngine.Infrastructure.csproj",
+        "projectPath": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Infrastructure\\TravelDecisionEngine.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\thoai\\.nuget\\packages\\",
-        "outputPath": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Infrastructure\\obj\\",
+        "outputPath": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\thoai\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\thoai\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
+            "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Application\\TravelDecisionEngine.Application.csproj": {
-                "projectPath": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Application\\TravelDecisionEngine.Application.csproj"
+              "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Application\\TravelDecisionEngine.Application.csproj": {
+                "projectPath": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Application\\TravelDecisionEngine.Application.csproj"
               },
-              "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\TravelDecisionEngine.Domain.csproj": {
-                "projectPath": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\TravelDecisionEngine.Domain.csproj"
+              "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\TravelDecisionEngine.Domain.csproj": {
+                "projectPath": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Domain\\TravelDecisionEngine.Domain.csproj"
               }
             }
           }
@@ -265,10 +299,12 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net8.0": {
+          "framework": "net8.0",
           "targetAlias": "net8.0",
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
@@ -304,7 +340,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.421/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

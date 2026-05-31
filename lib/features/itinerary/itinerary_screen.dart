@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/api_client.dart';
 import '../../core/theme.dart';
+import '../../core/trip_generation_gate.dart';
+import '../../l10n/app_localizations.dart';
 import '../../shared/models/models.dart';
 
 class ItineraryScreen extends StatefulWidget {
@@ -26,7 +28,6 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
   bool _isEditing = false;
 
   String? _userBudget;
-  String? _userDescription;
   String? _userDestination;
 
   Map<String, dynamic>? _trip;
@@ -36,13 +37,14 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
     super.initState();
 
     _userBudget = widget.extra?['budget']?.toString();
-    _userDescription = widget.extra?['description']?.toString();
     _userDestination = widget.extra?['destination']?.toString();
 
     _loadItinerary();
   }
 
   Future<void> _loadItinerary() async {
+    final l10n = AppLocalizations.of(context);
+
     try {
       setState(() => _isLoading = true);
 
@@ -54,27 +56,36 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
       final response = await ApiClient.get('/trips/${widget.id}');
       final data = response['data'];
 
-      _trip = data;
+      if (data is! Map<String, dynamic>) {
+        _days = [];
+        return;
+      }
 
+      _trip = data;
       final itinerary = data['itinerary'];
 
       if (itinerary is List) {
         _days = itinerary.map<ItineraryDay>((day) {
-          final checkpointsRaw = day['checkpoints'] as List? ?? [];
+          final dayMap = day is Map ? day : const {};
+          final checkpointsRaw = dayMap['checkpoints'] as List? ?? [];
 
           return ItineraryDay(
-            day: day['day'] ?? 1,
-            title: day['title'] ?? 'Trip Day',
+            day: int.tryParse(dayMap['day']?.toString() ?? '') ?? 1,
+            title: dayMap['title']?.toString() ?? l10n.tripDay,
             checkpoints: checkpointsRaw.map<Checkpoint>((cp) {
+              final checkpoint = cp is Map ? cp : const {};
+
               return Checkpoint(
-                time: cp['time']?.toString() ?? '',
-                title: cp['title']?.toString() ?? '',
-                description: cp['description']?.toString() ?? '',
-                completed: cp['completed'] ?? false,
+                time: checkpoint['time']?.toString() ?? '',
+                title: checkpoint['title']?.toString() ?? '',
+                description: checkpoint['description']?.toString() ?? '',
+                completed: checkpoint['completed'] == true,
               );
             }).toList(),
           );
         }).toList();
+      } else {
+        _days = [];
       }
     } catch (e) {
       debugPrint('LOAD ITINERARY ERROR: $e');
@@ -95,17 +106,19 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
   }
 
   void _loadPreviewPlan() {
+    final l10n = AppLocalizations.of(context);
+
     _days = MockData.itineraryDays
         .map(
           (day) => ItineraryDay(
             day: day.day,
-            title: day.title,
+            title: _localizedMockText(day.title, l10n),
             checkpoints: day.checkpoints
                 .map(
                   (cp) => Checkpoint(
                     time: cp.time,
-                    title: cp.title,
-                    description: cp.description,
+                    title: _localizedMockText(cp.title, l10n),
+                    description: _localizedMockText(cp.description, l10n),
                     completed: cp.completed,
                   ),
                 )
@@ -115,24 +128,20 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
         .toList();
 
     if (_userDestination == 'Ho Chi Minh City' && _days.isNotEmpty) {
-      _days[0].title = 'Exploring Saigon';
+      _days[0].title = l10n.exploringSaigon;
     }
 
     setState(() => _isLoading = false);
   }
 
-  int get _total =>
-      _days.fold(0, (s, d) => s + d.checkpoints.length);
+  int get _total => _days.fold(0, (s, d) => s + d.checkpoints.length);
 
   int get _completed => _days.fold(
         0,
-        (s, d) =>
-            s +
-            d.checkpoints.where((c) => c.completed).length,
+        (s, d) => s + d.checkpoints.where((c) => c.completed).length,
       );
 
-  double get _progress =>
-      _total > 0 ? _completed / _total : 0;
+  double get _progress => _total > 0 ? _completed / _total : 0;
 
   Future<void> _toggleCheckpoint(
     int dayIndex,
@@ -141,12 +150,8 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
     if (_isEditing) return;
 
     setState(() {
-      _days[dayIndex]
-              .checkpoints[checkpointIndex]
-              .completed =
-          !_days[dayIndex]
-              .checkpoints[checkpointIndex]
-              .completed;
+      _days[dayIndex].checkpoints[checkpointIndex].completed =
+          !_days[dayIndex].checkpoints[checkpointIndex].completed;
     });
 
     if (widget.id == 'new') return;
@@ -157,9 +162,7 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
         body: {
           'day': _days[dayIndex].day,
           'checkpointIndex': checkpointIndex,
-          'completed': _days[dayIndex]
-              .checkpoints[checkpointIndex]
-              .completed,
+          'completed': _days[dayIndex].checkpoints[checkpointIndex].completed,
         },
       );
     } catch (_) {}
@@ -167,44 +170,52 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
 
   Future<void> _saveTrip() async {
     try {
-      final response = await ApiClient.post(
-        '/trips',
-        body: {
-          'destination': _userDestination,
-          'budget': _userBudget,
-          'description': _userDescription,
-          'itinerary': _days
-              .map(
-                (d) => {
-                  'day': d.day,
-                  'title': d.title,
-                  'checkpoints': d.checkpoints
-                      .map(
-                        (c) => {
-                          'time': c.time,
-                          'title': c.title,
-                          'description': c.description,
-                          'completed': c.completed,
-                        },
-                      )
-                      .toList(),
-                },
-              )
-              .toList(),
-        },
-      );
+      final requestBody = <String, dynamic>{
+        'name': '${_userDestination ?? 'Vietnam'} trip',
+        'destination': _userDestination ?? 'Vietnam',
+        'countryCode': 'VN',
+        'startDate': DateTime.now().toIso8601String().substring(0, 10),
+        'endDate': DateTime.now()
+            .add(Duration(days: _days.length))
+            .toIso8601String()
+            .substring(0, 10),
+        'budget': num.tryParse(_userBudget ?? ''),
+        'peopleCount': 1,
+      };
+      final itineraryExtra = <String, dynamic>{
+        'budget': _userBudget,
+        'destination': _userDestination,
+      };
+      final canGenerate = await TripGenerationGate.canGenerateTrip();
+
+      if (!canGenerate) {
+        if (!mounted) return;
+
+        context.go(
+          '/purchase',
+          extra: {
+            'pendingTripRequest': requestBody,
+            'itineraryExtra': itineraryExtra,
+          },
+        );
+
+        return;
+      }
+
+      final response = await ApiClient.post('/trips', body: requestBody);
 
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Trip saved successfully!'),
+        SnackBar(
+          content: Text(AppLocalizations.of(context).tripSavedSuccessfully),
           backgroundColor: AppTheme.primary,
         ),
       );
 
-      final tripId =
-          response['data']?['id']?.toString() ?? '';
+      final tripId = response['data']?['tripId']?.toString() ??
+          response['data']?['id']?.toString() ??
+          '';
 
       if (tripId.isNotEmpty) {
         context.go('/itinerary/$tripId');
@@ -226,8 +237,8 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
       _days[dayIndex].checkpoints.add(
             Checkpoint(
               time: '14:00',
-              title: 'New Activity',
-              description: 'Custom activity',
+              title: AppLocalizations.of(context).newActivity,
+              description: AppLocalizations.of(context).customActivity,
             ),
           );
     });
@@ -238,13 +249,12 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
     int activityIndex,
   ) {
     setState(() {
-      _days[dayIndex]
-          .checkpoints
-          .removeAt(activityIndex);
+      _days[dayIndex].checkpoints.removeAt(activityIndex);
     });
   }
 
   void _editDay(int dayIndex) {
+    final l10n = AppLocalizations.of(context);
     final ctrl = TextEditingController(
       text: _days[dayIndex].title,
     );
@@ -254,8 +264,7 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
       backgroundColor: AppTheme.cardBg,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
-        borderRadius:
-            BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (_) => Padding(
         padding: EdgeInsets.only(
@@ -267,9 +276,9 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Edit Day Title',
-              style: TextStyle(
+            Text(
+              l10n.editDayTitle,
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
@@ -277,8 +286,8 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
             const SizedBox(height: 16),
             TextField(
               controller: ctrl,
-              decoration: const InputDecoration(
-                labelText: 'Day title',
+              decoration: InputDecoration(
+                labelText: l10n.dayTitle,
               ),
             ),
             const SizedBox(height: 20),
@@ -287,13 +296,12 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    _days[dayIndex].title =
-                        ctrl.text.trim();
+                    _days[dayIndex].title = ctrl.text.trim();
                   });
 
                   Navigator.pop(context);
                 },
-                child: const Text('Save'),
+                child: Text(l10n.save),
               ),
             ),
             const SizedBox(height: 20),
@@ -303,26 +311,26 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
     );
   }
 
-  String get _title {
+  String _title(AppLocalizations l10n) {
     return _trip?['destination']?.toString() ??
         _userDestination ??
-        'Trip Itinerary';
+        l10n.tripItinerary;
   }
 
   @override
   Widget build(BuildContext context) {
     final isNewPlan = widget.id == 'new';
+    final l10n = AppLocalizations.of(context);
+    final title = _title(l10n);
 
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
-        title: Text(_title),
+        title: Text(title),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () =>
-              context.canPop()
-                  ? context.pop()
-                  : context.go('/home'),
+              context.canPop() ? context.pop() : context.go('/home'),
         ),
         actions: [
           IconButton(
@@ -337,13 +345,11 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
                 });
               },
               icon: Icon(
-                _isEditing
-                    ? Icons.check_circle
-                    : Icons.edit,
+                _isEditing ? Icons.check_circle : Icons.edit,
                 size: 18,
               ),
               label: Text(
-                _isEditing ? 'Done' : 'Customize',
+                _isEditing ? l10n.done : l10n.customize,
               ),
             ),
         ],
@@ -358,27 +364,24 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
                   padding: const EdgeInsets.all(16),
                   color: AppTheme.cardBg,
                   child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
                           Expanded(
                             child: Text(
                               isNewPlan
-                                  ? 'Preview Your Plan'
-                                  : 'Trip Progress',
+                                  ? l10n.previewYourPlan
+                                  : l10n.tripProgress,
                               style: const TextStyle(
-                                fontWeight:
-                                    FontWeight.w600,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
                           Text(
-                            '$_completed/$_total completed',
+                            l10n.completedCount(_completed, _total),
                             style: const TextStyle(
-                              color:
-                                  AppTheme.textMuted,
+                              color: AppTheme.textMuted,
                               fontSize: 12,
                             ),
                           ),
@@ -386,15 +389,12 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
                       ),
                       const SizedBox(height: 10),
                       ClipRRect(
-                        borderRadius:
-                            BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(10),
                         child: LinearProgressIndicator(
                           value: _progress,
                           minHeight: 8,
-                          backgroundColor:
-                              AppTheme.accent,
-                          valueColor:
-                              const AlwaysStoppedAnimation(
+                          backgroundColor: AppTheme.accent,
+                          valueColor: const AlwaysStoppedAnimation(
                             AppTheme.primary,
                           ),
                         ),
@@ -405,35 +405,28 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
                           const Icon(
                             Icons.location_on_outlined,
                             size: 14,
-                            color:
-                                AppTheme.textMuted,
+                            color: AppTheme.textMuted,
                           ),
                           const SizedBox(width: 4),
                           Expanded(
                             child: Text(
-                              _title,
+                              title,
                               style: const TextStyle(
                                 fontSize: 12,
-                                color:
-                                    AppTheme.textMuted,
+                                color: AppTheme.textMuted,
                               ),
                             ),
                           ),
                           const Icon(
                             Icons.attach_money,
                             size: 14,
-                            color:
-                                AppTheme.textMuted,
+                            color: AppTheme.textMuted,
                           ),
                           Text(
-                            _userBudget ??
-                                _trip?['budget']
-                                    ?.toString() ??
-                                '-',
+                            _userBudget ?? _trip?['budget']?.toString() ?? '-',
                             style: const TextStyle(
                               fontSize: 12,
-                              color:
-                                  AppTheme.textMuted,
+                              color: AppTheme.textMuted,
                             ),
                           ),
                         ],
@@ -442,43 +435,50 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
                   ),
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    padding:
-                        const EdgeInsets.all(16),
-                    itemCount: _days.length,
-                    itemBuilder: (_, i) {
-                      final day = _days[i];
+                  child: _days.isEmpty
+                      ? Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(24),
+                            child: Text(
+                              l10n.noTripsFoundForFilter,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: AppTheme.textMuted,
+                              ),
+                            ),
+                          ),
+                        )
+                      : ListView.builder(
+                          padding: const EdgeInsets.all(16),
+                          itemCount: _days.length,
+                          itemBuilder: (_, i) {
+                            final day = _days[i];
 
-                      return _DayCard(
-                        day: day,
-                        isEditing: _isEditing,
-                        onEdit: () => _editDay(i),
-                        onAddActivity: () =>
-                            _addActivity(i),
-                        onRemoveActivity: (index) =>
-                            _removeActivity(
-                          i,
-                          index,
+                            return _DayCard(
+                              day: day,
+                              isEditing: _isEditing,
+                              onEdit: () => _editDay(i),
+                              onAddActivity: () => _addActivity(i),
+                              onRemoveActivity: (index) => _removeActivity(
+                                i,
+                                index,
+                              ),
+                              onToggle: (index) => _toggleCheckpoint(
+                                i,
+                                index,
+                              ),
+                            );
+                          },
                         ),
-                        onToggle: (index) =>
-                            _toggleCheckpoint(
-                          i,
-                          index,
-                        ),
-                      );
-                    },
-                  ),
                 ),
                 if (isNewPlan)
                   Container(
-                    padding:
-                        const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: AppTheme.cardBg,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black
-                              .withOpacity(0.05),
+                          color: Colors.black.withValues(alpha: 0.05),
                           blurRadius: 10,
                           offset: const Offset(
                             0,
@@ -491,15 +491,13 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: _saveTrip,
-                        style:
-                            ElevatedButton.styleFrom(
-                          padding:
-                              const EdgeInsets.symmetric(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
                             vertical: 16,
                           ),
                         ),
-                        child: const Text(
-                          'Confirm and Save Plan',
+                        child: Text(
+                          l10n.confirmSavePlan,
                         ),
                       ),
                     ),
@@ -507,6 +505,63 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
               ],
             ),
     );
+  }
+}
+
+String _localizedMockText(String value, AppLocalizations l10n) {
+  switch (value) {
+    case 'Arrival & Local Discovery':
+      return l10n.arrivalLocalDiscovery;
+    case 'City Landmark Visit':
+      return l10n.cityLandmarkVisit;
+    case 'Start your trip with a famous local landmark.':
+      return l10n.mockLandmarkDescription;
+    case 'Local Food Experience':
+      return l10n.localFoodExperience;
+    case 'Try authentic local food near the city center.':
+      return l10n.mockFoodDescription;
+    case 'Cultural Site':
+      return l10n.culturalSite;
+    case 'Visit a museum, temple, or cultural destination.':
+      return l10n.mockCulturalDescription;
+    case 'Evening Walk':
+      return l10n.eveningWalk;
+    case 'Enjoy the city atmosphere in the evening.':
+      return l10n.mockEveningDescription;
+    case 'Adventure & Exploration':
+      return l10n.adventureExploration;
+    case 'Morning Excursion':
+      return l10n.morningExcursion;
+    case 'Take a short trip to a nearby attraction.':
+      return l10n.mockExcursionDescription;
+    case 'Lunch Break':
+      return l10n.lunchBreak;
+    case 'Recharge with a recommended local restaurant.':
+      return l10n.mockLunchDescription;
+    case 'Outdoor Activity':
+      return l10n.outdoorActivity;
+    case 'Explore nature, markets, or hidden gems.':
+      return l10n.mockOutdoorDescription;
+    case 'Dinner & Relaxation':
+      return l10n.dinnerRelaxation;
+    case 'End your day with a relaxing dinner.':
+      return l10n.mockDinnerDescription;
+    case 'Relaxed Final Day':
+      return l10n.relaxedFinalDay;
+    case 'Slow Morning':
+      return l10n.slowMorning;
+    case 'Enjoy a slower start with coffee or breakfast.':
+      return l10n.mockSlowMorningDescription;
+    case 'Souvenir Shopping':
+      return l10n.souvenirShopping;
+    case 'Buy souvenirs or visit a local market.':
+      return l10n.mockSouvenirDescription;
+    case 'Final Photo Spot':
+      return l10n.finalPhotoSpot;
+    case 'Capture final memories before leaving.':
+      return l10n.mockPhotoDescription;
+    default:
+      return value;
   }
 }
 
@@ -547,16 +602,14 @@ class _DayCard extends StatelessWidget {
                   height: 44,
                   decoration: BoxDecoration(
                     color: AppTheme.primary,
-                    borderRadius:
-                        BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                   child: Center(
                     child: Text(
                       '${day.day}',
                       style: const TextStyle(
                         color: Colors.white,
-                        fontWeight:
-                            FontWeight.bold,
+                        fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                     ),
@@ -565,23 +618,20 @@ class _DayCard extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'DAY ${day.day}',
+                        AppLocalizations.of(context).dayNumber(day.day),
                         style: const TextStyle(
                           fontSize: 11,
-                          color:
-                              AppTheme.textMuted,
+                          color: AppTheme.textMuted,
                         ),
                       ),
                       Text(
                         day.title,
                         style: const TextStyle(
                           fontSize: 16,
-                          fontWeight:
-                              FontWeight.w600,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
@@ -599,28 +649,21 @@ class _DayCard extends StatelessWidget {
             ),
           ),
           const Divider(height: 1),
-          ...day.checkpoints
-              .asMap()
-              .entries
-              .map(
+          ...day.checkpoints.asMap().entries.map(
                 (e) => _CheckpointTile(
                   checkpoint: e.value,
                   isEditing: isEditing,
-                  onRemove: () =>
-                      onRemoveActivity(e.key),
-                  onToggle: () =>
-                      onToggle(e.key),
+                  onRemove: () => onRemoveActivity(e.key),
+                  onToggle: () => onToggle(e.key),
                 ),
               ),
           if (isEditing)
             Padding(
-              padding:
-                  const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(12),
               child: OutlinedButton.icon(
                 onPressed: onAddActivity,
                 icon: const Icon(Icons.add),
-                label:
-                    const Text('Add Activity'),
+                label: Text(AppLocalizations.of(context).addActivity),
               ),
             ),
         ],
@@ -655,16 +698,14 @@ class _CheckpointTile extends StatelessWidget {
           children: [
             if (!isEditing)
               AnimatedContainer(
-                duration:
-                    const Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 200),
                 width: 24,
                 height: 24,
                 decoration: BoxDecoration(
                   color: checkpoint.completed
                       ? AppTheme.primary
                       : Colors.transparent,
-                  borderRadius:
-                      BorderRadius.circular(6),
+                  borderRadius: BorderRadius.circular(6),
                   border: Border.all(
                     color: checkpoint.completed
                         ? AppTheme.primary
@@ -688,8 +729,7 @@ class _CheckpointTile extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(
               child: Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
@@ -698,8 +738,7 @@ class _CheckpointTile extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 12,
                           color: AppTheme.primary,
-                          fontWeight:
-                              FontWeight.bold,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -707,13 +746,10 @@ class _CheckpointTile extends StatelessWidget {
                         child: Text(
                           checkpoint.title,
                           style: TextStyle(
-                            fontWeight:
-                                FontWeight.w600,
-                            decoration:
-                                checkpoint.completed
-                                    ? TextDecoration
-                                        .lineThrough
-                                    : null,
+                            fontWeight: FontWeight.w600,
+                            decoration: checkpoint.completed
+                                ? TextDecoration.lineThrough
+                                : null,
                           ),
                         ),
                       ),

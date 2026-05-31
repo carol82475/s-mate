@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "m7OeDcct+T8=",
+  "dgSpecHash": "4QaMeyJExHk=",
   "success": true,
-  "projectFilePath": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Infrastructure\\TravelDecisionEngine.Infrastructure.csproj",
+  "projectFilePath": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Infrastructure\\TravelDecisionEngine.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\thoai\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\thoai\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

@@ -216,7 +216,7 @@ public class TravelDecisionEngineDbContext : DbContext
             entity.Property(x => x.DayId).HasColumnName("id").HasDefaultValueSql("NEWID()");
             entity.Property(x => x.TripId).HasColumnName("itinerary_id");
             entity.Property(x => x.Date).HasColumnName("schedule_date");
-            entity.Property<int>("DayNumber").HasColumnName("day_number").HasDefaultValue(1);
+            entity.Property(x => x.DayNumber).HasColumnName("day_number").HasDefaultValue(1);
             entity.Property(x => x.RouteOptimized).HasColumnName("route_optimized").HasDefaultValue(false);
             RequiredString(entity, "Status", "status").HasDefaultValue("active");
             RequiredDateTime(entity, nameof(TripDay.CreatedAt), "created_at").HasDefaultValueSql("SYSUTCDATETIME()");

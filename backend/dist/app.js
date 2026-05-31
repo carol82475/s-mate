@@ -19,9 +19,7 @@ const users_routes_1 = __importDefault(require("./modules/users/users.routes"));
 const trips_routes_1 = __importDefault(require("./modules/trips/trips.routes"));
 const map_routes_1 = __importDefault(require("./modules/map/map.routes"));
 const ai_chat_routes_1 = __importDefault(require("./modules/ai-chat/ai-chat.routes"));
-const travelers_routes_1 = __importDefault(require("./modules/travelers/travelers.routes"));
 const chats_routes_1 = __importDefault(require("./modules/chats/chats.routes"));
-const forum_routes_1 = __importDefault(require("./modules/forum/forum.routes"));
 const albums_routes_1 = __importDefault(require("./modules/albums/albums.routes"));
 const emergency_routes_1 = __importDefault(require("./modules/emergency/emergency.routes"));
 const quick_actions_routes_1 = __importDefault(require("./modules/quick-actions/quick-actions.routes"));
@@ -64,9 +62,7 @@ const createApp = () => {
     app.use(`${apiPrefix}/trips`, trips_routes_1.default);
     app.use(`${apiPrefix}/map`, map_routes_1.default);
     app.use(`${apiPrefix}/ai-chat`, ai_chat_routes_1.default);
-    app.use(`${apiPrefix}/travelers`, travelers_routes_1.default);
     app.use(`${apiPrefix}/chats`, chats_routes_1.default);
-    app.use(`${apiPrefix}/forum`, forum_routes_1.default);
     app.use(`${apiPrefix}/albums`, albums_routes_1.default);
     app.use(`${apiPrefix}/emergency`, emergency_routes_1.default);
     app.use(`${apiPrefix}/quick-actions`, quick_actions_routes_1.default);
@@ -78,4 +74,3 @@ const createApp = () => {
     return app;
 };
 exports.createApp = createApp;
-//# sourceMappingURL=app.js.map

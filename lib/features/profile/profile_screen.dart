@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/api_client.dart';
+import '../../core/locale_provider.dart';
 import '../../core/theme.dart';
+import '../../l10n/app_localizations.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -13,12 +15,13 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  String _language = 'English';
+  String _languageCode = 'en';
   bool _notificationsEnabled = true;
   String _privacy = 'Public';
 
   bool _isLoading = true;
   bool _isLoggingOut = false;
+  bool _didLoadProfileData = false;
 
   Map<String, dynamic>? _profile;
   List<Map<String, dynamic>> _stats = [];
@@ -27,6 +30,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (_didLoadProfileData) return;
+
+    _didLoadProfileData = true;
+    _languageCode = context.read<LocaleProvider>().locale.languageCode;
     _loadProfileData();
   }
 
@@ -58,26 +71,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _loadProfile() async {
+    final l10n = AppLocalizations.of(context);
+
     try {
-      final response = await ApiClient.get('/users/profile');
+      final response = await ApiClient.get('/users/me');
       final data = response['data'];
 
       if (data is Map<String, dynamic>) {
         _profile = data;
-
-        _language = data['language']?.toString() ?? _language;
-        _notificationsEnabled =
-            data['notifications_enabled'] ?? data['notificationsEnabled'] ?? true;
-        _privacy =
-            data['privacy_level']?.toString() ?? data['privacyLevel']?.toString() ?? _privacy;
+        _languageCode = _normalizeLanguageCode(
+          data['language']?.toString(),
+          fallback: _languageCode,
+        );
       }
     } catch (_) {
-      final user = Supabase.instance.client.auth.currentUser;
-
       _profile = {
-        'full_name': user?.userMetadata?['full_name'] ?? 'Traveler',
-        'email': user?.email ?? '',
-        'country': user?.userMetadata?['location'] ?? 'Unknown',
+        'email': ApiAuth.instance.email ?? '',
+        'nationality': l10n.unknown,
       };
     }
   }
@@ -89,22 +99,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       if (data is Map<String, dynamic>) {
         _stats = [
-          {
-            'label': 'Countries',
-            'value': '${data['countries'] ?? 0}',
-          },
-          {
-            'label': 'Trips',
-            'value': '${data['trips'] ?? 0}',
-          },
-          {
-            'label': 'Locations',
-            'value': '${data['locations'] ?? 0}',
-          },
-          {
-            'label': 'Days',
-            'value': '${data['days'] ?? 0}',
-          },
+          {'label': 'Countries', 'value': '${data['countries'] ?? 0}'},
+          {'label': 'Trips', 'value': '${data['trips'] ?? 0}'},
+          {'label': 'Locations', 'value': '${data['locations'] ?? 0}'},
+          {'label': 'Days', 'value': '${data['days'] ?? 0}'},
         ];
       }
     } catch (_) {
@@ -118,6 +116,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _loadTripHistory() async {
+    final l10n = AppLocalizations.of(context);
+
     try {
       final response = await ApiClient.get('/users/trip-history');
       final data = response['data'];
@@ -128,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             'id': item['id']?.toString() ?? '',
             'dest': item['destination']?.toString() ??
                 item['dest']?.toString() ??
-                'Unknown destination',
+                l10n.unknownDestination,
             'dates': item['dates']?.toString() ??
                 '${item['start_date'] ?? ''} - ${item['end_date'] ?? ''}',
             'status': item['status']?.toString() ?? 'Planned',
@@ -153,23 +153,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String get _displayName {
     return _profile?['full_name']?.toString() ??
         _profile?['fullName']?.toString() ??
-        Supabase.instance.client.auth.currentUser?.userMetadata?['full_name']?.toString() ??
-        'Traveler';
+        _profile?['email']?.toString().split('@').first ??
+        AppLocalizations.of(context).traveler;
   }
 
   String get _email {
-    return _profile?['email']?.toString() ??
-        Supabase.instance.client.auth.currentUser?.email ??
-        '';
+    return _profile?['email']?.toString() ?? '';
   }
 
   String get _location {
     return _profile?['country']?.toString() ??
+        _profile?['nationality']?.toString() ??
         _profile?['location']?.toString() ??
-        'Unknown';
+        AppLocalizations.of(context).unknown;
   }
 
   Future<void> _editProfile() async {
+    final l10n = AppLocalizations.of(context);
     final nameCtrl = TextEditingController(text: _displayName);
     final locationCtrl = TextEditingController(text: _location);
 
@@ -191,19 +191,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Edit Profile',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              l10n.editProfile,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             TextField(
               controller: nameCtrl,
-              decoration: const InputDecoration(labelText: 'Display Name'),
+              decoration: InputDecoration(labelText: l10n.displayName),
             ),
             const SizedBox(height: 12),
             TextField(
               controller: locationCtrl,
-              decoration: const InputDecoration(labelText: 'Location'),
+              decoration: InputDecoration(labelText: l10n.location),
             ),
             const SizedBox(height: 20),
             Row(
@@ -213,10 +213,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onPressed: () async {
                       try {
                         final response = await ApiClient.put(
-                          '/users/profile',
+                          '/users/me',
                           body: {
-                            'full_name': nameCtrl.text.trim(),
-                            'country': locationCtrl.text.trim(),
+                            'nationality': locationCtrl.text.trim(),
+                            'dietPreference':
+                                _profile?['dietPreference']?.toString(),
+                            'budgetPreference':
+                                _profile?['budgetPreference']?.toString(),
                           },
                         );
 
@@ -233,8 +236,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Navigator.pop(context);
 
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Profile updated!'),
+                          SnackBar(
+                            content: Text(l10n.profileUpdated),
                             backgroundColor: AppTheme.primary,
                           ),
                         );
@@ -247,14 +250,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         );
                       }
                     },
-                    child: const Text('Save Changes'),
+                    child: Text(l10n.saveChanges),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('Cancel'),
+                    child: Text(l10n.cancel),
                   ),
                 ),
               ],
@@ -267,26 +270,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _updateSettings({
-    String? language,
+    String? languageCode,
     bool? notificationsEnabled,
     String? privacy,
   }) async {
     try {
-      await ApiClient.put(
-        '/users/settings',
-        body: {
-          'language': language ?? _language,
-          'notifications_enabled': notificationsEnabled ?? _notificationsEnabled,
-          'privacy_level': privacy ?? _privacy,
-        },
-      );
+      if (languageCode != null) {
+        await ApiClient.put(
+          '/users/me/language',
+          body: {'language': languageCode},
+        );
+      }
+
+      if (privacy != null) {
+        await ApiClient.put(
+          '/users/me/privacy',
+          body: {'profileVisible': privacy != 'Private'},
+        );
+      }
     } catch (e) {
       debugPrint('UPDATE SETTINGS ERROR: $e');
     }
   }
 
   void _changeLanguage() {
-    final languages = ['English', 'Vietnamese', 'Japanese', 'French', 'Spanish'];
+    final l10n = AppLocalizations.of(context);
+    final languages = [
+      'en',
+      'vi',
+      'fr',
+      'de',
+      'ko',
+      'zh',
+    ];
 
     showModalBottomSheet(
       context: context,
@@ -300,28 +316,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Select Language',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              l10n.selectLanguage,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             ...languages.map(
-              (lang) => ListTile(
-                title: Text(lang),
-                trailing: _language == lang
+              (languageCode) => ListTile(
+                title: Text(_languageLabel(languageCode, l10n)),
+                trailing: _languageCode == languageCode
                     ? const Icon(Icons.check, color: AppTheme.primary)
                     : null,
                 onTap: () async {
-                  setState(() => _language = lang);
-                  await _updateSettings(language: lang);
+                  setState(() => _languageCode = languageCode);
+                  await context
+                      .read<LocaleProvider>()
+                      .setLocale(Locale(languageCode));
+                  _updateSettings(languageCode: languageCode);
 
                   if (!mounted) return;
 
                   Navigator.pop(context);
 
+                  final updatedL10n = AppLocalizations.of(context);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Language changed to $lang'),
+                      content: Text(
+                        updatedL10n.languageChangedTo(
+                          _languageLabel(languageCode, updatedL10n),
+                        ),
+                      ),
                       backgroundColor: AppTheme.primary,
                     ),
                   );
@@ -345,7 +369,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'Notifications ${_notificationsEnabled ? 'enabled' : 'disabled'}',
+          _notificationsEnabled
+              ? AppLocalizations.of(context).notificationsEnabled
+              : AppLocalizations.of(context).notificationsDisabled,
         ),
         backgroundColor: AppTheme.primary,
       ),
@@ -353,6 +379,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _changePrivacy() {
+    final l10n = AppLocalizations.of(context);
     final options = ['Public', 'Friends Only', 'Private'];
 
     showModalBottomSheet(
@@ -367,14 +394,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Privacy Setting',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              l10n.privacySetting,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             ...options.map(
               (opt) => ListTile(
-                title: Text(opt),
+                title: Text(_privacyLabel(opt, l10n)),
                 trailing: _privacy == opt
                     ? const Icon(Icons.check, color: AppTheme.primary)
                     : null,
@@ -388,7 +415,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Privacy set to $opt'),
+                      content:
+                          Text(l10n.privacySetTo(_privacyLabel(opt, l10n))),
                       backgroundColor: AppTheme.primary,
                     ),
                   );
@@ -402,6 +430,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _changePassword() {
+    final l10n = AppLocalizations.of(context);
     final newCtrl = TextEditingController();
 
     showModalBottomSheet(
@@ -422,15 +451,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Change Password',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              l10n.changePassword,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             TextField(
               controller: newCtrl,
               obscureText: true,
-              decoration: const InputDecoration(labelText: 'New Password'),
+              decoration: InputDecoration(labelText: l10n.newPassword),
             ),
             const SizedBox(height: 20),
             Row(
@@ -439,8 +468,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: ElevatedButton(
                     onPressed: () async {
                       try {
-                        await Supabase.instance.client.auth.updateUser(
-                          UserAttributes(password: newCtrl.text.trim()),
+                        await ApiClient.post(
+                          '/auth/reset-password',
+                          auth: false,
+                          body: {
+                            'email': _email,
+                            'newPassword': newCtrl.text.trim(),
+                            'otpCode': '',
+                          },
                         );
 
                         if (!mounted) return;
@@ -448,8 +483,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Navigator.pop(context);
 
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Password updated successfully!'),
+                          SnackBar(
+                            content: Text(l10n.passwordUpdatedSuccessfully),
                             backgroundColor: AppTheme.primary,
                           ),
                         );
@@ -462,14 +497,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         );
                       }
                     },
-                    child: const Text('Update Password'),
+                    child: Text(l10n.updatePassword),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('Cancel'),
+                    child: Text(l10n.cancel),
                   ),
                 ),
               ],
@@ -487,17 +522,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() => _isLoggingOut = true);
 
     try {
-      await Supabase.instance.client.auth.signOut();
-
-      if (!mounted) return;
-
-      Future<void>.delayed(Duration.zero, () {
-        if (!mounted) return;
-
-        if (GoRouterState.of(context).uri.path != '/') {
-          context.go('/');
-        }
-      });
+      await ApiClient.logout();
     } catch (e) {
       debugPrint('SIGN OUT ERROR: $e');
 
@@ -506,16 +531,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
       setState(() => _isLoggingOut = false);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Failed to sign out. Please try again.'),
+        SnackBar(
+          content: Text(AppLocalizations.of(context).failedSignOut),
           backgroundColor: AppTheme.destructive,
         ),
       );
     }
   }
 
+  Future<void> _confirmSignOut() async {
+    final l10n = AppLocalizations.of(context);
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.signOut),
+        content: Text(l10n.signOutConfirmation),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(l10n.cancel),
+          ),
+          TextButton(
+            onPressed: _isLoggingOut
+                ? null
+                : () => Navigator.of(dialogContext).pop(true),
+            child: Text(
+              l10n.signOut,
+              style: const TextStyle(
+                color: AppTheme.destructive,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true || !mounted) return;
+
+    await _signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final stats = _stats.isEmpty
         ? const [
             {'label': 'Countries', 'value': '0'},
@@ -528,10 +586,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: Text(l10n.profile),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.canPop() ? context.pop() : context.go('/home'),
+          onPressed: () =>
+              context.canPop() ? context.pop() : context.go('/home'),
         ),
         actions: [
           IconButton(
@@ -612,9 +671,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               size: 14,
                               color: Colors.white,
                             ),
-                            label: const Text(
-                              'Edit Profile',
-                              style: TextStyle(color: Colors.white),
+                            label: Text(
+                              l10n.editProfile,
+                              style: const TextStyle(color: Colors.white),
                             ),
                             style: OutlinedButton.styleFrom(
                               side: const BorderSide(color: Colors.white54),
@@ -634,8 +693,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             .map(
                               (s) => Expanded(
                                 child: Container(
-                                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                                  padding: const EdgeInsets.symmetric(vertical: 14),
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 4),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 14),
                                   decoration: BoxDecoration(
                                     color: AppTheme.cardBg,
                                     borderRadius: BorderRadius.circular(12),
@@ -652,7 +713,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                       ),
                                       Text(
-                                        s['label']!,
+                                        _statLabel(s['label']!, l10n),
                                         style: const TextStyle(
                                           fontSize: 11,
                                           color: AppTheme.textMuted,
@@ -671,9 +732,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Trip History',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          Text(
+                            l10n.tripHistory,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           const SizedBox(height: 12),
                           if (_trips.isEmpty)
@@ -685,9 +749,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(color: AppTheme.border),
                               ),
-                              child: const Text(
-                                'No trips yet',
-                                style: TextStyle(color: AppTheme.textMuted),
+                              child: Text(
+                                l10n.noTripsYet,
+                                style:
+                                    const TextStyle(color: AppTheme.textMuted),
                               ),
                             )
                           else
@@ -707,70 +772,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             _SettingTile(
                               icon: Icons.language,
-                              label: 'Language',
-                              value: _language,
+                              label: l10n.language,
+                              value: _languageLabel(_languageCode, l10n),
                               onTap: _changeLanguage,
                             ),
                             const Divider(height: 1),
                             _SettingTile(
                               icon: Icons.notifications_outlined,
-                              label: 'Notifications',
-                              value: _notificationsEnabled ? 'Enabled' : 'Disabled',
+                              label: l10n.notifications,
+                              value: _notificationsEnabled
+                                  ? l10n.enabled
+                                  : l10n.disabled,
                               onTap: _toggleNotifications,
                             ),
                             const Divider(height: 1),
                             _SettingTile(
                               icon: Icons.privacy_tip_outlined,
-                              label: 'Privacy',
-                              value: _privacy,
+                              label: l10n.privacy,
+                              value: _privacyLabel(_privacy, l10n),
                               onTap: _changePrivacy,
                             ),
                             const Divider(height: 1),
                             _SettingTile(
                               icon: Icons.lock_outline,
-                              label: 'Change Password',
+                              label: l10n.changePassword,
                               onTap: _changePassword,
                             ),
                             const Divider(height: 1),
                             _SettingTile(
                               icon: Icons.logout,
-                              label: 'Sign Out',
+                              label: l10n.signOut,
                               color: AppTheme.destructive,
-                              onTap: () => showDialog(
-                                context: context,
-                                builder: (_) => AlertDialog(
-                                  title: const Text('Sign Out'),
-                                  content: const Text(
-                                    'Are you sure you want to sign out?',
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: const Text('Cancel'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () async {
-                                        if (_isLoggingOut) return;
-
-                                        Navigator.pop(context);
-
-                                        await Future<void>.delayed(
-                                          Duration.zero,
-                                        );
-
-                                        if (!mounted) return;
-                                        await _signOut();
-                                      },
-                                      child: const Text(
-                                        'Sign Out',
-                                        style: TextStyle(
-                                          color: AppTheme.destructive,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              onTap: _confirmSignOut,
                             ),
                           ],
                         ),
@@ -795,6 +828,7 @@ class _TripHistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isInProgress = trip['status'] == 'In Progress';
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -820,20 +854,21 @@ class _TripHistoryCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    trip['dest']?.toString() ?? 'Unknown trip',
+                    trip['dest']?.toString() ?? l10n.unknownTrip,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                   decoration: BoxDecoration(
                     color: isInProgress
-                        ? AppTheme.primary.withOpacity(0.2)
-                        : Colors.green.withOpacity(0.2),
+                        ? AppTheme.primary.withValues(alpha: 0.2)
+                        : Colors.green.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    trip['status']?.toString() ?? 'Planned',
+                    _tripStatusLabel(trip['status']?.toString(), l10n),
                     style: TextStyle(
                       fontSize: 11,
                       color: isInProgress ? AppTheme.primary : Colors.green,
@@ -864,6 +899,102 @@ class _TripHistoryCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+String _statLabel(String value, AppLocalizations l10n) {
+  switch (value) {
+    case 'Countries':
+      return l10n.countries;
+    case 'Trips':
+      return l10n.trips;
+    case 'Locations':
+      return l10n.locations;
+    case 'Days':
+      return l10n.days;
+    default:
+      return value;
+  }
+}
+
+String _languageLabel(String value, AppLocalizations l10n) {
+  switch (value) {
+    case 'en':
+    case 'English':
+      return l10n.languageEnglish;
+    case 'vi':
+      return l10n.languageVietnamese;
+    case 'fr':
+      return l10n.languageFrench;
+    case 'de':
+      return l10n.languageGerman;
+    case 'ko':
+      return l10n.languageKorean;
+    case 'zh':
+      return l10n.languageChinese;
+    default:
+      return value;
+  }
+}
+
+String _normalizeLanguageCode(String? value, {required String fallback}) {
+  switch (value?.trim().toLowerCase()) {
+    case 'en':
+    case 'english':
+      return 'en';
+    case 'vi':
+    case 'vn':
+    case 'vietnamese':
+    case 'tiếng việt':
+    case 'tieng viet':
+      return 'vi';
+    case 'fr':
+    case 'french':
+    case 'français':
+      return 'fr';
+    case 'de':
+    case 'german':
+    case 'deutsch':
+      return 'de';
+    case 'ko':
+    case 'korean':
+    case '한국어':
+      return 'ko';
+    case 'zh':
+    case 'chinese':
+    case '中文':
+      return 'zh';
+    default:
+      return fallback;
+  }
+}
+
+String _privacyLabel(String value, AppLocalizations l10n) {
+  switch (value) {
+    case 'Public':
+      return l10n.public;
+    case 'Friends Only':
+      return l10n.friendsOnly;
+    case 'Private':
+      return l10n.private;
+    default:
+      return value;
+  }
+}
+
+String _tripStatusLabel(String? value, AppLocalizations l10n) {
+  switch (value) {
+    case 'Planned':
+      return l10n.planned;
+    case 'In Progress':
+      return l10n.inProgress;
+    case 'Completed':
+      return l10n.completed;
+    case null:
+    case '':
+      return l10n.planned;
+    default:
+      return value;
   }
 }
 

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KOMNiOFNNj0=",
+  "dgSpecHash": "Lc8wqgcUtGE=",
   "success": true,
-  "projectFilePath": "C:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Application\\TravelDecisionEngine.Application.csproj",
+  "projectFilePath": "E:\\FPTU\\s-mate\\s-mate\\backend\\TravelDecisionEngine.Application\\TravelDecisionEngine.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\thoai\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\thoai\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.1\\microsoft.extensions.dependencyinjection.abstractions.8.0.1.nupkg.sha512",

@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\TravelDecisionEngine.Api.props" />
-</Project>

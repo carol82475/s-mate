@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/api_client.dart';
 import '../../core/theme.dart';
+import '../../l10n/app_localizations.dart';
 
 class _Plan {
   final String id;
@@ -32,7 +33,6 @@ const _kFallbackPlans = [
       'Unlimited Planning',
       'Full Map Access',
       'Smart AI Suggestions',
-      'Forum Access',
     ],
   ),
   _Plan(
@@ -45,7 +45,6 @@ const _kFallbackPlans = [
       'Full Map Access',
       'Smart AI Suggestions',
       'Premium Features',
-      'Forum Access',
     ],
     popular: true,
   ),
@@ -65,7 +64,9 @@ const _kFallbackPlans = [
 ];
 
 class PurchaseScreen extends StatefulWidget {
-  const PurchaseScreen({super.key});
+  final Map<String, dynamic>? extra;
+
+  const PurchaseScreen({super.key, this.extra});
 
   @override
   State<PurchaseScreen> createState() => _PurchaseScreenState();
@@ -128,25 +129,34 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
     return plans[_selectedPlan];
   }
 
+  void _handleBack() {
+    if (_showPayment) {
+      setState(() => _showPayment = false);
+      return;
+    }
+
+    if (widget.extra?['pendingTripRequest'] is Map) {
+      context.go('/trip-planner');
+      return;
+    }
+
+    context.canPop() ? context.pop() : context.go('/home');
+  }
+
   @override
   Widget build(BuildContext context) {
     final plans = _plans.isEmpty ? _kFallbackPlans : _plans;
+    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
         title: Text(
-          _showPayment ? 'Payment Information' : 'Complete Your Purchase',
+          _showPayment ? l10n.paymentInformation : l10n.completeYourPurchase,
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            if (_showPayment) {
-              setState(() => _showPayment = false);
-            } else {
-              context.canPop() ? context.pop() : context.go('/home');
-            }
-          },
+          onPressed: _handleBack,
         ),
       ),
       body: _isLoadingPlans
@@ -154,6 +164,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
           : _showPayment
               ? _PaymentForm(
                   plan: _currentPlan,
+                  extra: widget.extra,
                   onBack: () => setState(() => _showPayment = false),
                 )
               : _PlanSelection(
@@ -181,13 +192,15 @@ class _PlanSelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Column(
       children: [
-        const Padding(
-          padding: EdgeInsets.fromLTRB(20, 8, 20, 16),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
           child: Text(
-            'Choose a plan and unlock your personalized travel experience',
-            style: TextStyle(color: AppTheme.textMuted, fontSize: 14),
+            l10n.choosePlanUnlock,
+            style: const TextStyle(color: AppTheme.textMuted, fontSize: 14),
             textAlign: TextAlign.center,
           ),
         ),
@@ -226,10 +239,10 @@ class _PlanSelection extends StatelessWidget {
                                   top: Radius.circular(14),
                                 ),
                               ),
-                              child: const Text(
-                                'Most Popular',
+                              child: Text(
+                                l10n.mostPopular,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
@@ -244,14 +257,14 @@ class _PlanSelection extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  plan.name,
+                                  _planName(plan.name, l10n),
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 13,
                                   ),
                                 ),
                                 Text(
-                                  plan.duration,
+                                  _planDuration(plan.duration, l10n),
                                   style: const TextStyle(
                                     color: AppTheme.textMuted,
                                     fontSize: 11,
@@ -272,9 +285,9 @@ class _PlanSelection extends StatelessWidget {
                                           color: AppTheme.textPrimary,
                                         ),
                                       ),
-                                      const TextSpan(
-                                        text: ' /trip',
-                                        style: TextStyle(
+                                      TextSpan(
+                                        text: l10n.perTrip,
+                                        style: const TextStyle(
                                           fontSize: 11,
                                           color: AppTheme.textMuted,
                                         ),
@@ -296,7 +309,7 @@ class _PlanSelection extends StatelessWidget {
                                         const SizedBox(width: 4),
                                         Expanded(
                                           child: Text(
-                                            f,
+                                            _planFeature(f, l10n),
                                             style: const TextStyle(
                                               fontSize: 11,
                                               color: AppTheme.textMuted,
@@ -312,7 +325,7 @@ class _PlanSelection extends StatelessWidget {
                                   width: double.infinity,
                                   child: isSelected
                                       ? ElevatedButton(
-                                          onPressed: () {},
+                                          onPressed: null,
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: AppTheme.primary,
                                             foregroundColor: Colors.white,
@@ -324,9 +337,10 @@ class _PlanSelection extends StatelessWidget {
                                                   BorderRadius.circular(10),
                                             ),
                                           ),
-                                          child: const Text(
-                                            'Selected',
-                                            style: TextStyle(fontSize: 12),
+                                          child: Text(
+                                            l10n.selected,
+                                            style:
+                                                const TextStyle(fontSize: 12),
                                           ),
                                         )
                                       : OutlinedButton(
@@ -340,9 +354,10 @@ class _PlanSelection extends StatelessWidget {
                                                   BorderRadius.circular(10),
                                             ),
                                           ),
-                                          child: const Text(
-                                            'Select Plan',
-                                            style: TextStyle(fontSize: 12),
+                                          child: Text(
+                                            l10n.selectPlan,
+                                            style:
+                                                const TextStyle(fontSize: 12),
                                           ),
                                         ),
                                 ),
@@ -366,7 +381,7 @@ class _PlanSelection extends StatelessWidget {
               onPressed: onContinue,
               icon: const Icon(Icons.credit_card, size: 18),
               label: Text(
-                'Continue to Payment - \$${plans[selectedPlan].price}',
+                l10n.continueToPayment('\$${plans[selectedPlan].price}'),
               ),
             ),
           ),
@@ -376,12 +391,59 @@ class _PlanSelection extends StatelessWidget {
   }
 }
 
+String _planName(String value, AppLocalizations l10n) {
+  switch (value) {
+    case 'Basic Plan':
+      return l10n.basicPlan;
+    case 'Premium Plan':
+      return l10n.premiumPlan;
+    case 'Pro Plan':
+      return l10n.proPlan;
+    case 'Plan':
+      return l10n.plan;
+    default:
+      return value;
+  }
+}
+
+String _planDuration(String value, AppLocalizations l10n) {
+  switch (value) {
+    case '7 Days':
+      return l10n.sevenDays;
+    case '14 Days':
+      return l10n.fourteenDays;
+    case '30 Days':
+      return l10n.thirtyDays;
+    default:
+      return value;
+  }
+}
+
+String _planFeature(String value, AppLocalizations l10n) {
+  switch (value) {
+    case 'Unlimited Planning':
+      return l10n.unlimitedPlanning;
+    case 'Full Map Access':
+      return l10n.fullMapAccess;
+    case 'Smart AI Suggestions':
+      return l10n.smartAiSuggestions;
+    case 'Premium Features':
+      return l10n.premiumFeatures;
+    case 'Priority Support':
+      return l10n.prioritySupport;
+    default:
+      return value;
+  }
+}
+
 class _PaymentForm extends StatefulWidget {
   final _Plan plan;
+  final Map<String, dynamic>? extra;
   final VoidCallback onBack;
 
   const _PaymentForm({
     required this.plan,
+    required this.extra,
     required this.onBack,
   });
 
@@ -440,26 +502,32 @@ class _PaymentFormState extends State<_PaymentForm> {
 
       if (!mounted) return;
 
+      final pendingTripId = await _generatePendingTrip();
+      final itineraryExtra = widget.extra?['itineraryExtra'];
+
+      if (!mounted) return;
+
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
-          content: const Column(
+          content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.check_circle, color: AppTheme.success, size: 56),
-              SizedBox(height: 12),
+              const Icon(Icons.check_circle, color: AppTheme.success, size: 56),
+              const SizedBox(height: 12),
               Text(
-                'Purchase Successful!',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                AppLocalizations.of(context).purchaseSuccessful,
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
-                'Your plan is now active. Enjoy your trip!',
+                AppLocalizations.of(context).planActiveEnjoyTrip,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: AppTheme.textMuted),
+                style: const TextStyle(color: AppTheme.textMuted),
               ),
             ],
           ),
@@ -469,9 +537,22 @@ class _PaymentFormState extends State<_PaymentForm> {
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  context.pop(true);
+                  if (pendingTripId != null) {
+                    context.go(
+                      '/itinerary/$pendingTripId',
+                      extra: itineraryExtra is Map
+                          ? Map<String, dynamic>.from(itineraryExtra)
+                          : null,
+                    );
+                  } else {
+                    context.go('/home');
+                  }
                 },
-                child: Text('Go to Home'),
+                child: Text(
+                  pendingTripId != null
+                      ? AppLocalizations.of(context).openItinerary
+                      : AppLocalizations.of(context).goToHome,
+                ),
               ),
             ),
           ],
@@ -493,9 +574,33 @@ class _PaymentFormState extends State<_PaymentForm> {
     }
   }
 
+  Future<String?> _generatePendingTrip() async {
+    final pending = widget.extra?['pendingTripRequest'];
+
+    if (pending is! Map) {
+      return null;
+    }
+
+    try {
+      final response = await ApiClient.post(
+        '/trips/generate',
+        body: Map<String, dynamic>.from(pending),
+      );
+      final data = response['data'];
+
+      if (data is Map<String, dynamic>) {
+        return data['id']?.toString() ?? data['tripId']?.toString();
+      }
+    } catch (e) {
+      debugPrint('PENDING TRIP GENERATION ERROR: $e');
+    }
+
+    return null;
+  }
+
   String? _required(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Required';
+      return AppLocalizations.of(context).required;
     }
 
     return null;
@@ -503,6 +608,8 @@ class _PaymentFormState extends State<_PaymentForm> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
       child: Form(
@@ -520,13 +627,17 @@ class _PaymentFormState extends State<_PaymentForm> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Row(
+                  Row(
                     children: [
-                      Icon(Icons.credit_card, color: AppTheme.primary, size: 20),
-                      SizedBox(width: 8),
+                      const Icon(
+                        Icons.credit_card,
+                        color: AppTheme.primary,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 8),
                       Text(
-                        'Payment Information',
-                        style: TextStyle(
+                        l10n.paymentInformation,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
@@ -534,9 +645,12 @@ class _PaymentFormState extends State<_PaymentForm> {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  const Text(
-                    'Card Number',
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                  Text(
+                    l10n.cardNumber,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                   const SizedBox(height: 6),
                   TextFormField(
@@ -548,14 +662,18 @@ class _PaymentFormState extends State<_PaymentForm> {
                     validator: _required,
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Cardholder Name',
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                  Text(
+                    l10n.cardholderName,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                   const SizedBox(height: 6),
                   TextFormField(
                     controller: _cardNameCtrl,
-                    decoration: const InputDecoration(hintText: 'John Doe'),
+                    decoration:
+                        InputDecoration(hintText: l10n.cardholderNameHint),
                     validator: _required,
                   ),
                   const SizedBox(height: 16),
@@ -566,9 +684,9 @@ class _PaymentFormState extends State<_PaymentForm> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              'Expiry Date',
-                              style: TextStyle(
+                            Text(
+                              l10n.expiryDate,
+                              style: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -576,8 +694,8 @@ class _PaymentFormState extends State<_PaymentForm> {
                             const SizedBox(height: 6),
                             TextFormField(
                               controller: _expiryCtrl,
-                              decoration:
-                                  const InputDecoration(hintText: 'MM/YY'),
+                              decoration: InputDecoration(
+                                  hintText: l10n.expiryDateHint),
                               validator: _required,
                             ),
                           ],
@@ -588,9 +706,9 @@ class _PaymentFormState extends State<_PaymentForm> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              'CVV',
-                              style: TextStyle(
+                            Text(
+                              l10n.cvv,
+                              style: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -600,7 +718,8 @@ class _PaymentFormState extends State<_PaymentForm> {
                               controller: _cvvCtrl,
                               keyboardType: TextInputType.number,
                               obscureText: true,
-                              decoration: const InputDecoration(hintText: '123'),
+                              decoration:
+                                  const InputDecoration(hintText: '123'),
                               validator: _required,
                             ),
                           ],
@@ -615,18 +734,18 @@ class _PaymentFormState extends State<_PaymentForm> {
                       color: AppTheme.background,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: const Row(
+                    child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.lock_outline,
                           size: 16,
                           color: AppTheme.textMuted,
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            'This is a demo payment. Do not enter real card information.',
-                            style: TextStyle(
+                            l10n.demoPaymentWarning,
+                            style: const TextStyle(
                               fontSize: 12,
                               color: AppTheme.textMuted,
                             ),
@@ -644,7 +763,7 @@ class _PaymentFormState extends State<_PaymentForm> {
                 OutlinedButton.icon(
                   onPressed: _isPaying ? null : widget.onBack,
                   icon: const Icon(Icons.arrow_back, size: 16),
-                  label: const Text('Back'),
+                  label: Text(l10n.back),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 20,
@@ -668,8 +787,8 @@ class _PaymentFormState extends State<_PaymentForm> {
                         : const Icon(Icons.credit_card, size: 18),
                     label: Text(
                       _isPaying
-                          ? 'Processing...'
-                          : 'Complete Purchase - \$${widget.plan.price}',
+                          ? l10n.processing
+                          : l10n.completePurchase('\$${widget.plan.price}'),
                     ),
                   ),
                 ),

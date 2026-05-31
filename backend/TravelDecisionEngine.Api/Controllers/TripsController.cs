@@ -24,6 +24,10 @@ public class TripsController : ApiControllerBase
     public async Task<IActionResult> CreateTrip([FromBody] TripRequest request, CancellationToken cancellationToken)
         => Ok(new { success = true, message = "Trip created", data = await _trips.CreateTripAsync(GetUserIdOrThrow(), request, cancellationToken) });
 
+    [HttpPost("generate")]
+    public async Task<IActionResult> GenerateTrip([FromBody] GenerateTripRequest request, CancellationToken cancellationToken)
+        => Ok(new { success = true, message = "Trip generated", data = await _trips.GenerateTripAsync(GetUserIdOrThrow(), request, cancellationToken) });
+
     [HttpGet("{tripId:guid}")]
     public async Task<IActionResult> GetTrip([FromRoute] Guid tripId, CancellationToken cancellationToken)
         => Ok(new { success = true, message = "Trip loaded", data = await _trips.GetTripAsync(GetUserIdOrThrow(), tripId, cancellationToken) });

@@ -11,7 +11,7 @@ exports.getPlans = (0, asyncHandler_1.asyncHandler)(async (_req, res) => {
             duration: '7 Days',
             price: 15,
             popular: false,
-            features: ['Unlimited Planning', 'Full Map Access', 'Forum Access'],
+            features: ['Unlimited Planning', 'Full Map Access', 'Smart AI Suggestions'],
         },
         {
             id: 'premium',
@@ -43,4 +43,3 @@ exports.checkout = (0, asyncHandler_1.asyncHandler)(async (req, res) => {
         status: 'completed',
     }, 201);
 });
-//# sourceMappingURL=purchase.controller.js.map

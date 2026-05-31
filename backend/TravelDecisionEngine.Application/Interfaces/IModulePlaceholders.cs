@@ -11,6 +11,5 @@ public interface IPriceReportsService { Task<object> ExecuteAsync(CancellationTo
 public interface IDiscoveryService { Task<object> ExecuteAsync(CancellationToken cancellationToken); }
 public interface IAiTripPlannerService { Task<object> ExecuteAsync(CancellationToken cancellationToken); }
 public interface IChatbotService { Task<object> ExecuteAsync(CancellationToken cancellationToken); }
-public interface ITravelersService { Task<object> ExecuteAsync(CancellationToken cancellationToken); }
 public interface INotificationsService { Task<object> ExecuteAsync(CancellationToken cancellationToken); }
 public interface IAdminCmsService { Task<object> ExecuteAsync(CancellationToken cancellationToken); }

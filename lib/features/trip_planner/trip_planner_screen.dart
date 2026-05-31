@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/api_client.dart';
 import '../../core/theme.dart';
+import '../../core/trip_generation_gate.dart';
 import '../../core/validators.dart';
+import '../../l10n/app_localizations.dart';
 
 class TripPlannerScreen extends StatefulWidget {
   const TripPlannerScreen({super.key});
@@ -112,10 +114,16 @@ class _TripPlannerScreenState extends State<TripPlannerScreen> {
     }
   }
 
-  String _formatDate(DateTime? d) {
-    if (d == null) return 'Select date';
+  String _formatDate(DateTime? d, AppLocalizations l10n) {
+    if (d == null) return l10n.selectDate;
 
     return '${d.day}/${d.month}/${d.year}';
+  }
+
+  String _apiDate(DateTime d) {
+    final month = d.month.toString().padLeft(2, '0');
+    final day = d.day.toString().padLeft(2, '0');
+    return '${d.year}-$month-$day';
   }
 
   int _parseTravelerCount() {
@@ -127,29 +135,28 @@ class _TripPlannerScreenState extends State<TripPlannerScreen> {
     return 1;
   }
 
+  int _tripDays() {
+    if (_startDate == null || _endDate == null) return 3;
+
+    return _endDate!.difference(_startDate!).inDays + 1;
+  }
+
   Future<void> _submit() async {
+    if (_isGenerating) return;
+
+    final l10n = AppLocalizations.of(context);
+
     if (!(_formKey.currentState?.validate() ?? false)) {
       return;
     }
 
-    if (_startDate == null || _endDate == null) {
+    if (_startDate != null &&
+        _endDate != null &&
+        _endDate!.isBefore(_startDate!)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            'Please select start and end dates',
-          ),
-          backgroundColor: AppTheme.destructive,
-        ),
-      );
-
-      return;
-    }
-
-    if (_endDate!.isBefore(_startDate!)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'End date must be after start date',
+            l10n.endDateAfterStartDate,
           ),
           backgroundColor: AppTheme.destructive,
         ),
@@ -161,33 +168,62 @@ class _TripPlannerScreenState extends State<TripPlannerScreen> {
     try {
       setState(() => _isGenerating = true);
 
-      final response = await ApiClient.post(
-        '/trips',
-        body: {
-          'destination': _destination,
-          'budget': int.tryParse(_budgetCtrl.text.trim()) ?? 0,
-          'description': _descriptionCtrl.text.trim(),
-          'preferences': _selectedPrefs.toList(),
-          'travelers': _parseTravelerCount(),
-          'travelers_label': _travelers,
-          'start_date': _startDate!.toIso8601String(),
-          'end_date': _endDate!.toIso8601String(),
-        },
-      );
+      final requestBody = <String, dynamic>{
+        'name': '$_destination trip',
+        'destination': _destination,
+        'days': _tripDays(),
+        'countryCode': 'VN',
+        'budget': int.tryParse(_budgetCtrl.text.trim()) ?? 0,
+        'peopleCount': _parseTravelerCount(),
+        'preferences': _selectedPrefs.toList(),
+        'description': _descriptionCtrl.text.trim(),
+      };
+      if (_startDate != null) {
+        requestBody['startDate'] = _apiDate(_startDate!);
+      }
+      if (_endDate != null) {
+        requestBody['endDate'] = _apiDate(_endDate!);
+      }
+      final itineraryExtra = <String, dynamic>{
+        'budget': _budgetCtrl.text.trim(),
+        'description': _descriptionCtrl.text.trim(),
+        'destination': _destination,
+        'preferences': _selectedPrefs.toList(),
+      };
+
+      final canGenerate = await TripGenerationGate.canGenerateTrip();
+
+      if (!canGenerate) {
+        if (!mounted) return;
+
+        context.go(
+          '/purchase',
+          extra: {
+            'pendingTripRequest': requestBody,
+            'itineraryExtra': itineraryExtra,
+          },
+        );
+
+        return;
+      }
+
+      final response =
+          await ApiClient.post('/trips/generate', body: requestBody);
 
       final data = response['data'];
+      if (data is! Map<String, dynamic>) {
+        throw StateError('Invalid trip generation response');
+      }
 
       final tripId =
-          data['id']?.toString() ??
-          data['trip_id']?.toString() ??
-          'new';
+          data['tripId']?.toString() ?? data['id']?.toString() ?? 'new';
 
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            'Trip generated successfully!',
+            l10n.tripGeneratedSuccessfully,
           ),
           backgroundColor: AppTheme.primary,
         ),
@@ -195,19 +231,14 @@ class _TripPlannerScreenState extends State<TripPlannerScreen> {
 
       context.go(
         '/itinerary/$tripId',
-        extra: {
-          'budget': _budgetCtrl.text.trim(),
-          'description': _descriptionCtrl.text.trim(),
-          'destination': _destination,
-          'preferences': _selectedPrefs.toList(),
-        },
+        extra: itineraryExtra,
       );
     } catch (e) {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(e.toString()),
+          content: Text(l10n.generateTripFailed),
           backgroundColor: AppTheme.destructive,
         ),
       );
@@ -228,10 +259,12 @@ class _TripPlannerScreenState extends State<TripPlannerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
-        title: const Text('AI Trip Planner'),
+        title: Text(l10n.aiTripPlanner),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -260,7 +293,7 @@ class _TripPlannerScreenState extends State<TripPlannerScreen> {
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: AppTheme.primary.withOpacity(0.1),
+                        color: AppTheme.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Icon(
@@ -270,19 +303,19 @@ class _TripPlannerScreenState extends State<TripPlannerScreen> {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    const Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Plan Your Journey',
-                          style: TextStyle(
+                          l10n.planYourJourney,
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          'Let AI create the perfect itinerary',
-                          style: TextStyle(
+                          l10n.aiCreatePerfectItinerary,
+                          style: const TextStyle(
                             color: AppTheme.textMuted,
                             fontSize: 12,
                           ),
@@ -291,14 +324,12 @@ class _TripPlannerScreenState extends State<TripPlannerScreen> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 24),
-
                 DropdownButtonFormField<String>(
-                  value: _destination,
-                  decoration: const InputDecoration(
-                    labelText: 'Destination',
-                    prefixIcon: Icon(
+                  initialValue: _destination,
+                  decoration: InputDecoration(
+                    labelText: l10n.destination,
+                    prefixIcon: const Icon(
                       Icons.location_on_outlined,
                       color: AppTheme.primary,
                     ),
@@ -317,57 +348,50 @@ class _TripPlannerScreenState extends State<TripPlannerScreen> {
                     });
                   },
                 ),
-
                 const SizedBox(height: 16),
-
                 Row(
                   children: [
                     Expanded(
                       child: _DateField(
-                        label: 'Start Date',
-                        value: _formatDate(_startDate),
+                        label: l10n.startDate,
+                        value: _formatDate(_startDate, l10n),
                         onTap: () => _pickDate(true),
                       ),
                     ),
-
                     const SizedBox(width: 12),
-
                     Expanded(
                       child: _DateField(
-                        label: 'End Date',
-                        value: _formatDate(_endDate),
+                        label: l10n.endDate,
+                        value: _formatDate(_endDate, l10n),
                         onTap: () => _pickDate(false),
                       ),
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 16),
-
                 TextFormField(
                   controller: _budgetCtrl,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: 'Budget (USD)',
-                    prefixIcon: Icon(
+                  decoration: InputDecoration(
+                    labelText: l10n.budgetUsd,
+                    prefixIcon: const Icon(
                       Icons.attach_money,
                       color: AppTheme.primary,
                     ),
-                    hintText: 'Enter your budget',
+                    hintText: l10n.enterYourBudget,
                   ),
                   validator: (v) => Validators.numeric(
                     v,
-                    'Budget',
+                    l10n.budget,
+                    l10n,
                   ),
                 ),
-
                 const SizedBox(height: 16),
-
                 DropdownButtonFormField<String>(
-                  value: _travelers,
-                  decoration: const InputDecoration(
-                    labelText: 'Number of Travelers',
-                    prefixIcon: Icon(
+                  initialValue: _travelers,
+                  decoration: InputDecoration(
+                    labelText: l10n.numberOfTravelers,
+                    prefixIcon: const Icon(
                       Icons.people_outline,
                       color: AppTheme.primary,
                     ),
@@ -376,7 +400,7 @@ class _TripPlannerScreenState extends State<TripPlannerScreen> {
                       .map(
                         (o) => DropdownMenuItem(
                           value: o,
-                          child: Text(o),
+                          child: Text(_travelerLabel(o, l10n)),
                         ),
                       )
                       .toList(),
@@ -386,18 +410,14 @@ class _TripPlannerScreenState extends State<TripPlannerScreen> {
                     });
                   },
                 ),
-
                 const SizedBox(height: 20),
-
-                const Text(
-                  'Travel Preferences',
-                  style: TextStyle(
+                Text(
+                  l10n.travelPreferences,
+                  style: const TextStyle(
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-
                 const SizedBox(height: 10),
-
                 Wrap(
                   spacing: 8,
                   runSpacing: 8,
@@ -405,7 +425,7 @@ class _TripPlannerScreenState extends State<TripPlannerScreen> {
                     final selected = _selectedPrefs.contains(pref);
 
                     return FilterChip(
-                      label: Text(pref),
+                      label: Text(_preferenceLabel(pref, l10n)),
                       selected: selected,
                       onSelected: (v) {
                         setState(() {
@@ -419,43 +439,32 @@ class _TripPlannerScreenState extends State<TripPlannerScreen> {
                       selectedColor: AppTheme.primary,
                       checkmarkColor: Colors.white,
                       labelStyle: TextStyle(
-                        color: selected
-                            ? Colors.white
-                            : AppTheme.textPrimary,
+                        color: selected ? Colors.white : AppTheme.textPrimary,
                       ),
                     );
                   }).toList(),
                 ),
-
                 const SizedBox(height: 16),
-
-                const Text(
-                  'Additional Preferences',
-                  style: TextStyle(
+                Text(
+                  l10n.additionalPreferences,
+                  style: const TextStyle(
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-
                 const SizedBox(height: 8),
-
                 TextFormField(
                   controller: _descriptionCtrl,
                   maxLines: 3,
-                  decoration: const InputDecoration(
-                    hintText:
-                        'Tell us more about what you like (e.g., hidden gems, local markets, late starts...)',
+                  decoration: InputDecoration(
+                    hintText: l10n.additionalPreferencesHint,
                     alignLabelWithHint: true,
                   ),
                 ),
-
                 const SizedBox(height: 24),
-
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton.icon(
-                    onPressed: _isGenerating
-                        ? null
-                        : _submit,
+                    onPressed: _isGenerating ? null : _submit,
                     icon: _isGenerating
                         ? const SizedBox(
                             width: 18,
@@ -468,8 +477,8 @@ class _TripPlannerScreenState extends State<TripPlannerScreen> {
                         : const Icon(Icons.auto_awesome),
                     label: Text(
                       _isGenerating
-                          ? 'Generating...'
-                          : 'Generate AI Itinerary',
+                          ? l10n.generatingTrip
+                          : l10n.generateAiItinerary,
                     ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
@@ -484,6 +493,40 @@ class _TripPlannerScreenState extends State<TripPlannerScreen> {
         ),
       ),
     );
+  }
+}
+
+String _travelerLabel(String value, AppLocalizations l10n) {
+  switch (value) {
+    case 'Solo (1 person)':
+      return l10n.soloTraveler;
+    case 'Couple (2 people)':
+      return l10n.coupleTravelers;
+    case 'Small Group (3-5)':
+      return l10n.smallGroupTravelers;
+    case 'Large Group (6+)':
+      return l10n.largeGroupTravelers;
+    default:
+      return value;
+  }
+}
+
+String _preferenceLabel(String value, AppLocalizations l10n) {
+  switch (value) {
+    case 'Cultural':
+      return l10n.cultural;
+    case 'Adventure':
+      return l10n.adventure;
+    case 'Relaxation':
+      return l10n.relaxation;
+    case 'Food':
+      return l10n.food;
+    case 'Nature':
+      return l10n.nature;
+    case 'Shopping':
+      return l10n.shopping;
+    default:
+      return value;
   }
 }
 
@@ -521,9 +564,7 @@ class _DateField extends StatelessWidget {
               size: 16,
               color: AppTheme.primary,
             ),
-
             const SizedBox(width: 8),
-
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -4,6 +4,7 @@ public class TripDay : AuditableEntity
 {
     public Guid DayId { get; set; }
     public Guid TripId { get; set; }
+    public int DayNumber { get; set; } = 1;
     public DateOnly Date { get; set; }
     public bool RouteOptimized { get; set; }
 

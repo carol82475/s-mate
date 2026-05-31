@@ -27,6 +27,7 @@ public interface ITripRepository
 {
     Task<IReadOnlyCollection<Trip>> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken);
     Task<Trip?> GetByIdAsync(Guid userId, Guid tripId, CancellationToken cancellationToken);
+    Task<Trip?> GetByIdWithItineraryAsync(Guid userId, Guid tripId, CancellationToken cancellationToken);
     Task AddAsync(Trip trip, CancellationToken cancellationToken);
     Task UpdateAsync(Trip trip, CancellationToken cancellationToken);
     Task DeleteAsync(Trip trip, CancellationToken cancellationToken);

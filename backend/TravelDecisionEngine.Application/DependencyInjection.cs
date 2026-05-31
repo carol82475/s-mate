@@ -25,7 +25,6 @@ public static class DependencyInjection
         services.AddScoped<IDiscoveryService, DiscoveryService>();
         services.AddScoped<IAiTripPlannerService, AiTripPlannerService>();
         services.AddScoped<IChatbotService, ChatbotService>();
-        services.AddScoped<ITravelersService, TravelersService>();
         services.AddScoped<INotificationsService, NotificationsService>();
         services.AddScoped<IAdminCmsService, AdminCmsService>();
 

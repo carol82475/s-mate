@@ -1,12 +1,15 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/theme.dart';
+import '../../l10n/app_localizations.dart';
 
 class IntroScreen extends StatelessWidget {
   const IntroScreen({super.key});
 
   void _showFeatureDetails(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     showModalBottomSheet(
       context: context,
       backgroundColor: AppTheme.cardBg,
@@ -25,17 +28,17 @@ class IntroScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'About S-Mate',
-                style: TextStyle(
+              Text(
+                l10n.aboutSMate,
+                style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'S-Mate is your all-in-one travel companion designed to make every journey seamless and memorable.',
-                style: TextStyle(
+              Text(
+                l10n.aboutSMateDescription,
+                style: const TextStyle(
                   fontSize: 15,
                   height: 1.6,
                   color: AppTheme.textMuted,
@@ -44,34 +47,34 @@ class IntroScreen extends StatelessWidget {
               const SizedBox(height: 20),
               ...[
                 (
-                  'AI Trip Planning',
-                  'Generate personalized itineraries powered by AI. Just enter your destination, dates, and preferences.',
+                  l10n.aiTripPlanning,
+                  l10n.aiTripPlanningDescription,
                   Icons.auto_awesome,
                 ),
                 (
-                  'Interactive Maps',
-                  'Explore destinations with real-time maps, nearby places, and navigation support.',
+                  l10n.interactiveMaps,
+                  l10n.interactiveMapsDescription,
                   Icons.map,
                 ),
                 (
-                  '24/7 AI Assistant',
-                  'Get instant answers about local customs, translations, restaurants, and travel tips.',
+                  l10n.assistant247,
+                  l10n.assistant247Description,
                   Icons.chat_bubble,
                 ),
                 (
-                  'Find Travelers',
-                  'Connect with fellow travelers nearby. Share experiences and explore together.',
-                  Icons.people,
+                  l10n.tripAlbums,
+                  l10n.tripAlbumsFeatureDescription,
+                  Icons.photo_library,
                 ),
                 (
-                  'Emergency Support',
-                  'Access emergency contacts, quick phrases, and safety tips for any situation.',
+                  l10n.emergencySupport,
+                  l10n.emergencySupportDescription,
                   Icons.shield,
                 ),
                 (
-                  'Trip Albums',
-                  'Capture and organize your travel memories with photos and albums.',
-                  Icons.photo_library,
+                  l10n.smartTips,
+                  l10n.smartTipsDescription,
+                  Icons.tips_and_updates,
                 ),
               ].map(
                 (item) => Padding(
@@ -135,7 +138,7 @@ class IntroScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
-                  child: const Text('Get Started'),
+                  child: Text(l10n.getStarted),
                 ),
               ),
               const SizedBox(height: 16),
@@ -148,6 +151,8 @@ class IntroScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       backgroundColor: AppTheme.background,
       body: SafeArea(
@@ -156,7 +161,6 @@ class IntroScreen extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 32),
-
               Container(
                 width: 80,
                 height: 80,
@@ -172,7 +176,7 @@ class IntroScreen extends StatelessWidget {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: AppTheme.primary.withOpacity(0.4),
+                      color: AppTheme.primary.withValues(alpha: 0.4),
                       blurRadius: 20,
                       offset: const Offset(0, 8),
                     ),
@@ -189,32 +193,26 @@ class IntroScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
               const SizedBox(height: 24),
-
-              const Text(
-                'Welcome to S-Mate',
-                style: TextStyle(
+              Text(
+                l10n.welcomeToSMate,
+                style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                   color: AppTheme.textPrimary,
                 ),
               ),
-
               const SizedBox(height: 12),
-
-              const Text(
-                'Your intelligent companion for discovering, planning, and experiencing unforgettable journeys',
+              Text(
+                l10n.introSubtitle,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 15,
                   color: AppTheme.textMuted,
                   height: 1.5,
                 ),
               ),
-
               const SizedBox(height: 32),
-
               ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Image.network(
@@ -233,9 +231,7 @@ class IntroScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
               const SizedBox(height: 32),
-
               GridView.count(
                 crossAxisCount: 2,
                 shrinkWrap: true,
@@ -243,56 +239,52 @@ class IntroScreen extends StatelessWidget {
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
                 childAspectRatio: 1.4,
-                children: const [
+                children: [
                   _FeatureCard(
                     icon: Icons.calendar_today,
-                    title: 'AI Trip Planning',
-                    subtitle: 'Smart itineraries',
+                    title: l10n.aiTripPlanning,
+                    subtitle: l10n.smartItineraries,
                   ),
                   _FeatureCard(
                     icon: Icons.map,
-                    title: 'Interactive Maps',
-                    subtitle: 'Explore destinations',
+                    title: l10n.interactiveMaps,
+                    subtitle: l10n.exploreDestinations,
                   ),
                   _FeatureCard(
                     icon: Icons.chat_bubble,
-                    title: '24/7 AI Assistant',
-                    subtitle: 'Instant answers',
+                    title: l10n.assistant247,
+                    subtitle: l10n.instantAnswers,
                   ),
                   _FeatureCard(
-                    icon: Icons.people,
-                    title: 'Find Travelers',
-                    subtitle: 'Connect globally',
+                    icon: Icons.photo_library,
+                    title: l10n.tripAlbums,
+                    subtitle: l10n.saveMemories,
                   ),
                   _FeatureCard(
                     icon: Icons.shield,
-                    title: 'Local Laws',
-                    subtitle: 'Stay safe',
+                    title: l10n.localLaws,
+                    subtitle: l10n.staySafe,
                   ),
                   _FeatureCard(
                     icon: Icons.auto_awesome,
-                    title: 'Smart Tips',
-                    subtitle: 'Personalized',
+                    title: l10n.smartTips,
+                    subtitle: l10n.personalized,
                   ),
                 ],
               ),
-
               const SizedBox(height: 32),
-
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
                   onPressed: () => context.go('/login'),
                   icon: const Icon(Icons.arrow_forward),
-                  label: const Text('Get Started'),
+                  label: Text(l10n.getStarted),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
                 ),
               ),
-
               const SizedBox(height: 12),
-
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(
@@ -300,20 +292,17 @@ class IntroScreen extends StatelessWidget {
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
-                  child: const Text('Learn More'),
+                  child: Text(l10n.learnMore),
                 ),
               ),
-
               const SizedBox(height: 24),
-
-              const Text(
-                '© 2026 S-Mate. All rights reserved.',
-                style: TextStyle(
+              Text(
+                l10n.copyright,
+                style: const TextStyle(
                   fontSize: 12,
                   color: AppTheme.textMuted,
                 ),
               ),
-
               const SizedBox(height: 16),
             ],
           ),
@@ -385,3 +374,4 @@ class _FeatureCard extends StatelessWidget {
     );
   }
 }
+

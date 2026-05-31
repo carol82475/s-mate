@@ -14,5 +14,5 @@ public record UserProfileResponse(
 
 public record UpdateUserProfileRequest(string? Nationality, string? DietPreference, string? BudgetPreference);
 public record UpdateLanguageRequest(string Language);
-public record UpdatePrivacyRequest(bool ProfileVisible, bool TravelersVisible);
+public record UpdatePrivacyRequest(bool ProfileVisible);
 public record UpdatePreferencesRequest(string? DietPreference, string? BudgetPreference);

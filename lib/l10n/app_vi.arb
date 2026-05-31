@@ -1,0 +1,534 @@
+{
+  "@@locale": "vi",
+  "vietnam": "Việt Nam",
+  "appName": "S-Mate",
+  "login": "Đăng nhập",
+  "register": "Đăng ký",
+  "email": "Email",
+  "emailHint": "you@example.com",
+  "password": "Mật khẩu",
+  "home": "Trang chủ",
+  "profile": "Hồ sơ",
+  "tripPlanner": "Lập kế hoạch chuyến đi",
+  "generateItinerary": "Tạo lịch trình",
+  "destination": "Điểm đến",
+  "budget": "Ngân sách",
+  "peopleCount": "Số người",
+  "startDate": "Ngày bắt đầu",
+  "endDate": "Ngày kết thúc",
+  "save": "Lưu",
+  "cancel": "Hủy",
+  "logout": "Đăng xuất",
+  "notifications": "Thông báo",
+  "settings": "Cài đặt",
+  "language": "Ngôn ngữ",
+  "loading": "Đang tải",
+  "error": "Lỗi",
+  "success": "Thành công",
+  "retry": "Thử lại",
+  "myTrip": "Chuyến đi của tôi",
+  "scan": "Quét",
+  "map": "Bản đồ",
+  "aiChat": "Trò chuyện AI",
+  "all": "Tất cả",
+  "upcoming": "Sắp tới",
+  "inProgress": "Đang diễn ra",
+  "completed": "Đã hoàn thành",
+  "cancelled": "Đã hủy",
+  "couldNotLoadTrips": "Không thể tải chuyến đi",
+  "couldNotLoadTripsMessage": "Hiện tại chúng tôi không thể tải chuyến đi của bạn. Vui lòng thử lại.",
+  "tryAgain": "Thử lại",
+  "noTripsYet": "Chưa có chuyến đi",
+  "noTripsYetMessage": "Tạo lịch trình AI đầu tiên và nó sẽ xuất hiện tại đây.",
+  "noTripsFoundForFilter": "Không có chuyến đi phù hợp với bộ lọc",
+  "createNewTrip": "Tạo chuyến đi mới",
+  "destinationPending": "Chưa chọn điểm đến",
+  "defaultTripName": "Chuyến đi {destination}",
+  "@defaultTripName": {
+    "placeholders": {
+      "destination": {}
+    }
+  },
+  "budgetValue": "Ngân sách: {value}",
+  "@budgetValue": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "close": "Đóng",
+  "back": "Quay lại",
+  "create": "Tạo",
+  "update": "Cập nhật",
+  "edit": "Sửa",
+  "done": "Xong",
+  "customize": "Tùy chỉnh",
+  "openMap": "Mở bản đồ",
+  "createTrip": "Tạo chuyến đi",
+  "welcomeBackTraveler": "Chào mừng trở lại, du khách!",
+  "planNextAdventure": "Lên kế hoạch cho chuyến phiêu lưu tiếp theo",
+  "itineraryReminder": "Nhắc lịch trình",
+  "nextActivitySoon": "Hoạt động tiếp theo của bạn sắp bắt đầu.",
+  "mapUpdate": "Cập nhật bản đồ",
+  "nearbyRecommendationsReady": "Các gợi ý gần bạn đã sẵn sàng để khám phá.",
+  "albumReminder": "Nhắc album",
+  "addTodaysPhotos": "Thêm ảnh hôm nay vào album chuyến đi.",
+  "timeAgoHours": "{hours} giờ trước",
+  "@timeAgoHours": {
+    "placeholders": {
+      "hours": {}
+    }
+  },
+  "timeAgoDays": "{days} ngày trước",
+  "@timeAgoDays": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "planYourFirstTrip": "Lên kế hoạch chuyến đi đầu tiên",
+  "chooseDestination": "Chọn điểm đến của bạn",
+  "newStatus": "Mới",
+  "action": "Hành động",
+  "generateTrip": "Tạo chuyến đi",
+  "generateTripDescription": "Tạo lịch trình AI mới từ ngày đi và ngân sách của bạn.",
+  "currentTrip": "Chuyến đi hiện tại",
+  "currentTrips": "Chuyến đi hiện tại",
+  "viewMyTrips": "Xem chuyến đi của tôi",
+  "viewItinerary": "Xem lịch trình",
+  "popularDestinations": "Điểm đến phổ biến",
+  "welcomeBack": "Chào mừng trở lại",
+  "createAccount": "Tạo tài khoản",
+  "signInContinueJourney": "Đăng nhập để tiếp tục hành trình",
+  "signUpStartAdventure": "Đăng ký để bắt đầu lên kế hoạch cho chuyến phiêu lưu tiếp theo",
+  "loginSuccessful": "Đăng nhập thành công!",
+  "accountCreatedSuccessfully": "Tạo tài khoản thành công!",
+  "resetPassword": "Đặt lại mật khẩu",
+  "resetPasswordInstructions": "Nhập email của bạn và chúng tôi sẽ gửi liên kết đặt lại.",
+  "sendResetLink": "Gửi liên kết đặt lại",
+  "passwordResetOtpSent": "Đã gửi mã OTP đặt lại mật khẩu!",
+  "fullName": "Họ và tên",
+  "fullNameHint": "John Doe",
+  "location": "Vị trí",
+  "locationHint": "San Francisco, USA",
+  "forgotPassword": "Quên mật khẩu?",
+  "signUp": "Đăng ký",
+  "dontHaveAccount": "Chưa có tài khoản? ",
+  "alreadyHaveAccount": "Đã có tài khoản? ",
+  "yourName": "tên của bạn",
+  "yourLocation": "vị trí của bạn",
+  "displayName": "Tên hiển thị",
+  "editProfile": "Chỉnh sửa hồ sơ",
+  "profileUpdated": "Đã cập nhật hồ sơ!",
+  "saveChanges": "Lưu thay đổi",
+  "selectLanguage": "Chọn ngôn ngữ",
+  "languageEnglish": "English",
+  "languageVietnamese": "Tiếng Việt",
+  "languageFrench": "Français",
+  "languageGerman": "Deutsch",
+  "languageKorean": "한국어",
+  "languageChinese": "中文",
+  "languageChangedTo": "Đã đổi ngôn ngữ sang {language}",
+  "@languageChangedTo": {
+    "placeholders": {
+      "language": {}
+    }
+  },
+  "notificationsEnabled": "Đã bật thông báo",
+  "notificationsDisabled": "Đã tắt thông báo",
+  "privacy": "Quyền riêng tư",
+  "privacySetting": "Cài đặt quyền riêng tư",
+  "privacySetTo": "Quyền riêng tư đặt thành {privacy}",
+  "@privacySetTo": {
+    "placeholders": {
+      "privacy": {}
+    }
+  },
+  "changePassword": "Đổi mật khẩu",
+  "newPassword": "Mật khẩu mới",
+  "passwordUpdatedSuccessfully": "Cập nhật mật khẩu thành công!",
+  "updatePassword": "Cập nhật mật khẩu",
+  "failedSignOut": "Không thể đăng xuất. Vui lòng thử lại.",
+  "signOut": "Đăng xuất",
+  "signOutConfirmation": "Bạn có chắc muốn đăng xuất không?",
+  "traveler": "Du khách",
+  "unknown": "Không rõ",
+  "unknownDestination": "Điểm đến không rõ",
+  "countries": "Quốc gia",
+  "trips": "Chuyến đi",
+  "locations": "Địa điểm",
+  "days": "Ngày",
+  "tripHistory": "Lịch sử chuyến đi",
+  "enabled": "Đã bật",
+  "disabled": "Đã tắt",
+  "public": "Công khai",
+  "friendsOnly": "Chỉ bạn bè",
+  "private": "Riêng tư",
+  "planned": "Đã lên kế hoạch",
+  "unknownTrip": "Chuyến đi không rõ",
+  "aiTripPlanner": "Trình lập kế hoạch AI",
+  "planYourJourney": "Lên kế hoạch hành trình",
+  "aiCreatePerfectItinerary": "Để AI tạo lịch trình hoàn hảo",
+  "selectDate": "Chọn ngày",
+  "pleaseSelectDates": "Vui lòng chọn ngày bắt đầu và kết thúc",
+  "endDateAfterStartDate": "Ngày kết thúc phải sau ngày bắt đầu",
+  "tripGeneratedSuccessfully": "Tạo chuyến đi thành công!",
+  "generateTripFailed": "Không thể tạo chuyến đi. Vui lòng thử lại.",
+  "aiGeneratedTrip": "Chuyến đi do AI tạo",
+  "fallbackItineraryUsed": "Đã dùng lịch trình dự phòng",
+  "budgetUsd": "Ngân sách (USD)",
+  "enterYourBudget": "Nhập ngân sách của bạn",
+  "numberOfTravelers": "Số du khách",
+  "travelPreferences": "Sở thích du lịch",
+  "additionalPreferences": "Sở thích bổ sung",
+  "additionalPreferencesHint": "Cho chúng tôi biết thêm điều bạn thích (ví dụ: điểm ẩn, chợ địa phương, khởi hành muộn...)",
+  "generating": "Đang tạo...",
+  "generatingTrip": "Đang tạo chuyến đi...",
+  "generateAiItinerary": "Tạo lịch trình AI",
+  "soloTraveler": "Đi một mình (1 người)",
+  "coupleTravelers": "Cặp đôi (2 người)",
+  "smallGroupTravelers": "Nhóm nhỏ (3-5)",
+  "largeGroupTravelers": "Nhóm lớn (6+)",
+  "cultural": "Văn hóa",
+  "adventure": "Phiêu lưu",
+  "relaxation": "Thư giãn",
+  "food": "Ẩm thực",
+  "nature": "Thiên nhiên",
+  "shopping": "Mua sắm",
+  "tripDay": "Ngày trong chuyến đi",
+  "tripItinerary": "Lịch trình chuyến đi",
+  "tripSavedSuccessfully": "Đã lưu chuyến đi!",
+  "newActivity": "Hoạt động mới",
+  "customActivity": "Hoạt động tùy chỉnh",
+  "editDayTitle": "Sửa tiêu đề ngày",
+  "dayTitle": "Tiêu đề ngày",
+  "previewYourPlan": "Xem trước kế hoạch",
+  "tripProgress": "Tiến độ chuyến đi",
+  "completedCount": "Đã hoàn thành {completed}/{total}",
+  "@completedCount": {
+    "placeholders": {
+      "completed": {},
+      "total": {}
+    }
+  },
+  "confirmSavePlan": "Xác nhận và lưu kế hoạch",
+  "dayNumber": "NGÀY {day}",
+  "@dayNumber": {
+    "placeholders": {
+      "day": {}
+    }
+  },
+  "addActivity": "Thêm hoạt động",
+  "arrivalLocalDiscovery": "Đến nơi & khám phá địa phương",
+  "cityLandmarkVisit": "Thăm biểu tượng thành phố",
+  "localFoodExperience": "Trải nghiệm ẩm thực địa phương",
+  "culturalSite": "Điểm văn hóa",
+  "eveningWalk": "Dạo buổi tối",
+  "adventureExploration": "Phiêu lưu & khám phá",
+  "morningExcursion": "Chuyến đi buổi sáng",
+  "lunchBreak": "Nghỉ ăn trưa",
+  "outdoorActivity": "Hoạt động ngoài trời",
+  "dinnerRelaxation": "Ăn tối & thư giãn",
+  "relaxedFinalDay": "Ngày cuối thư thái",
+  "slowMorning": "Buổi sáng chậm rãi",
+  "souvenirShopping": "Mua quà lưu niệm",
+  "finalPhotoSpot": "Điểm chụp ảnh cuối",
+  "exploringSaigon": "Khám phá Sài Gòn",
+  "mockLandmarkDescription": "Bắt đầu chuyến đi với một biểu tượng địa phương nổi tiếng.",
+  "mockFoodDescription": "Thử món ăn địa phương chính gốc gần trung tâm thành phố.",
+  "mockCulturalDescription": "Thăm bảo tàng, đền chùa hoặc điểm văn hóa.",
+  "mockEveningDescription": "Tận hưởng không khí thành phố vào buổi tối.",
+  "mockExcursionDescription": "Đi một chuyến ngắn tới điểm tham quan gần đó.",
+  "mockLunchDescription": "Nạp năng lượng tại một nhà hàng địa phương được gợi ý.",
+  "mockOutdoorDescription": "Khám phá thiên nhiên, chợ hoặc những điểm ẩn.",
+  "mockDinnerDescription": "Kết thúc ngày bằng bữa tối thư giãn.",
+  "mockSlowMorningDescription": "Bắt đầu chậm rãi hơn với cà phê hoặc bữa sáng.",
+  "mockSouvenirDescription": "Mua quà lưu niệm hoặc ghé chợ địa phương.",
+  "mockPhotoDescription": "Ghi lại kỷ niệm cuối trước khi rời đi.",
+  "scanDemoResult": "Đang hiển thị kết quả demo cho đến khi API kiểm tra giá khả dụng.",
+  "estimatedLocalPrice": "Giá địa phương ước tính",
+  "detectedPrice": "Giá phát hiện",
+  "advice": "Lời khuyên",
+  "cameraPreview": "Xem trước camera",
+  "cameraPreviewHint": "Hướng vào món đồ, hóa đơn hoặc giá trên menu.",
+  "checkingPrice": "Đang kiểm tra giá...",
+  "scanItemMenu": "Quét món đồ hoặc menu",
+  "takePhoto": "Chụp ảnh",
+  "upload": "Tải lên",
+  "priceCheckInfo": "Kiểm tra giá so sánh giá phát hiện với mức giá địa phương khi backend scanner được kết nối.",
+  "scannedItem": "Mục đã quét",
+  "pending": "Đang chờ",
+  "unknownWarning": "Không rõ",
+  "scanAdviceDefault": "Hãy đối chiếu giá với tham khảo địa phương trước khi thanh toán.",
+  "menuItem": "Món trên menu",
+  "apiPending": "API đang chờ",
+  "demo": "Demo",
+  "scanBackendPending": "Backend scanner chưa được kết nối. Dùng bố cục này làm bề mặt kết quả tương lai.",
+  "usingOfflinePlaces": "Đang dùng địa điểm ngoại tuyến.",
+  "zoomPercent": "Thu phóng: {percent}%",
+  "@zoomPercent": {
+    "placeholders": {
+      "percent": {}
+    }
+  },
+  "centeringLocation": "Đang căn giữa vị trí của bạn...",
+  "searchPlaces": "Tìm địa điểm...",
+  "mapExplorer": "Khám phá bản đồ",
+  "myLocation": "Vị trí của tôi",
+  "search": "Tìm kiếm",
+  "zoomIn": "Phóng to",
+  "zoomOut": "Thu nhỏ",
+  "nearbyPlaces": "Địa điểm gần đây",
+  "foundCount": "Tìm thấy {count}",
+  "@foundCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "noPlacesFound": "Không tìm thấy địa điểm",
+  "place": "Địa điểm",
+  "unknownPlace": "Địa điểm không rõ",
+  "nearby": "Gần đây",
+  "coffeeShop": "Quán cà phê",
+  "vietnameseRestaurant": "Nhà hàng Việt Nam",
+  "market": "Chợ",
+  "aiTravelAssistant": "Trợ lý du lịch AI",
+  "alwaysHereToHelp": "Luôn sẵn sàng hỗ trợ",
+  "askMeAnything": "Hỏi tôi bất cứ điều gì...",
+  "suggestedQuestions": "Câu hỏi gợi ý",
+  "assistantGreeting": "Xin chào! Tôi là trợ lý du lịch AI của bạn. Tôi có thể giúp bạn với gợi ý địa phương, dịch thuật, mẹo văn hóa và câu hỏi du lịch. Hôm nay tôi có thể giúp gì?",
+  "assistantFallback": "Tôi có thể giúp việc đó. Bạn có thể cung cấp thêm chi tiết không?",
+  "assistantConnectionError": "Xin lỗi, tôi không thể kết nối tới trợ lý AI.",
+  "suggestionBestTimeHaLong": "Thời điểm tốt nhất để thăm Ha Long Bay là khi nào?",
+  "suggestionVietnameseRestaurants": "Gợi ý nhà hàng Việt Nam chính gốc",
+  "suggestionHanoiToSapa": "Làm sao đi từ Hanoi đến Sapa?",
+  "suggestionLocalCustoms": "Tôi nên biết phong tục địa phương nào?",
+  "completeYourPurchase": "Hoàn tất mua hàng",
+  "paymentInformation": "Thông tin thanh toán",
+  "choosePlanUnlock": "Chọn gói và mở khóa trải nghiệm du lịch cá nhân hóa",
+  "mostPopular": "Phổ biến nhất",
+  "perTrip": " /chuyến",
+  "selected": "Đã chọn",
+  "selectPlan": "Chọn gói",
+  "continueToPayment": "Tiếp tục thanh toán - {price}",
+  "@continueToPayment": {
+    "placeholders": {
+      "price": {}
+    }
+  },
+  "purchaseSuccessful": "Mua hàng thành công!",
+  "planActiveEnjoyTrip": "Gói của bạn đã kích hoạt. Chúc bạn có chuyến đi vui vẻ!",
+  "openItinerary": "Mở lịch trình",
+  "goToHome": "Về trang chủ",
+  "required": "Bắt buộc",
+  "cardNumber": "Số thẻ",
+  "cardholderName": "Tên chủ thẻ",
+  "cardholderNameHint": "John Doe",
+  "expiryDate": "Ngày hết hạn",
+  "expiryDateHint": "MM/YY",
+  "cvv": "CVV",
+  "demoPaymentWarning": "Đây là thanh toán demo. Không nhập thông tin thẻ thật.",
+  "processing": "Đang xử lý...",
+  "completePurchase": "Hoàn tất mua - {price}",
+  "@completePurchase": {
+    "placeholders": {
+      "price": {}
+    }
+  },
+  "basicPlan": "Gói cơ bản",
+  "premiumPlan": "Gói cao cấp",
+  "proPlan": "Gói Pro",
+  "sevenDays": "7 ngày",
+  "fourteenDays": "14 ngày",
+  "thirtyDays": "30 ngày",
+  "unlimitedPlanning": "Lập kế hoạch không giới hạn",
+  "fullMapAccess": "Truy cập bản đồ đầy đủ",
+  "smartAiSuggestions": "Gợi ý AI thông minh",
+  "premiumFeatures": "Tính năng cao cấp",
+  "prioritySupport": "Hỗ trợ ưu tiên",
+  "plan": "Gói",
+  "tripAlbums": "Album chuyến đi",
+  "newAlbum": "Album mới",
+  "createNewAlbum": "Tạo album mới",
+  "albumName": "Tên album",
+  "albumNameHint": "ví dụ: Phiêu lưu Hanoi",
+  "description": "Mô tả",
+  "publicAlbum": "Album công khai",
+  "albumCreated": "Đã tạo album!",
+  "noAlbumsYet": "Chưa có album",
+  "createFirstAlbum": "Tạo album đầu tiên của bạn",
+  "createAlbum": "Tạo album",
+  "untitledAlbum": "Album chưa đặt tên",
+  "tripCamera": "Camera chuyến đi",
+  "savePhoto": "Lưu ảnh",
+  "caption": "Chú thích",
+  "captionHint": "Viết điều gì đó về bức ảnh này...",
+  "photoLocationHint": "ví dụ: Da Lat, Vietnam",
+  "cameraSource": "camera",
+  "gallerySource": "thư viện",
+  "mustLoginUploadPhotos": "Bạn phải đăng nhập trước khi tải ảnh lên.",
+  "photoReadyUploadUnavailable": "Ảnh đã sẵn sàng. Backend tải lên chưa khả dụng.",
+  "photoSaveFailed": "Không thể lưu ảnh. Vui lòng thử lại.",
+  "photoSaveFailedWithMessage": "Không thể lưu ảnh: {message}",
+  "@photoSaveFailedWithMessage": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "tripCameraPermissionDenied": "Quyền bị từ chối. Vui lòng cho phép truy cập {source} và thử lại.",
+  "@tripCameraPermissionDenied": {
+    "placeholders": {
+      "source": {}
+    }
+  },
+  "couldNotOpenSource": "Không thể mở {source}. {message}",
+  "@couldNotOpenSource": {
+    "placeholders": {
+      "source": {},
+      "message": {}
+    }
+  },
+  "couldNotSelectPhoto": "Không thể chọn ảnh. Vui lòng thử lại.",
+  "viewAlbums": "Xem album",
+  "readyCaptureMoment": "Sẵn sàng ghi lại khoảnh khắc?",
+  "tapOpenCamera": "Nhấn bên dưới để mở camera",
+  "openCamera": "Mở camera",
+  "uploadFromGallery": "Tải lên từ thư viện",
+  "photoUploadBackendInfo": "Tải ảnh lên sẽ được bật khi backend thêm lưu trữ album",
+  "emergencySupport": "Hỗ trợ khẩn cấp",
+  "playingPhrase": "Đang phát: {phrase}",
+  "@playingPhrase": {
+    "placeholders": {
+      "phrase": {}
+    }
+  },
+  "quickTalk": "Câu nói nhanh",
+  "emergencyContacts": "Liên hệ khẩn cấp",
+  "emergency": "Khẩn cấp",
+  "police": "Cảnh sát",
+  "fire": "Cứu hỏa",
+  "ambulance": "Cấp cứu",
+  "general": "Chung",
+  "medical": "Y tế",
+  "incident": "Sự cố",
+  "security": "An ninh",
+  "navigation": "Điều hướng",
+  "communication": "Giao tiếp",
+  "call": "Gọi",
+  "quickTips": "Mẹo nhanh",
+  "tipHotelAddress": "Luôn mang theo địa chỉ khách sạn bằng tiếng Việt.",
+  "tipPhoneBattery": "Kiểm tra pin điện thoại trước khi ra ngoài.",
+  "tipSaveEmergencyContacts": "Lưu số liên hệ khẩn cấp trong điện thoại.",
+  "phraseHelpMe": "Làm ơn giúp tôi!",
+  "phraseHospital": "Bệnh viện gần nhất ở đâu?",
+  "phraseLostWalletPassport": "Tôi bị mất ví/hộ chiếu.",
+  "phraseCallPolice": "Tôi cần gọi cảnh sát.",
+  "phraseLost": "Tôi bị lạc.",
+  "phraseSpeakEnglish": "Bạn có nói tiếng Anh không?",
+  "aboutSMate": "Giới thiệu S-Mate",
+  "aboutSMateDescription": "S-Mate là người bạn đồng hành du lịch tất cả trong một, giúp mọi hành trình mượt mà và đáng nhớ.",
+  "aiTripPlanning": "Lập kế hoạch AI",
+  "aiTripPlanningDescription": "Tạo lịch trình cá nhân hóa bằng AI. Chỉ cần nhập điểm đến, ngày đi và sở thích.",
+  "interactiveMaps": "Bản đồ tương tác",
+  "interactiveMapsDescription": "Khám phá điểm đến với bản đồ thời gian thực, địa điểm gần bạn và hỗ trợ điều hướng.",
+  "assistant247": "Trợ lý AI 24/7",
+  "assistant247Description": "Nhận câu trả lời tức thì về phong tục địa phương, dịch thuật, nhà hàng và mẹo du lịch.",
+  "tripAlbumsFeatureDescription": "Ghi lại và sắp xếp kỷ niệm du lịch bằng ảnh và album.",
+  "emergencySupportDescription": "Truy cập liên hệ khẩn cấp, câu nói nhanh và mẹo an toàn cho mọi tình huống.",
+  "smartTips": "Mẹo thông minh",
+  "smartTipsDescription": "Nhận gợi ý du lịch cá nhân hóa cho kế hoạch và điểm đến của bạn.",
+  "getStarted": "Bắt đầu",
+  "welcomeToSMate": "Chào mừng đến với S-Mate",
+  "introSubtitle": "Người bạn đồng hành thông minh để khám phá, lên kế hoạch và trải nghiệm những hành trình khó quên",
+  "smartItineraries": "Lịch trình thông minh",
+  "exploreDestinations": "Khám phá điểm đến",
+  "instantAnswers": "Câu trả lời tức thì",
+  "saveMemories": "Lưu kỷ niệm",
+  "localLaws": "Luật địa phương",
+  "staySafe": "Giữ an toàn",
+  "personalized": "Cá nhân hóa",
+  "learnMore": "Tìm hiểu thêm",
+  "copyright": "© 2026 S-Mate. Đã đăng ký bản quyền.",
+  "validationRequiredField": "Vui lòng nhập {fieldName}",
+  "@validationRequiredField": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "validationEmailRequired": "Vui lòng nhập email của bạn",
+  "validationEmailInvalid": "Nhập địa chỉ email hợp lệ",
+  "validationPasswordRequired": "Vui lòng nhập mật khẩu",
+  "validationPasswordMinLength": "Mật khẩu phải có ít nhất {min} ký tự",
+  "@validationPasswordMinLength": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "validationPasswordTooLong": "Mật khẩu quá dài",
+  "validationPasswordComplexity": "Mật khẩu phải có chữ hoa, số và ký tự đặc biệt",
+  "validationConfirmPasswordRequired": "Vui lòng xác nhận mật khẩu",
+  "validationPasswordsDoNotMatch": "Mật khẩu không khớp",
+  "validationNumberInvalid": "{fieldName} phải là số hợp lệ",
+  "@validationNumberInvalid": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "validationNumberNegative": "{fieldName} không được âm",
+  "@validationNumberNegative": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "validationMinLength": "{fieldName} phải có ít nhất {min} ký tự",
+  "@validationMinLength": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      },
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "validationMaxLength": "{fieldName} phải ít hơn {max} ký tự",
+  "@validationMaxLength": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "validationPhoneRequired": "Vui lòng nhập số điện thoại",
+  "validationPhoneInvalid": "Số điện thoại không hợp lệ",
+  "validationBudgetTooLow": "Ngân sách quá thấp",
+  "validationUsernameRequired": "Vui lòng nhập tên người dùng",
+  "validationUsernameMinLength": "Tên người dùng phải có ít nhất {min} ký tự",
+  "@validationUsernameMinLength": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "validationUsernameTooLong": "Tên người dùng quá dài",
+  "validationUsernameInvalid": "Tên người dùng chỉ được chứa chữ cái, số và dấu gạch dưới",
+  "validationDescriptionMaxLength": "Mô tả phải ít hơn {maxLength} ký tự",
+  "@validationDescriptionMaxLength": {
+    "placeholders": {
+      "maxLength": {
+        "type": "int"
+      }
+    }
+  },
+  "continueTrip": "Tiếp tục chuyến đi"
+}

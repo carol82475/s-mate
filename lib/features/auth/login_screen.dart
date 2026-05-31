@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../core/api_client.dart';
 import '../../core/theme.dart';
 import '../../core/validators.dart';
+import '../../l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -27,23 +28,21 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
     setState(() => _isLoading = true);
+    final l10n = AppLocalizations.of(context);
 
     try {
-      final supabase = Supabase.instance.client;
-
       if (_isLogin) {
-        await supabase.auth.signInWithPassword(
+        await ApiClient.login(
           email: _emailCtrl.text.trim(),
           password: _passwordCtrl.text.trim(),
         );
       } else {
-        await supabase.auth.signUp(
+        await ApiClient.register(
           email: _emailCtrl.text.trim(),
           password: _passwordCtrl.text.trim(),
-          data: {
-            'full_name': _nameCtrl.text.trim(),
-            'location': _locationCtrl.text.trim(),
-          },
+          nationality: _locationCtrl.text.trim().isEmpty
+              ? null
+              : _locationCtrl.text.trim(),
         );
       }
 
@@ -52,24 +51,13 @@ class _LoginScreenState extends State<LoginScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            _isLogin
-                ? 'Login successful!'
-                : 'Account created successfully!',
+            _isLogin ? l10n.loginSuccessful : l10n.accountCreatedSuccessfully,
           ),
           backgroundColor: AppTheme.success,
         ),
       );
 
       context.go('/home');
-    } on AuthException catch (e) {
-      if (!mounted) return;
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.message),
-          backgroundColor: AppTheme.destructive,
-        ),
-      );
     } catch (e) {
       if (!mounted) return;
 
@@ -88,6 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _forgotPassword() async {
     final emailCtrl = TextEditingController(text: _emailCtrl.text);
+    final l10n = AppLocalizations.of(context);
 
     showModalBottomSheet(
       context: context,
@@ -107,23 +96,23 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Reset Password',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Text(
+              l10n.resetPassword,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Enter your email and we will send you a reset link.',
-              style: TextStyle(color: AppTheme.textMuted),
+            Text(
+              l10n.resetPasswordInstructions,
+              style: const TextStyle(color: AppTheme.textMuted),
             ),
             const SizedBox(height: 20),
             TextField(
               controller: emailCtrl,
               keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                labelText: 'Email',
-                prefixIcon: Icon(Icons.email_outlined),
-                hintText: 'you@example.com',
+              decoration: InputDecoration(
+                labelText: l10n.email,
+                prefixIcon: const Icon(Icons.email_outlined),
+                hintText: l10n.emailHint,
               ),
             ),
             const SizedBox(height: 20),
@@ -133,21 +122,25 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: ElevatedButton(
                     onPressed: () async {
                       try {
-                        await Supabase.instance.client.auth.resetPasswordForEmail(
-                          emailCtrl.text.trim(),
+                        await ApiClient.post(
+                          '/auth/forgot-password',
+                          auth: false,
+                          body: {
+                            'email': emailCtrl.text.trim(),
+                          },
                         );
 
-                        if (!context.mounted) return;
+                        if (!mounted) return;
                         Navigator.pop(context);
 
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Password reset link sent!'),
+                          SnackBar(
+                            content: Text(l10n.passwordResetOtpSent),
                             backgroundColor: AppTheme.primary,
                           ),
                         );
                       } catch (e) {
-                        if (!context.mounted) return;
+                        if (!mounted) return;
 
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -157,14 +150,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         );
                       }
                     },
-                    child: const Text('Send Reset Link'),
+                    child: Text(l10n.sendResetLink),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('Cancel'),
+                    child: Text(l10n.cancel),
                   ),
                 ),
               ],
@@ -187,6 +180,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       backgroundColor: AppTheme.background,
       body: SafeArea(
@@ -200,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextButton.icon(
                   onPressed: () => context.go('/'),
                   icon: const Icon(Icons.arrow_back, size: 18),
-                  label: const Text('Back'),
+                  label: Text(l10n.back),
                   style: TextButton.styleFrom(
                     foregroundColor: AppTheme.textMuted,
                   ),
@@ -213,7 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         blurRadius: 20,
                         offset: const Offset(0, 10),
                       ),
@@ -226,7 +221,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _isLogin ? 'Welcome Back' : 'Create Account',
+                          _isLogin ? l10n.welcomeBack : l10n.createAccount,
                           style: const TextStyle(
                             fontSize: 26,
                             fontWeight: FontWeight.bold,
@@ -236,53 +231,56 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: 6),
                         Text(
                           _isLogin
-                              ? 'Sign in to continue your journey'
-                              : 'Sign up to start planning your next adventure',
+                              ? l10n.signInContinueJourney
+                              : l10n.signUpStartAdventure,
                           style: const TextStyle(color: AppTheme.textMuted),
                         ),
                         const SizedBox(height: 32),
-
                         if (!_isLogin) ...[
                           TextFormField(
                             controller: _nameCtrl,
-                            decoration: const InputDecoration(
-                              labelText: 'Full Name',
-                              prefixIcon: Icon(Icons.person_outline),
-                              hintText: 'John Doe',
+                            decoration: InputDecoration(
+                              labelText: l10n.fullName,
+                              prefixIcon: const Icon(Icons.person_outline),
+                              hintText: l10n.fullNameHint,
                             ),
-                            validator: (v) => Validators.required(v, 'your name'),
+                            validator: (v) =>
+                                Validators.required(v, l10n.yourName, l10n),
                           ),
                           const SizedBox(height: 16),
                           TextFormField(
                             controller: _locationCtrl,
-                            decoration: const InputDecoration(
-                              labelText: 'Location',
-                              prefixIcon: Icon(Icons.location_on_outlined),
-                              hintText: 'San Francisco, USA',
+                            decoration: InputDecoration(
+                              labelText: l10n.location,
+                              prefixIcon:
+                                  const Icon(Icons.location_on_outlined),
+                              hintText: l10n.locationHint,
                             ),
                             validator: (v) =>
-                                Validators.required(v, 'your location'),
+                                Validators.required(
+                                  v,
+                                  l10n.yourLocation,
+                                  l10n,
+                                ),
                           ),
                           const SizedBox(height: 16),
                         ],
-
                         TextFormField(
                           controller: _emailCtrl,
                           keyboardType: TextInputType.emailAddress,
-                          decoration: const InputDecoration(
-                            labelText: 'Email',
-                            prefixIcon: Icon(Icons.email_outlined),
-                            hintText: 'you@example.com',
+                          decoration: InputDecoration(
+                            labelText: l10n.email,
+                            prefixIcon: const Icon(Icons.email_outlined),
+                            hintText: l10n.emailHint,
                           ),
-                          validator: Validators.email,
+                          validator: (v) => Validators.email(v, l10n),
                         ),
                         const SizedBox(height: 16),
-
                         TextFormField(
                           controller: _passwordCtrl,
                           obscureText: _obscurePassword,
                           decoration: InputDecoration(
-                            labelText: 'Password',
+                            labelText: l10n.password,
                             prefixIcon: const Icon(Icons.lock_outline),
                             hintText: '••••••••',
                             suffixIcon: IconButton(
@@ -298,18 +296,17 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                             ),
                           ),
-                          validator: Validators.password,
+                          validator: (v) => Validators.password(v, l10n),
                         ),
-
                         if (_isLogin) ...[
                           const SizedBox(height: 8),
                           Align(
                             alignment: Alignment.centerRight,
                             child: TextButton(
                               onPressed: _forgotPassword,
-                              child: const Text(
-                                'Forgot password?',
-                                style: TextStyle(
+                              child: Text(
+                                l10n.forgotPassword,
+                                style: const TextStyle(
                                   color: AppTheme.primary,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -317,9 +314,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ],
-
                         const SizedBox(height: 24),
-
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton.icon(
@@ -338,12 +333,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ? Icons.login
                                         : Icons.person_add_outlined,
                                   ),
-                            label: Text(_isLogin ? 'Login' : 'Sign Up'),
+                            label: Text(_isLogin ? l10n.login : l10n.signUp),
                           ),
                         ),
-
                         const SizedBox(height: 24),
-
                         Center(
                           child: TextButton(
                             onPressed: () {
@@ -357,11 +350,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 children: [
                                   TextSpan(
                                     text: _isLogin
-                                        ? "Don't have an account? "
-                                        : "Already have an account? ",
+                                        ? l10n.dontHaveAccount
+                                        : l10n.alreadyHaveAccount,
                                   ),
                                   TextSpan(
-                                    text: _isLogin ? 'Sign up' : 'Login',
+                                    text: _isLogin ? l10n.signUp : l10n.login,
                                     style: const TextStyle(
                                       color: AppTheme.primary,
                                       fontWeight: FontWeight.bold,

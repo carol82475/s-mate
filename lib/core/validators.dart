@@ -1,3 +1,5 @@
+import '../l10n/app_localizations.dart';
+
 class Validators {
   // =========================
   // Required Field
@@ -5,9 +7,10 @@ class Validators {
   static String? required(
     String? value,
     String fieldName,
+    AppLocalizations l10n,
   ) {
     if (value == null || value.trim().isEmpty) {
-      return 'Please enter $fieldName';
+      return l10n.validationRequiredField(fieldName);
     }
 
     return null;
@@ -16,9 +19,9 @@ class Validators {
   // =========================
   // Email Validator
   // =========================
-  static String? email(String? value) {
+  static String? email(String? value, AppLocalizations l10n) {
     if (value == null || value.trim().isEmpty) {
-      return 'Please enter your email';
+      return l10n.validationEmailRequired;
     }
 
     final email = value.trim();
@@ -28,7 +31,7 @@ class Validators {
     );
 
     if (!emailRegex.hasMatch(email)) {
-      return 'Enter a valid email address';
+      return l10n.validationEmailInvalid;
     }
 
     return null;
@@ -37,19 +40,19 @@ class Validators {
   // =========================
   // Password Validator
   // =========================
-  static String? password(String? value) {
+  static String? password(String? value, AppLocalizations l10n) {
     if (value == null || value.trim().isEmpty) {
-      return 'Please enter your password';
+      return l10n.validationPasswordRequired;
     }
 
     final password = value.trim();
 
     if (password.length < 6) {
-      return 'Password must be at least 6 characters';
+      return l10n.validationPasswordMinLength(6);
     }
 
     if (password.length > 64) {
-      return 'Password is too long';
+      return l10n.validationPasswordTooLong;
     }
 
     // Optional strong password check
@@ -58,7 +61,7 @@ class Validators {
     );
 
     if (!strongPasswordRegex.hasMatch(password)) {
-      return 'Password must contain uppercase, number, and special character';
+      return l10n.validationPasswordComplexity;
     }
 
     return null;
@@ -70,13 +73,14 @@ class Validators {
   static String? confirmPassword(
     String? value,
     String originalPassword,
+    AppLocalizations l10n,
   ) {
     if (value == null || value.trim().isEmpty) {
-      return 'Please confirm your password';
+      return l10n.validationConfirmPasswordRequired;
     }
 
     if (value.trim() != originalPassword.trim()) {
-      return 'Passwords do not match';
+      return l10n.validationPasswordsDoNotMatch;
     }
 
     return null;
@@ -88,19 +92,20 @@ class Validators {
   static String? numeric(
     String? value,
     String fieldName,
+    AppLocalizations l10n,
   ) {
     if (value == null || value.trim().isEmpty) {
-      return 'Please enter $fieldName';
+      return l10n.validationRequiredField(fieldName);
     }
 
     final parsed = double.tryParse(value.trim());
 
     if (parsed == null) {
-      return '$fieldName must be a valid number';
+      return l10n.validationNumberInvalid(fieldName);
     }
 
     if (parsed < 0) {
-      return '$fieldName cannot be negative';
+      return l10n.validationNumberNegative(fieldName);
     }
 
     return null;
@@ -113,13 +118,14 @@ class Validators {
     String? value,
     int min,
     String fieldName,
+    AppLocalizations l10n,
   ) {
     if (value == null || value.trim().isEmpty) {
-      return 'Please enter $fieldName';
+      return l10n.validationRequiredField(fieldName);
     }
 
     if (value.trim().length < min) {
-      return '$fieldName must be at least $min characters';
+      return l10n.validationMinLength(fieldName, min);
     }
 
     return null;
@@ -132,9 +138,10 @@ class Validators {
     String? value,
     int max,
     String fieldName,
+    AppLocalizations l10n,
   ) {
     if (value != null && value.trim().length > max) {
-      return '$fieldName must be less than $max characters';
+      return l10n.validationMaxLength(fieldName, max);
     }
 
     return null;
@@ -143,9 +150,9 @@ class Validators {
   // =========================
   // Phone Number Validator
   // =========================
-  static String? phone(String? value) {
+  static String? phone(String? value, AppLocalizations l10n) {
     if (value == null || value.trim().isEmpty) {
-      return 'Please enter phone number';
+      return l10n.validationPhoneRequired;
     }
 
     final phone = value.trim();
@@ -153,7 +160,7 @@ class Validators {
     final regex = RegExp(r'^[0-9]{9,11}$');
 
     if (!regex.hasMatch(phone)) {
-      return 'Invalid phone number';
+      return l10n.validationPhoneInvalid;
     }
 
     return null;
@@ -162,8 +169,8 @@ class Validators {
   // =========================
   // Budget Validator
   // =========================
-  static String? budget(String? value) {
-    final error = numeric(value, 'budget');
+  static String? budget(String? value, AppLocalizations l10n) {
+    final error = numeric(value, l10n.budget, l10n);
 
     if (error != null) {
       return error;
@@ -172,7 +179,7 @@ class Validators {
     final amount = double.parse(value!.trim());
 
     if (amount < 100000) {
-      return 'Budget too low';
+      return l10n.validationBudgetTooLow;
     }
 
     return null;
@@ -181,25 +188,25 @@ class Validators {
   // =========================
   // Username Validator
   // =========================
-  static String? username(String? value) {
+  static String? username(String? value, AppLocalizations l10n) {
     if (value == null || value.trim().isEmpty) {
-      return 'Please enter username';
+      return l10n.validationUsernameRequired;
     }
 
     final username = value.trim();
 
     if (username.length < 3) {
-      return 'Username must be at least 3 characters';
+      return l10n.validationUsernameMinLength(3);
     }
 
     if (username.length > 20) {
-      return 'Username is too long';
+      return l10n.validationUsernameTooLong;
     }
 
     final regex = RegExp(r'^[a-zA-Z0-9_]+$');
 
     if (!regex.hasMatch(username)) {
-      return 'Username can only contain letters, numbers, and underscore';
+      return l10n.validationUsernameInvalid;
     }
 
     return null;
@@ -211,9 +218,10 @@ class Validators {
   static String? description(
     String? value, {
     int maxLength = 500,
+    required AppLocalizations l10n,
   }) {
     if (value != null && value.trim().length > maxLength) {
-      return 'Description must be less than $maxLength characters';
+      return l10n.validationDescriptionMaxLength(maxLength);
     }
 
     return null;

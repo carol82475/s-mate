@@ -1,13 +1,13 @@
-import 'dart:io';
+﻿import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/api_client.dart';
 import '../../core/theme.dart';
+import '../../l10n/app_localizations.dart';
 
 class TripCameraScreen extends StatefulWidget {
   const TripCameraScreen({super.key});
@@ -17,8 +17,6 @@ class TripCameraScreen extends StatefulWidget {
 }
 
 class _TripCameraScreenState extends State<TripCameraScreen> {
-  static const String _tripPhotosBucket = 'trip-photos';
-
   final ImagePicker _picker = ImagePicker();
   bool _isUploading = false;
 
@@ -35,21 +33,24 @@ class _TripCameraScreenState extends State<TripCameraScreen> {
 
       _showSavePhotoSheet(File(pickedFile.path));
     } on PlatformException catch (e) {
-      final sourceName = source == ImageSource.camera ? 'camera' : 'gallery';
+      final l10n = AppLocalizations.of(context);
+      final sourceName =
+          source == ImageSource.camera ? l10n.cameraSource : l10n.gallerySource;
       final isPermissionError = e.code.toLowerCase().contains('denied') ||
           e.message?.toLowerCase().contains('permission') == true;
 
       _showError(
         isPermissionError
-            ? 'Permission denied. Please allow $sourceName access and try again.'
-            : 'Could not open $sourceName. ${e.message ?? ''}'.trim(),
+            ? l10n.tripCameraPermissionDenied(sourceName)
+            : l10n.couldNotOpenSource(sourceName, e.message ?? '').trim(),
       );
     } catch (e) {
-      _showError('Could not select photo. Please try again.');
+      _showError(AppLocalizations.of(context).couldNotSelectPhoto);
     }
   }
 
   void _showSavePhotoSheet(File imageFile) {
+    final l10n = AppLocalizations.of(context);
     final captionCtrl = TextEditingController();
     final locationCtrl = TextEditingController();
 
@@ -73,13 +74,13 @@ class _TripCameraScreenState extends State<TripCameraScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Row(
+                Row(
                   children: [
-                    Icon(Icons.photo, color: AppTheme.primary),
-                    SizedBox(width: 10),
+                    const Icon(Icons.photo, color: AppTheme.primary),
+                    const SizedBox(width: 10),
                     Text(
-                      'Save Photo',
-                      style: TextStyle(
+                      l10n.savePhoto,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
@@ -99,17 +100,17 @@ class _TripCameraScreenState extends State<TripCameraScreen> {
                 const SizedBox(height: 16),
                 TextField(
                   controller: captionCtrl,
-                  decoration: const InputDecoration(
-                    labelText: 'Caption',
-                    hintText: 'Write something about this photo...',
+                  decoration: InputDecoration(
+                    labelText: l10n.caption,
+                    hintText: l10n.captionHint,
                   ),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: locationCtrl,
-                  decoration: const InputDecoration(
-                    labelText: 'Location',
-                    hintText: 'e.g., Da Lat, Vietnam',
+                  decoration: InputDecoration(
+                    labelText: l10n.location,
+                    hintText: l10n.photoLocationHint,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -145,7 +146,7 @@ class _TripCameraScreenState extends State<TripCameraScreen> {
                                   color: Colors.white,
                                 ),
                               )
-                            : const Text('Save Photo'),
+                            : Text(l10n.savePhoto),
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -153,7 +154,7 @@ class _TripCameraScreenState extends State<TripCameraScreen> {
                       child: OutlinedButton(
                         onPressed:
                             _isUploading ? null : () => Navigator.pop(context),
-                        child: const Text('Cancel'),
+                        child: Text(l10n.cancel),
                       ),
                     ),
                   ],
@@ -182,66 +183,33 @@ class _TripCameraScreenState extends State<TripCameraScreen> {
     required String location,
   }) async {
     try {
-      final userId = Supabase.instance.client.auth.currentUser?.id;
+      final userId = ApiAuth.instance.userId;
 
       if (userId == null) {
-        throw Exception('You must login before uploading photos.');
+        throw Exception(AppLocalizations.of(context).mustLoginUploadPhotos);
       }
-
-      final fileName =
-          '$userId/${DateTime.now().millisecondsSinceEpoch}.jpg';
-
-      // Supabase bucket `trip-photos` must exist and be public for getPublicUrl.
-      await Supabase.instance.client.storage.from(_tripPhotosBucket).upload(
-            fileName,
-            imageFile,
-            fileOptions: const FileOptions(
-              contentType: 'image/jpeg',
-              upsert: false,
-            ),
-          );
-
-      final publicUrl = Supabase.instance.client.storage
-          .from(_tripPhotosBucket)
-          .getPublicUrl(fileName);
-
-      await ApiClient.post(
-        '/albums/photos',
-        body: {
-          'image_url': publicUrl,
-          'caption': caption,
-          'location': location,
-          'metadata': {
-            'source': 'trip_camera',
-            'uploadedAt': DateTime.now().toIso8601String(),
-          },
-        },
-      );
 
       if (!mounted) return false;
 
       Navigator.pop(context);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Photo uploaded to album!'),
+        SnackBar(
+          content: Text(
+            AppLocalizations.of(context).photoReadyUploadUnavailable,
+          ),
           backgroundColor: AppTheme.primary,
         ),
       );
 
       context.go('/trip-albums');
       return true;
-    } on StorageException catch (e) {
-      final message = e.message.toLowerCase().contains('bucket')
-          ? 'Upload failed: Supabase bucket "$_tripPhotosBucket" is missing or not accessible.'
-          : 'Upload failed: ${e.message}';
-      _showError(message);
     } catch (e) {
       final message = e.toString().replaceFirst('Exception: ', '');
       _showError(
         message.isEmpty
-            ? 'Photo could not be saved. Please try again.'
-            : 'Photo could not be saved: $message',
+            ? AppLocalizations.of(context).photoSaveFailed
+            : AppLocalizations.of(context).photoSaveFailedWithMessage(message),
       );
     }
 
@@ -261,10 +229,12 @@ class _TripCameraScreenState extends State<TripCameraScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
-        title: const Text('Trip Camera'),
+        title: Text(l10n.tripCamera),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () =>
@@ -274,7 +244,7 @@ class _TripCameraScreenState extends State<TripCameraScreen> {
           IconButton(
             icon: const Icon(Icons.photo_library_outlined),
             onPressed: () => context.go('/trip-albums'),
-            tooltip: 'View Albums',
+            tooltip: l10n.viewAlbums,
           ),
         ],
       ),
@@ -288,7 +258,7 @@ class _TripCameraScreenState extends State<TripCameraScreen> {
                   color: const Color(0xFF1A1A2E),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: AppTheme.primary.withOpacity(0.3),
+                    color: AppTheme.primary.withValues(alpha: 0.3),
                     width: 2,
                   ),
                 ),
@@ -298,7 +268,7 @@ class _TripCameraScreenState extends State<TripCameraScreen> {
                     Container(
                       padding: const EdgeInsets.all(24),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.1),
+                        color: Colors.white.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(
@@ -308,18 +278,19 @@ class _TripCameraScreenState extends State<TripCameraScreen> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
-                      'Ready to capture the moment?',
-                      style: TextStyle(
+                    Text(
+                      l10n.readyCaptureMoment,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Tap below to open your camera',
-                      style: TextStyle(color: Colors.white54, fontSize: 13),
+                    Text(
+                      l10n.tapOpenCamera,
+                      style:
+                          const TextStyle(color: Colors.white54, fontSize: 13),
                     ),
                     const SizedBox(height: 32),
                     ElevatedButton.icon(
@@ -327,7 +298,7 @@ class _TripCameraScreenState extends State<TripCameraScreen> {
                           ? null
                           : () => _pickImage(ImageSource.camera),
                       icon: const Icon(Icons.camera_alt),
-                      label: const Text('Open Camera'),
+                      label: Text(l10n.openCamera),
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 32,
@@ -346,32 +317,31 @@ class _TripCameraScreenState extends State<TripCameraScreen> {
             SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(
-                onPressed: _isUploading
-                    ? null
-                    : () => _pickImage(ImageSource.gallery),
+                onPressed:
+                    _isUploading ? null : () => _pickImage(ImageSource.gallery),
                 icon: const Icon(Icons.upload_outlined),
-                label: const Text('Upload from Gallery'),
+                label: Text(l10n.uploadFromGallery),
               ),
             ),
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppTheme.accent.withOpacity(0.5),
+                color: AppTheme.accent.withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Row(
+              child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.info_outline,
                     size: 16,
                     color: AppTheme.primary,
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Photos are saved to your Trip Albums automatically',
-                      style: TextStyle(
+                      l10n.photoUploadBackendInfo,
+                      style: const TextStyle(
                         fontSize: 12,
                         color: AppTheme.textMuted,
                       ),
@@ -386,3 +356,4 @@ class _TripCameraScreenState extends State<TripCameraScreen> {
     );
   }
 }
+

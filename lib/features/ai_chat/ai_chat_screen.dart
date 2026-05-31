@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 import '../../core/api_client.dart';
 import '../../core/theme.dart';
+import '../../l10n/app_localizations.dart';
 
 class AiChatScreen extends StatefulWidget {
   const AiChatScreen({super.key});
@@ -15,26 +16,27 @@ class _AiChatScreenState extends State<AiChatScreen> {
   final _scrollCtrl = ScrollController();
 
   bool _isTyping = false;
-
-  final List<Map<String, dynamic>> _messages = [
-    {
-      'role': 'assistant',
-      'text':
-          "Hello! I'm your AI travel assistant. I can help you with local recommendations, translations, cultural tips, and travel questions. How can I help you today?",
-    },
-  ];
-
-  final _suggestions = [
-    "What's the best time to visit Ha Long Bay?",
-    "Recommend authentic Vietnamese restaurants",
-    "How do I get from Hanoi to Sapa?",
-    "What are local customs I should know?",
-  ];
+  final List<Map<String, dynamic>> _messages = [];
 
   bool get _showSuggestions => _messages.length == 1 && !_isTyping;
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (_messages.isEmpty) {
+      final l10n = AppLocalizations.of(context);
+      _messages.add({
+        'role': 'assistant',
+        'text': l10n.assistantGreeting,
+      });
+    }
+  }
+
   Future<void> _send([String? text]) async {
+    final l10n = AppLocalizations.of(context);
     final msg = text ?? _ctrl.text.trim();
+
     if (msg.isEmpty || _isTyping) return;
 
     setState(() {
@@ -58,12 +60,11 @@ class _AiChatScreenState extends State<AiChatScreen> {
 
       final data = response['data'];
 
-      String assistantText = 'I can help with that. Can you provide more details?';
+      String assistantText = l10n.assistantFallback;
       String? imageUrl;
 
       if (data is Map<String, dynamic>) {
-        assistantText =
-            data['response']?.toString() ??
+        assistantText = data['response']?.toString() ??
             data['message']?.toString() ??
             data['content']?.toString() ??
             data['text']?.toString() ??
@@ -89,7 +90,7 @@ class _AiChatScreenState extends State<AiChatScreen> {
       setState(() {
         _messages.add({
           'role': 'assistant',
-          'text': 'Sorry, I could not connect to the AI assistant. $e',
+          'text': l10n.assistantConnectionError,
         });
       });
 
@@ -128,27 +129,39 @@ class _AiChatScreenState extends State<AiChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
+    final suggestions = [
+      l10n.suggestionBestTimeHaLong,
+      l10n.suggestionVietnameseRestaurants,
+      l10n.suggestionHanoiToSapa,
+      l10n.suggestionLocalCustoms,
+    ];
+
     final itemCount =
         _messages.length + (_showSuggestions ? 1 : 0) + (_isTyping ? 1 : 0);
 
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
-        title: const Row(
+        title: Row(
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               backgroundColor: AppTheme.primary,
               radius: 16,
               child: Icon(Icons.smart_toy, color: Colors.white, size: 18),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('AI Travel Assistant', style: TextStyle(fontSize: 15)),
                 Text(
-                  'Always here to help',
-                  style: TextStyle(
+                  l10n.aiTravelAssistant,
+                  style: const TextStyle(fontSize: 15),
+                ),
+                Text(
+                  l10n.alwaysHereToHelp,
+                  style: const TextStyle(
                     fontSize: 11,
                     color: AppTheme.textMuted,
                     fontWeight: FontWeight.normal,
@@ -179,7 +192,7 @@ class _AiChatScreenState extends State<AiChatScreen> {
 
                 if (_showSuggestions && i == _messages.length) {
                   return _SuggestionsWidget(
-                    suggestions: _suggestions,
+                    suggestions: suggestions,
                     onTap: _send,
                   );
                 }
@@ -205,7 +218,7 @@ class _AiChatScreenState extends State<AiChatScreen> {
                     controller: _ctrl,
                     enabled: !_isTyping,
                     decoration: InputDecoration(
-                      hintText: 'Ask me anything...',
+                      hintText: l10n.askMeAnything,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(24),
                         borderSide: const BorderSide(color: AppTheme.border),
@@ -386,8 +399,8 @@ class _TypingIndicatorState extends State<_TypingIndicator>
                     height: 8,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: AppTheme.textMuted.withOpacity(
-                        i == 1 ? _ctrl.value : (1 - _ctrl.value),
+                      color: AppTheme.textMuted.withValues(
+                        alpha: i == 1 ? _ctrl.value : (1 - _ctrl.value),
                       ),
                     ),
                   ),
@@ -412,14 +425,16 @@ class _SuggestionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Suggested Questions',
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+          Text(
+            l10n.suggestedQuestions,
+            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
           ),
           const SizedBox(height: 8),
           ...suggestions.map(
@@ -430,7 +445,7 @@ class _SuggestionsWidget extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 8),
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppTheme.accent.withOpacity(0.5),
+                  color: AppTheme.accent.withValues(alpha: 0.5),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: AppTheme.border),
                 ),

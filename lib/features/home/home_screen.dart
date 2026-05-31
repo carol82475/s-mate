@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/api_client.dart';
 import '../../core/theme.dart';
+import '../../l10n/app_localizations.dart';
 import '../../shared/widgets/app_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -106,6 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _showNotifications() {
     setState(() => _notificationCount = 0);
+    final l10n = AppLocalizations.of(context);
 
     showModalBottomSheet(
       context: context,
@@ -124,13 +126,16 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Notifications',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  Text(
+                    l10n.notifications,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('Close'),
+                    child: Text(l10n.close),
                   ),
                 ],
               ),
@@ -140,24 +145,24 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ListView(
                 controller: ctrl,
                 padding: const EdgeInsets.all(16),
-                children: const [
+                children: [
                   _NotificationItem(
                     icon: Icons.calendar_today,
-                    title: 'Itinerary Reminder',
-                    body: 'Your next activity is coming soon.',
-                    time: '2h ago',
+                    title: l10n.itineraryReminder,
+                    body: l10n.nextActivitySoon,
+                    time: l10n.timeAgoHours(2),
                   ),
                   _NotificationItem(
-                    icon: Icons.people,
-                    title: 'New Traveler Nearby',
-                    body: 'Someone is looking for travel buddies.',
-                    time: '4h ago',
+                    icon: Icons.map_outlined,
+                    title: l10n.mapUpdate,
+                    body: l10n.nearbyRecommendationsReady,
+                    time: l10n.timeAgoHours(4),
                   ),
                   _NotificationItem(
-                    icon: Icons.forum,
-                    title: 'Forum Reply',
-                    body: 'Someone replied to your travel post.',
-                    time: '1d ago',
+                    icon: Icons.photo_library_outlined,
+                    title: l10n.albumReminder,
+                    body: l10n.addTodaysPhotos,
+                    time: l10n.timeAgoDays(1),
                   ),
                 ],
               ),
@@ -168,24 +173,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  String _tripId() {
-    return _currentTrip?['id']?.toString() ?? 'new';
-  }
-
-  String _tripTitle() {
+  String _tripTitle(AppLocalizations l10n) {
     return _currentTrip?['title']?.toString() ??
         _currentTrip?['destination']?.toString() ??
-        'Plan Your First Trip';
+        l10n.planYourFirstTrip;
   }
 
-  String _tripLocation() {
+  String _tripLocation(AppLocalizations l10n) {
     return _currentTrip?['destination']?.toString() ??
         _currentTrip?['location']?.toString() ??
-        'Choose your destination';
+        l10n.chooseDestination;
   }
 
-  String _tripStatus() {
-    return _currentTrip?['status']?.toString() ?? 'New';
+  String _tripStatus(AppLocalizations l10n) {
+    return _currentTrip?['status']?.toString() ?? l10n.newStatus;
   }
 
   String _tripImage() {
@@ -194,80 +195,118 @@ class _HomeScreenState extends State<HomeScreen> {
         'https://images.unsplash.com/photo-1727860628226-2d545134f8a9?w=800';
   }
 
-  List<_QuickActionData> get _fallbackQuickActions {
+  List<_QuickActionData> _fallbackQuickActions(AppLocalizations l10n) {
     return [
       _QuickActionData(
-        icon: Icons.camera_alt_outlined,
-        label: 'Camera',
-        route: '/trip-camera',
+        icon: Icons.calendar_today_outlined,
+        label: l10n.myTrip,
+        route: '/my-trips',
       ),
       _QuickActionData(
-        icon: Icons.photo_library_outlined,
-        label: 'Albums',
-        route: '/trip-albums',
+        icon: Icons.document_scanner_outlined,
+        label: l10n.scan,
+        route: '/scan',
       ),
       _QuickActionData(
-        icon: Icons.shield_outlined,
-        label: 'Safety',
-        route: '/quick-action',
+        icon: Icons.map_outlined,
+        label: l10n.map,
+        route: '/map',
       ),
       _QuickActionData(
-        icon: Icons.forum_outlined,
-        label: 'Forum',
-        route: '/forum',
+        icon: Icons.chat_bubble_outline,
+        label: l10n.aiChat,
+        route: '/ai-chat',
       ),
     ];
   }
 
-  List<_QuickActionData> get _resolvedQuickActions {
-    if (_quickActions.isEmpty) return _fallbackQuickActions;
+  List<_QuickActionData> _resolvedQuickActions(AppLocalizations l10n) {
+    final fallbackQuickActions = _fallbackQuickActions(l10n);
 
-    final actions = _quickActions.map((item) {
-      return _QuickActionData(
-        icon: _iconFromName(item['icon']?.toString()),
-        label: item['label']?.toString() ??
-            item['title']?.toString() ??
-            'Action',
-        route: _normalizeRoute(
-          item['route']?.toString() ??
-              item['path']?.toString() ??
-              '/home',
-        ),
-      );
-    }).toList();
+    if (_quickActions.isEmpty) return fallbackQuickActions;
 
-    if (!actions.any((action) => action.route == '/trip-camera')) {
-      actions.insert(0, _fallbackQuickActions.first);
+    final actions = _quickActions
+        .map((item) {
+          final route = _normalizeRoute(
+            item['route']?.toString() ?? item['path']?.toString() ?? '/home',
+          );
+
+          if (route == null) {
+            return null;
+          }
+
+          return _QuickActionData(
+            icon: _iconFromName(item['icon']?.toString()),
+            label: item['label']?.toString() ??
+                item['title']?.toString() ??
+                l10n.action,
+            route: route,
+          );
+        })
+        .whereType<_QuickActionData>()
+        .toList();
+
+    for (final fallback in fallbackQuickActions) {
+      if (actions.length >= 4) break;
+      if (!actions.any((action) => action.route == fallback.route)) {
+        actions.add(fallback);
+      }
     }
 
     return actions.take(4).toList();
   }
 
-  String _normalizeRoute(String route) {
+  String? _normalizeRoute(String route) {
+    if (route.startsWith('/forum') ||
+        route.startsWith('/find-travelers') ||
+        route.startsWith('/traveler-chat')) {
+      return null;
+    }
+
     switch (route) {
       case '/camera':
       case '/tripCamera':
       case '/trip-camera/':
-        return '/trip-camera';
+      case '/trip-camera':
+      case '/anti-scam':
+      case '/anti-scam/scan':
+      case '/quick-action':
+        return '/scan';
+      case '/trip-albums':
+        return null;
       default:
-        return route;
+        return _isAllowedQuickActionRoute(route) ? route : null;
     }
+  }
+
+  bool _isAllowedQuickActionRoute(String route) {
+    return const {
+      '/home',
+      '/trip-planner',
+      '/my-trips',
+      '/scan',
+      '/map',
+      '/ai-chat',
+      '/profile',
+    }.contains(route);
   }
 
   IconData _iconFromName(String? name) {
     switch (name) {
       case 'camera':
       case 'camera_alt':
-        return Icons.camera_alt_outlined;
+      case 'scan':
+      case 'scanner':
+      case 'safety':
+      case 'shield':
+        return Icons.document_scanner_outlined;
+      case 'trip':
+      case 'calendar':
+        return Icons.calendar_today_outlined;
       case 'album':
       case 'photo':
       case 'photo_library':
         return Icons.photo_library_outlined;
-      case 'safety':
-      case 'shield':
-        return Icons.shield_outlined;
-      case 'forum':
-        return Icons.forum_outlined;
       case 'map':
         return Icons.map_outlined;
       case 'chat':
@@ -279,21 +318,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final quickActions = _resolvedQuickActions;
+    final l10n = AppLocalizations.of(context);
+    final quickActions = _resolvedQuickActions(l10n);
 
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
-        title: const Column(
+        title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Welcome back, Traveler!',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              l10n.welcomeBackTraveler,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             Text(
-              'Plan your next adventure',
-              style: TextStyle(
+              l10n.planNextAdventure,
+              style: const TextStyle(
                 fontSize: 12,
                 color: AppTheme.textMuted,
                 fontWeight: FontWeight.normal,
@@ -349,6 +389,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    _TripHeroCard(
+                      onCreateTrip: () => context.go('/trip-planner'),
+                    ),
+                    const SizedBox(height: 16),
                     Row(
                       children: quickActions
                           .map(
@@ -362,14 +406,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 24),
                     SectionHeader(
-                      title: 'Current Trip',
-                      actionLabel: 'View Details',
-                      onAction: () => context.go('/itinerary/${_tripId()}'),
+                      title: l10n.currentTrip,
+                      actionLabel: l10n.viewMyTrips,
+                      onAction: () => context.go('/my-trips'),
                     ),
                     const SizedBox(height: 12),
                     AppCard(
                       padding: EdgeInsets.zero,
-                      onTap: () => context.go('/itinerary/${_tripId()}'),
+                      onTap: () => context.go(
+                        _currentTrip == null ? '/trip-planner' : '/my-trips',
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -407,7 +453,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Text(
-                                      _tripStatus(),
+                                      _tripStatus(l10n),
                                       style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
@@ -425,7 +471,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  _tripTitle(),
+                                  _tripTitle(l10n),
                                   style: const TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.bold,
@@ -442,7 +488,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     const SizedBox(width: 4),
                                     Expanded(
                                       child: Text(
-                                        _tripLocation(),
+                                        _tripLocation(l10n),
                                         style: const TextStyle(
                                           fontSize: 13,
                                           color: AppTheme.textMuted,
@@ -458,12 +504,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Expanded(
                                       child: ElevatedButton(
                                         onPressed: () => context.go(
-                                          '/itinerary/${_tripId()}',
+                                          _currentTrip == null
+                                              ? '/trip-planner'
+                                              : '/my-trips',
                                         ),
                                         child: Text(
                                           _currentTrip == null
-                                              ? 'Create Trip'
-                                              : 'View Itinerary',
+                                              ? l10n.createTrip
+                                              : l10n.myTrip,
                                         ),
                                       ),
                                     ),
@@ -471,7 +519,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Expanded(
                                       child: OutlinedButton(
                                         onPressed: () => context.go('/map'),
-                                        child: const Text('Open Map'),
+                                        child: Text(l10n.openMap),
                                       ),
                                     ),
                                   ],
@@ -483,7 +531,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    const SectionHeader(title: 'Popular Destinations'),
+                    SectionHeader(title: l10n.popularDestinations),
                     const SizedBox(height: 12),
                     SizedBox(
                       height: 200,
@@ -521,6 +569,67 @@ class _QuickActionData {
   });
 }
 
+class _TripHeroCard extends StatelessWidget {
+  final VoidCallback onCreateTrip;
+
+  const _TripHeroCard({required this.onCreateTrip});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
+    return AppCard(
+      child: Row(
+        children: [
+          Container(
+            width: 58,
+            height: 58,
+            decoration: BoxDecoration(
+              color: AppTheme.primary.withValues(alpha: 0.16),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: const Icon(
+              Icons.auto_awesome,
+              color: AppTheme.primary,
+              size: 30,
+            ),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.generateTrip,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  l10n.generateTripDescription,
+                  style:
+                      const TextStyle(color: AppTheme.textMuted, fontSize: 13),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 12),
+          IconButton.filled(
+            onPressed: onCreateTrip,
+            icon: const Icon(Icons.add),
+            style: IconButton.styleFrom(
+              backgroundColor: AppTheme.primary,
+              foregroundColor: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _NotificationItem extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -540,7 +649,7 @@ class _NotificationItem extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppTheme.accent.withOpacity(0.3),
+        color: AppTheme.accent.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppTheme.border),
       ),
@@ -550,7 +659,7 @@ class _NotificationItem extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: AppTheme.primary.withOpacity(0.1),
+              color: AppTheme.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(icon, color: AppTheme.primary, size: 18),
@@ -698,3 +807,4 @@ class _DestinationCard extends StatelessWidget {
     );
   }
 }
+

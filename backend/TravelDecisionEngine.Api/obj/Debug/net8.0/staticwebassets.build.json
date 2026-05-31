@@ -1,11 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "WcUlacGc/1IB/BYplV8Zf8mMbQlLEtJwKcQCFJjfigM=",
-  "Source": "TravelDecisionEngine.Api",
-  "BasePath": "_content/TravelDecisionEngine.Api",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
-}
+{"Version":1,"Hash":"LCPzV/2ZI2eGYPa/6Kl8pxqojIgfhrfhaFZND6VKS48=","Source":"TravelDecisionEngine.Api","BasePath":"/","Mode":"Root","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}

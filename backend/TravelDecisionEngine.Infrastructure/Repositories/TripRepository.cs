@@ -16,10 +16,22 @@ public class TripRepository : ITripRepository
     }
 
     public async Task<IReadOnlyCollection<Trip>> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken)
-        => await _db.Trips.Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedAt).ToListAsync(cancellationToken);
+        => await _db.Trips
+            .Include(x => x.TripDays)
+                .ThenInclude(x => x.TripPlaces)
+            .Where(x => x.UserId == userId)
+            .OrderByDescending(x => x.CreatedAt)
+            .ToListAsync(cancellationToken);
 
     public async Task<Trip?> GetByIdAsync(Guid userId, Guid tripId, CancellationToken cancellationToken)
         => await _db.Trips.FirstOrDefaultAsync(x => x.UserId == userId && x.TripId == tripId, cancellationToken);
+
+    public async Task<Trip?> GetByIdWithItineraryAsync(Guid userId, Guid tripId, CancellationToken cancellationToken)
+        => await _db.Trips
+            .Include(x => x.TripDays)
+                .ThenInclude(x => x.TripPlaces)
+                    .ThenInclude(x => x.Place)
+            .FirstOrDefaultAsync(x => x.UserId == userId && x.TripId == tripId, cancellationToken);
 
     public async Task AddAsync(Trip trip, CancellationToken cancellationToken)
     {

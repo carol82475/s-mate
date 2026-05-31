@@ -1,0 +1,534 @@
+{
+  "@@locale": "de",
+  "vietnam": "Vietnam",
+  "appName": "S-Mate",
+  "login": "Anmelden",
+  "register": "Registrieren",
+  "email": "Email",
+  "emailHint": "you@example.com",
+  "password": "Passwort",
+  "home": "Startseite",
+  "profile": "Profil",
+  "tripPlanner": "Reiseplaner",
+  "generateItinerary": "Route erstellen",
+  "destination": "Reiseziel",
+  "budget": "Budget",
+  "peopleCount": "Personenzahl",
+  "startDate": "Startdatum",
+  "endDate": "Enddatum",
+  "save": "Speichern",
+  "cancel": "Abbrechen",
+  "logout": "Abmelden",
+  "notifications": "Benachrichtigungen",
+  "settings": "Einstellungen",
+  "language": "Sprache",
+  "loading": "Wird geladen",
+  "error": "Fehler",
+  "success": "Erfolg",
+  "retry": "Erneut versuchen",
+  "myTrip": "Meine Reise",
+  "scan": "Scannen",
+  "map": "Karte",
+  "aiChat": "KI-Chat",
+  "all": "Alle",
+  "upcoming": "Bevorstehend",
+  "inProgress": "Läuft",
+  "completed": "Abgeschlossen",
+  "cancelled": "Abgebrochen",
+  "couldNotLoadTrips": "Reisen konnten nicht geladen werden",
+  "couldNotLoadTripsMessage": "Wir können Ihre Reisen derzeit nicht laden. Bitte versuchen Sie es erneut.",
+  "tryAgain": "Erneut versuchen",
+  "noTripsYet": "Noch keine Reisen",
+  "noTripsYetMessage": "Erstellen Sie Ihren ersten KI-Reiseplan; er erscheint dann hier.",
+  "noTripsFoundForFilter": "Keine Reisen für diesen Filter gefunden",
+  "createNewTrip": "Neue Reise erstellen",
+  "destinationPending": "Reiseziel ausstehend",
+  "defaultTripName": "{destination}-Reise",
+  "@defaultTripName": {
+    "placeholders": {
+      "destination": {}
+    }
+  },
+  "budgetValue": "Budget: {value}",
+  "@budgetValue": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "close": "Schließen",
+  "back": "Zurück",
+  "create": "Erstellen",
+  "update": "Aktualisieren",
+  "edit": "Bearbeiten",
+  "done": "Fertig",
+  "customize": "Anpassen",
+  "openMap": "Karte öffnen",
+  "createTrip": "Reise erstellen",
+  "welcomeBackTraveler": "Willkommen zurück, Reisender!",
+  "planNextAdventure": "Planen Sie Ihr nächstes Abenteuer",
+  "itineraryReminder": "Routen-Erinnerung",
+  "nextActivitySoon": "Ihre nächste Aktivität beginnt bald.",
+  "mapUpdate": "Karten-Update",
+  "nearbyRecommendationsReady": "Empfehlungen in der Nähe sind bereit.",
+  "albumReminder": "Album-Erinnerung",
+  "addTodaysPhotos": "Fügen Sie die heutigen Fotos Ihrem Reisealbum hinzu.",
+  "timeAgoHours": "vor {hours} Std.",
+  "@timeAgoHours": {
+    "placeholders": {
+      "hours": {}
+    }
+  },
+  "timeAgoDays": "vor {days} Tg.",
+  "@timeAgoDays": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "planYourFirstTrip": "Planen Sie Ihre erste Reise",
+  "chooseDestination": "Wählen Sie Ihr Reiseziel",
+  "newStatus": "Neu",
+  "action": "Aktion",
+  "generateTrip": "Reise generieren",
+  "generateTripDescription": "Erstellen Sie aus Datum und Budget einen neuen KI-Reiseplan.",
+  "currentTrip": "Aktuelle Reise",
+  "currentTrips": "Aktuelle Reisen",
+  "viewMyTrips": "Meine Reisen ansehen",
+  "viewItinerary": "Reiseplan ansehen",
+  "popularDestinations": "Beliebte Reiseziele",
+  "welcomeBack": "Willkommen zurück",
+  "createAccount": "Konto erstellen",
+  "signInContinueJourney": "Melden Sie sich an, um Ihre Reise fortzusetzen",
+  "signUpStartAdventure": "Registrieren Sie sich, um Ihr nächstes Abenteuer zu planen",
+  "loginSuccessful": "Anmeldung erfolgreich!",
+  "accountCreatedSuccessfully": "Konto erfolgreich erstellt!",
+  "resetPassword": "Passwort zurücksetzen",
+  "resetPasswordInstructions": "Geben Sie Ihre E-Mail ein und wir senden Ihnen einen Link zum Zurücksetzen.",
+  "sendResetLink": "Link senden",
+  "passwordResetOtpSent": "OTP zum Zurücksetzen gesendet!",
+  "fullName": "Vollständiger Name",
+  "fullNameHint": "John Doe",
+  "location": "Standort",
+  "locationHint": "San Francisco, USA",
+  "forgotPassword": "Passwort vergessen?",
+  "signUp": "Registrieren",
+  "dontHaveAccount": "Noch kein Konto? ",
+  "alreadyHaveAccount": "Sie haben bereits ein Konto? ",
+  "yourName": "Ihr Name",
+  "yourLocation": "Ihr Standort",
+  "displayName": "Anzeigename",
+  "editProfile": "Profil bearbeiten",
+  "profileUpdated": "Profil aktualisiert!",
+  "saveChanges": "Änderungen speichern",
+  "selectLanguage": "Sprache auswählen",
+  "languageEnglish": "English",
+  "languageVietnamese": "Tiếng Việt",
+  "languageFrench": "Français",
+  "languageGerman": "Deutsch",
+  "languageKorean": "한국어",
+  "languageChinese": "中文",
+  "languageChangedTo": "Sprache geändert zu {language}",
+  "@languageChangedTo": {
+    "placeholders": {
+      "language": {}
+    }
+  },
+  "notificationsEnabled": "Benachrichtigungen aktiviert",
+  "notificationsDisabled": "Benachrichtigungen deaktiviert",
+  "privacy": "Datenschutz",
+  "privacySetting": "Datenschutzeinstellung",
+  "privacySetTo": "Datenschutz auf {privacy} gesetzt",
+  "@privacySetTo": {
+    "placeholders": {
+      "privacy": {}
+    }
+  },
+  "changePassword": "Passwort ändern",
+  "newPassword": "Neues Passwort",
+  "passwordUpdatedSuccessfully": "Passwort erfolgreich aktualisiert!",
+  "updatePassword": "Passwort aktualisieren",
+  "failedSignOut": "Abmelden fehlgeschlagen. Bitte versuchen Sie es erneut.",
+  "signOut": "Abmelden",
+  "signOutConfirmation": "Möchten Sie sich wirklich abmelden?",
+  "traveler": "Reisender",
+  "unknown": "Unbekannt",
+  "unknownDestination": "Unbekanntes Reiseziel",
+  "countries": "Länder",
+  "trips": "Reisen",
+  "locations": "Orte",
+  "days": "Tage",
+  "tripHistory": "Reiseverlauf",
+  "enabled": "Aktiviert",
+  "disabled": "Deaktiviert",
+  "public": "Öffentlich",
+  "friendsOnly": "Nur Freunde",
+  "private": "Privat",
+  "planned": "Geplant",
+  "unknownTrip": "Unbekannte Reise",
+  "aiTripPlanner": "KI-Reiseplaner",
+  "planYourJourney": "Planen Sie Ihre Reise",
+  "aiCreatePerfectItinerary": "Lassen Sie die KI den perfekten Reiseplan erstellen",
+  "selectDate": "Datum auswählen",
+  "pleaseSelectDates": "Bitte Start- und Enddatum auswählen",
+  "endDateAfterStartDate": "Das Enddatum muss nach dem Startdatum liegen",
+  "tripGeneratedSuccessfully": "Reise erfolgreich generiert!",
+  "generateTripFailed": "Reise konnte nicht generiert werden. Bitte versuchen Sie es erneut.",
+  "aiGeneratedTrip": "KI-generierte Reise",
+  "fallbackItineraryUsed": "Ersatzreiseplan verwendet",
+  "budgetUsd": "Budget (USD)",
+  "enterYourBudget": "Geben Sie Ihr Budget ein",
+  "numberOfTravelers": "Anzahl der Reisenden",
+  "travelPreferences": "Reisevorlieben",
+  "additionalPreferences": "Weitere Vorlieben",
+  "additionalPreferencesHint": "Erzählen Sie uns mehr über Ihre Wünsche (z. B. Geheimtipps, lokale Märkte, später Start...)",
+  "generating": "Wird generiert...",
+  "generatingTrip": "Reise wird generiert...",
+  "generateAiItinerary": "KI-Reiseplan generieren",
+  "soloTraveler": "Allein (1 Person)",
+  "coupleTravelers": "Paar (2 Personen)",
+  "smallGroupTravelers": "Kleine Gruppe (3-5)",
+  "largeGroupTravelers": "Große Gruppe (6+)",
+  "cultural": "Kultur",
+  "adventure": "Abenteuer",
+  "relaxation": "Entspannung",
+  "food": "Essen",
+  "nature": "Natur",
+  "shopping": "Shopping",
+  "tripDay": "Reisetag",
+  "tripItinerary": "Reiseplan",
+  "tripSavedSuccessfully": "Reise erfolgreich gespeichert!",
+  "newActivity": "Neue Aktivität",
+  "customActivity": "Benutzerdefinierte Aktivität",
+  "editDayTitle": "Tagestitel bearbeiten",
+  "dayTitle": "Tagestitel",
+  "previewYourPlan": "Planvorschau",
+  "tripProgress": "Reisefortschritt",
+  "completedCount": "{completed}/{total} abgeschlossen",
+  "@completedCount": {
+    "placeholders": {
+      "completed": {},
+      "total": {}
+    }
+  },
+  "confirmSavePlan": "Plan bestätigen und speichern",
+  "dayNumber": "TAG {day}",
+  "@dayNumber": {
+    "placeholders": {
+      "day": {}
+    }
+  },
+  "addActivity": "Aktivität hinzufügen",
+  "arrivalLocalDiscovery": "Ankunft & lokale Entdeckung",
+  "cityLandmarkVisit": "Besuch eines Wahrzeichens",
+  "localFoodExperience": "Lokales Essen erleben",
+  "culturalSite": "Kulturstätte",
+  "eveningWalk": "Abendspaziergang",
+  "adventureExploration": "Abenteuer & Erkundung",
+  "morningExcursion": "Morgenausflug",
+  "lunchBreak": "Mittagspause",
+  "outdoorActivity": "Outdoor-Aktivität",
+  "dinnerRelaxation": "Abendessen & Entspannung",
+  "relaxedFinalDay": "Entspannter letzter Tag",
+  "slowMorning": "Ruhiger Morgen",
+  "souvenirShopping": "Souvenirs kaufen",
+  "finalPhotoSpot": "Letzter Fotospot",
+  "exploringSaigon": "Saigon erkunden",
+  "mockLandmarkDescription": "Beginnen Sie Ihre Reise mit einem berühmten lokalen Wahrzeichen.",
+  "mockFoodDescription": "Probieren Sie authentisches lokales Essen nahe dem Stadtzentrum.",
+  "mockCulturalDescription": "Besuchen Sie ein Museum, einen Tempel oder ein kulturelles Ziel.",
+  "mockEveningDescription": "Genießen Sie am Abend die Atmosphäre der Stadt.",
+  "mockExcursionDescription": "Machen Sie einen kurzen Ausflug zu einer nahegelegenen Attraktion.",
+  "mockLunchDescription": "Stärken Sie sich in einem empfohlenen lokalen Restaurant.",
+  "mockOutdoorDescription": "Erkunden Sie Natur, Märkte oder versteckte Orte.",
+  "mockDinnerDescription": "Beenden Sie den Tag mit einem entspannten Abendessen.",
+  "mockSlowMorningDescription": "Starten Sie langsamer mit Kaffee oder Frühstück.",
+  "mockSouvenirDescription": "Kaufen Sie Souvenirs oder besuchen Sie einen lokalen Markt.",
+  "mockPhotoDescription": "Halten Sie letzte Erinnerungen fest, bevor Sie abreisen.",
+  "scanDemoResult": "Demo-Ergebnis, bis die Preisprüfungs-API verfügbar ist.",
+  "estimatedLocalPrice": "Geschätzter lokaler Preis",
+  "detectedPrice": "Erkannter Preis",
+  "advice": "Hinweis",
+  "cameraPreview": "Kameravorschau",
+  "cameraPreviewHint": "Richten Sie die Kamera auf einen Artikel, Beleg oder Menüpreis.",
+  "checkingPrice": "Preis wird geprüft...",
+  "scanItemMenu": "Artikel oder Menü scannen",
+  "takePhoto": "Foto aufnehmen",
+  "upload": "Hochladen",
+  "priceCheckInfo": "Die Preisprüfung vergleicht erkannte Preise mit lokalen Spannen, sobald der Backend-Scanner verbunden ist.",
+  "scannedItem": "Gescannter Artikel",
+  "pending": "Ausstehend",
+  "unknownWarning": "Unbekannt",
+  "scanAdviceDefault": "Vergleichen Sie den Preis vor dem Bezahlen mit einer lokalen Referenz.",
+  "menuItem": "Menüpunkt",
+  "apiPending": "API ausstehend",
+  "demo": "Demo",
+  "scanBackendPending": "Der Scanner-Backend ist noch nicht verbunden. Diese Oberfläche dient als zukünftige Ergebnisansicht.",
+  "usingOfflinePlaces": "Offline-Orte werden verwendet.",
+  "zoomPercent": "Zoom: {percent}%",
+  "@zoomPercent": {
+    "placeholders": {
+      "percent": {}
+    }
+  },
+  "centeringLocation": "Ihre Position wird zentriert...",
+  "searchPlaces": "Orte suchen...",
+  "mapExplorer": "Karten-Explorer",
+  "myLocation": "Mein Standort",
+  "search": "Suchen",
+  "zoomIn": "Vergrößern",
+  "zoomOut": "Verkleinern",
+  "nearbyPlaces": "Orte in der Nähe",
+  "foundCount": "{count} gefunden",
+  "@foundCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "noPlacesFound": "Keine Orte gefunden",
+  "place": "Ort",
+  "unknownPlace": "Unbekannter Ort",
+  "nearby": "In der Nähe",
+  "coffeeShop": "Café",
+  "vietnameseRestaurant": "Vietnamesisches Restaurant",
+  "market": "Markt",
+  "aiTravelAssistant": "KI-Reiseassistent",
+  "alwaysHereToHelp": "Immer bereit zu helfen",
+  "askMeAnything": "Fragen Sie mich alles...",
+  "suggestedQuestions": "Vorgeschlagene Fragen",
+  "assistantGreeting": "Hallo! Ich bin Ihr KI-Reiseassistent. Ich helfe mit lokalen Empfehlungen, Übersetzungen, Kulturtipps und Reisefragen. Wie kann ich heute helfen?",
+  "assistantFallback": "Dabei kann ich helfen. Können Sie mehr Details nennen?",
+  "assistantConnectionError": "Entschuldigung, ich konnte keine Verbindung zum KI-Assistenten herstellen.",
+  "suggestionBestTimeHaLong": "Wann ist die beste Reisezeit für Ha Long Bay?",
+  "suggestionVietnameseRestaurants": "Empfehlen Sie authentische vietnamesische Restaurants",
+  "suggestionHanoiToSapa": "Wie komme ich von Hanoi nach Sapa?",
+  "suggestionLocalCustoms": "Welche lokalen Bräuche sollte ich kennen?",
+  "completeYourPurchase": "Kauf abschließen",
+  "paymentInformation": "Zahlungsinformationen",
+  "choosePlanUnlock": "Wählen Sie einen Tarif und schalten Sie Ihr personalisiertes Reiseerlebnis frei",
+  "mostPopular": "Am beliebtesten",
+  "perTrip": " /Reise",
+  "selected": "Ausgewählt",
+  "selectPlan": "Tarif auswählen",
+  "continueToPayment": "Weiter zur Zahlung - {price}",
+  "@continueToPayment": {
+    "placeholders": {
+      "price": {}
+    }
+  },
+  "purchaseSuccessful": "Kauf erfolgreich!",
+  "planActiveEnjoyTrip": "Ihr Tarif ist jetzt aktiv. Genießen Sie Ihre Reise!",
+  "openItinerary": "Reiseplan öffnen",
+  "goToHome": "Zur Startseite",
+  "required": "Erforderlich",
+  "cardNumber": "Kartennummer",
+  "cardholderName": "Name des Karteninhabers",
+  "cardholderNameHint": "John Doe",
+  "expiryDate": "Ablaufdatum",
+  "expiryDateHint": "MM/YY",
+  "cvv": "CVV",
+  "demoPaymentWarning": "Dies ist eine Demo-Zahlung. Geben Sie keine echten Kartendaten ein.",
+  "processing": "Wird verarbeitet...",
+  "completePurchase": "Kauf abschließen - {price}",
+  "@completePurchase": {
+    "placeholders": {
+      "price": {}
+    }
+  },
+  "basicPlan": "Basis-Tarif",
+  "premiumPlan": "Premium-Tarif",
+  "proPlan": "Pro-Tarif",
+  "sevenDays": "7 Tage",
+  "fourteenDays": "14 Tage",
+  "thirtyDays": "30 Tage",
+  "unlimitedPlanning": "Unbegrenzte Planung",
+  "fullMapAccess": "Voller Kartenzugriff",
+  "smartAiSuggestions": "Smarte KI-Vorschläge",
+  "premiumFeatures": "Premium-Funktionen",
+  "prioritySupport": "Priorisierter Support",
+  "plan": "Tarif",
+  "tripAlbums": "Reisealben",
+  "newAlbum": "Neues Album",
+  "createNewAlbum": "Neues Album erstellen",
+  "albumName": "Albumname",
+  "albumNameHint": "z. B. Hanoi-Abenteuer",
+  "description": "Beschreibung",
+  "publicAlbum": "Öffentliches Album",
+  "albumCreated": "Album erstellt!",
+  "noAlbumsYet": "Noch keine Alben",
+  "createFirstAlbum": "Erstellen Sie Ihr erstes Album",
+  "createAlbum": "Album erstellen",
+  "untitledAlbum": "Unbenanntes Album",
+  "tripCamera": "Reisekamera",
+  "savePhoto": "Foto speichern",
+  "caption": "Bildunterschrift",
+  "captionHint": "Schreiben Sie etwas zu diesem Foto...",
+  "photoLocationHint": "z. B. Da Lat, Vietnam",
+  "cameraSource": "Kamera",
+  "gallerySource": "Galerie",
+  "mustLoginUploadPhotos": "Sie müssen sich anmelden, bevor Sie Fotos hochladen.",
+  "photoReadyUploadUnavailable": "Foto bereit. Backend-Upload ist noch nicht verfügbar.",
+  "photoSaveFailed": "Foto konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+  "photoSaveFailedWithMessage": "Foto konnte nicht gespeichert werden: {message}",
+  "@photoSaveFailedWithMessage": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "tripCameraPermissionDenied": "Berechtigung verweigert. Bitte erlauben Sie Zugriff auf {source} und versuchen Sie es erneut.",
+  "@tripCameraPermissionDenied": {
+    "placeholders": {
+      "source": {}
+    }
+  },
+  "couldNotOpenSource": "{source} konnte nicht geöffnet werden. {message}",
+  "@couldNotOpenSource": {
+    "placeholders": {
+      "source": {},
+      "message": {}
+    }
+  },
+  "couldNotSelectPhoto": "Foto konnte nicht ausgewählt werden. Bitte versuchen Sie es erneut.",
+  "viewAlbums": "Alben ansehen",
+  "readyCaptureMoment": "Bereit, den Moment festzuhalten?",
+  "tapOpenCamera": "Tippen Sie unten, um die Kamera zu öffnen",
+  "openCamera": "Kamera öffnen",
+  "uploadFromGallery": "Aus Galerie hochladen",
+  "photoUploadBackendInfo": "Foto-Upload wird aktiviert, sobald das Backend Album-Speicher unterstützt",
+  "emergencySupport": "Notfallhilfe",
+  "playingPhrase": "Wiedergabe: {phrase}",
+  "@playingPhrase": {
+    "placeholders": {
+      "phrase": {}
+    }
+  },
+  "quickTalk": "Schnellphrasen",
+  "emergencyContacts": "Notfallkontakte",
+  "emergency": "Notfall",
+  "police": "Polizei",
+  "fire": "Feuerwehr",
+  "ambulance": "Krankenwagen",
+  "general": "Allgemein",
+  "medical": "Medizinisch",
+  "incident": "Vorfall",
+  "security": "Sicherheit",
+  "navigation": "Navigation",
+  "communication": "Kommunikation",
+  "call": "Anrufen",
+  "quickTips": "Schnelle Tipps",
+  "tipHotelAddress": "Nehmen Sie immer die Hoteladresse auf Vietnamesisch mit.",
+  "tipPhoneBattery": "Prüfen Sie den Akkustand Ihres Telefons, bevor Sie ausgehen.",
+  "tipSaveEmergencyContacts": "Speichern Sie Notfallkontakte in Ihrem Telefon.",
+  "phraseHelpMe": "Bitte helfen Sie mir!",
+  "phraseHospital": "Wo ist das nächste Krankenhaus?",
+  "phraseLostWalletPassport": "Ich habe meine Geldbörse/meinen Reisepass verloren.",
+  "phraseCallPolice": "Ich muss die Polizei rufen.",
+  "phraseLost": "Ich habe mich verirrt.",
+  "phraseSpeakEnglish": "Sprechen Sie Englisch?",
+  "aboutSMate": "Über S-Mate",
+  "aboutSMateDescription": "S-Mate ist Ihr All-in-one-Reisebegleiter, der jede Reise reibungslos und unvergesslich macht.",
+  "aiTripPlanning": "KI-Reiseplanung",
+  "aiTripPlanningDescription": "Erstellen Sie personalisierte Reisepläne mit KI. Geben Sie einfach Ziel, Daten und Vorlieben ein.",
+  "interactiveMaps": "Interaktive Karten",
+  "interactiveMapsDescription": "Erkunden Sie Ziele mit Echtzeitkarten, Orten in der Nähe und Navigationshilfe.",
+  "assistant247": "24/7 KI-Assistent",
+  "assistant247Description": "Erhalten Sie sofort Antworten zu lokalen Bräuchen, Übersetzungen, Restaurants und Reisetipps.",
+  "tripAlbumsFeatureDescription": "Halten und organisieren Sie Reiseerinnerungen mit Fotos und Alben.",
+  "emergencySupportDescription": "Greifen Sie auf Notfallkontakte, Schnellphrasen und Sicherheitstipps für jede Situation zu.",
+  "smartTips": "Smarte Tipps",
+  "smartTipsDescription": "Erhalten Sie personalisierte Reisevorschläge für Ihre Pläne und Ihr Ziel.",
+  "getStarted": "Loslegen",
+  "welcomeToSMate": "Willkommen bei S-Mate",
+  "introSubtitle": "Ihr intelligenter Begleiter zum Entdecken, Planen und Erleben unvergesslicher Reisen",
+  "smartItineraries": "Smarte Reisepläne",
+  "exploreDestinations": "Ziele erkunden",
+  "instantAnswers": "Sofortige Antworten",
+  "saveMemories": "Erinnerungen speichern",
+  "localLaws": "Lokale Gesetze",
+  "staySafe": "Sicher bleiben",
+  "personalized": "Personalisiert",
+  "learnMore": "Mehr erfahren",
+  "copyright": "© 2026 S-Mate. Alle Rechte vorbehalten.",
+  "validationRequiredField": "Bitte geben Sie {fieldName} ein",
+  "@validationRequiredField": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "validationEmailRequired": "Bitte geben Sie Ihre E-Mail ein",
+  "validationEmailInvalid": "Geben Sie eine gültige E-Mail-Adresse ein",
+  "validationPasswordRequired": "Bitte geben Sie Ihr Passwort ein",
+  "validationPasswordMinLength": "Das Passwort muss mindestens {min} Zeichen lang sein",
+  "@validationPasswordMinLength": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "validationPasswordTooLong": "Das Passwort ist zu lang",
+  "validationPasswordComplexity": "Das Passwort muss Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten",
+  "validationConfirmPasswordRequired": "Bitte bestätigen Sie Ihr Passwort",
+  "validationPasswordsDoNotMatch": "Die Passwörter stimmen nicht überein",
+  "validationNumberInvalid": "{fieldName} muss eine gültige Zahl sein",
+  "@validationNumberInvalid": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "validationNumberNegative": "{fieldName} darf nicht negativ sein",
+  "@validationNumberNegative": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "validationMinLength": "{fieldName} muss mindestens {min} Zeichen lang sein",
+  "@validationMinLength": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      },
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "validationMaxLength": "{fieldName} muss weniger als {max} Zeichen haben",
+  "@validationMaxLength": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "validationPhoneRequired": "Bitte geben Sie eine Telefonnummer ein",
+  "validationPhoneInvalid": "Ungültige Telefonnummer",
+  "validationBudgetTooLow": "Budget zu niedrig",
+  "validationUsernameRequired": "Bitte geben Sie einen Benutzernamen ein",
+  "validationUsernameMinLength": "Der Benutzername muss mindestens {min} Zeichen lang sein",
+  "@validationUsernameMinLength": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "validationUsernameTooLong": "Der Benutzername ist zu lang",
+  "validationUsernameInvalid": "Der Benutzername darf nur Buchstaben, Zahlen und Unterstriche enthalten",
+  "validationDescriptionMaxLength": "Die Beschreibung muss weniger als {maxLength} Zeichen haben",
+  "@validationDescriptionMaxLength": {
+    "placeholders": {
+      "maxLength": {
+        "type": "int"
+      }
+    }
+  },
+  "continueTrip": "Reise fortsetzen"
+}
