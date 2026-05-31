@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../core/theme.dart';
 import 'ai_chat_service.dart';
-import 'image_search_service.dart';
 import '../../core/config.dart';
 
 class AiChatScreen extends StatefulWidget {
@@ -21,7 +20,6 @@ class _AiChatScreenState extends State<AiChatScreen> {
   bool _isTyping = false;
 
   final AiChatService _chatService = AiChatService();
-  final ImageSearchService _imageService = ImageSearchService();
   final ImagePicker _picker = ImagePicker();
   XFile? _selectedImage;
 
@@ -111,17 +109,6 @@ class _AiChatScreenState extends State<AiChatScreen> {
       }
 
       if (!mounted) return;
-      // Search for dynamic image if it's text-only or if we want to show location cards
-      if (img == null) {
-        final imageUrl = await _imageService.searchImage(fullResponse);
-        if (!mounted) return;
-        setState(() {
-          if (imageUrl != 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&fit=crop' ||
-              (AppConfig.unsplashAccessKey.isNotEmpty && AppConfig.unsplashAccessKey != 'YOUR_UNSPLASH_ACCESS_KEY_HERE')) {
-            _messages[assistantIndex]['image'] = imageUrl;
-          }
-        });
-      }
     } catch (e) {
       debugPrint('Error getting chat response: $e');
       if (mounted) {
