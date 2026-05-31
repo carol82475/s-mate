@@ -36,7 +36,10 @@ final GoRouter appRouter = GoRouter(
           },
         ),
         GoRoute(path: '/map', builder: (_, __) => const MapScreen()),
-        GoRoute(path: '/ai-chat', builder: (_, __) => const AiChatScreen()),
+        GoRoute(
+          path: '/ai-chat',
+          builder: (_, state) => AiChatScreen(mode: state.uri.queryParameters['mode']),
+        ),
         GoRoute(path: '/find-travelers', builder: (_, __) => const FindTravelersScreen()),
         GoRoute(
           path: '/traveler-chat/:id',
@@ -47,6 +50,7 @@ final GoRouter appRouter = GoRouter(
         GoRoute(path: '/trip-albums', builder: (_, __) => const TripAlbumsScreen()),
         GoRoute(path: '/profile', builder: (_, __) => const ProfileScreen()),
         GoRoute(path: '/quick-action', builder: (_, __) => const QuickActionScreen()),
+        GoRoute(path: '/antiscam', builder: (_, __) => const AiChatScreen(mode: 'antiscam')),
         GoRoute(path: '/purchase', builder: (_, __) => const PurchaseScreen()),
       ],
     ),

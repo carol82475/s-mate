@@ -3,8 +3,11 @@ import 'package:flutter/services.dart';
 import 'core/theme.dart';
 import 'core/router.dart';
 
-void main() {
+import 'core/config.dart';
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await AppConfig.initialize();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,

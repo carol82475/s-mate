@@ -20,6 +20,7 @@ class MainScaffold extends StatelessWidget {
     if (location.startsWith('/trip-albums')) return 0;
     if (location.startsWith('/profile')) return 0;
     if (location.startsWith('/quick-action')) return 0;
+    if (location.startsWith('/antiscam')) return 0;
     return 0;
   }
 

@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 _QuickActionChip(icon: Icons.camera_alt_outlined, label: 'Camera', onTap: () => context.go('/trip-camera')),
                 const SizedBox(width: 8),
-                _QuickActionChip(icon: Icons.photo_library_outlined, label: 'Albums', onTap: () => context.go('/trip-albums')),
+                _QuickActionChip(icon: Icons.qr_code_scanner, label: 'Anti-Scam', onTap: () => context.go('/antiscam')),
                 const SizedBox(width: 8),
                 _QuickActionChip(icon: Icons.shield_outlined, label: 'Safety', onTap: () => context.go('/quick-action')),
                 const SizedBox(width: 8),

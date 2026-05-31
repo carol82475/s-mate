@@ -253,7 +253,28 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image.network('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_\"G\"_logo.svg/1200px-Google_\"G\"_logo.svg.png', height: 20),
+                                Image.network(
+                                  'https://developers.google.com/identity/images/g-logo.png',
+                                  height: 20,
+                                  errorBuilder: (context, error, stackTrace) => Container(
+                                    width: 20,
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.grey.shade200,
+                                    ),
+                                    child: const Center(
+                                      child: Text(
+                                        'G',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppTheme.textPrimary,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                                 const SizedBox(width: 12),
                                 const Text('Continue with Google', style: TextStyle(color: AppTheme.textPrimary, fontWeight: FontWeight.w500)),
                               ],
